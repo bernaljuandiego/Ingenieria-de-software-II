@@ -78,16 +78,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@color/colorPrimary"
                 android:text="sign in"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+                android:gravity="center"
+                android:linksClickable="true"
+                android:padding="15dp"
+                android:text="Forgot your password?" />
+
+            <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:linksClickable="true"
                 android:padding="15dp"
                 android:text="No account yet? Create one" />
 
