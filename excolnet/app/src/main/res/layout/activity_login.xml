@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPrimary"
                 android:text="sign in"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
@@ -88,42 +88,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:linksClickable="true"
                 android:padding="15dp"
                 android:text="No account yet? Create one" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
-                <view
+                <View
+                    android:id="@+id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_marginTop="23dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="9dp"
                     android:layout_weight="2"
-                    android:background="@color/colorAccent"></view>
+                    android:background="#FF909090" />
 
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
                     android:layout_weight="3"
                     android:gravity="center"
                     android:text="or" />
 
-                <view
-                    android:id="@+id/view"
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_marginTop="23dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="9dp"
                     android:layout_weight="2"
-                    android:background="@color/colorAccent"></view>
+                    android:background="#FF909090" />
+
             </LinearLayout>
 
         </LinearLayout>
