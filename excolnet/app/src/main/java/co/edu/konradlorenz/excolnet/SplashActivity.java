@@ -17,18 +17,15 @@ public class SplashActivity extends AppCompatActivity {
                     int waited = 0;
                     // SplashActivity screen pause time
                     while (waited < 1000) {
-                        sleep(240);
+                        sleep(250);
                         waited += 100;
                     }
-                    Intent intent = new Intent(SplashActivity.this,
-                            LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(intent);
-                    SplashActivity.this.finish();
                 } catch (InterruptedException e) {
-                    // do nothing
                 } finally {
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     SplashActivity.this.finish();
+                    startActivity(intent);
                 }
 
             }
