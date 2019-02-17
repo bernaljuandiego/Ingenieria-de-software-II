@@ -66,8 +66,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private LinearLayout mProgressView;
     private Button mEmailSignInButton;
-    private SignInButton googleSignInButton;
+    private Button googleSignInButton;
     private CallbackManager mCallbackManager;
+    private LoginButton loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +76,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         getLayoutComponents();
         populateAutoComplete();
-        createLiseners();
         googleFirebaseComponents();
         googleSignInComponents();
         facebookSignInComponents();
+        createLiseners();
     }
 
     private void facebookSignInComponents() {
@@ -89,22 +90,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
         mCallbackManager = CallbackManager.Factory.create();
-        LoginButton loginButton = findViewById(R.id.facebookButton);
         loginButton.setReadPermissions("email", "public_profile");
-        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
-
-            @Override
-            public void onCancel() {
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-            }
-        });
     }
 
     private void createLiseners() {
@@ -132,6 +118,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 signIn();
             }
         });
+
+        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+            }
+        });
     }
 
     private void getLayoutComponents() {
@@ -140,6 +141,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mProgressView = findViewById(R.id.login_progress);
         googleSignInButton = findViewById(R.id.googleButton);
+        loginButton = findViewById(R.id.facebookButton);
     }
 
     private void googleFirebaseComponents() {
@@ -182,6 +184,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
         }
         return false;
+    }
+
+    public void onClickFacebook(View v) {
+            loginButton.performClick();
     }
 
     /**

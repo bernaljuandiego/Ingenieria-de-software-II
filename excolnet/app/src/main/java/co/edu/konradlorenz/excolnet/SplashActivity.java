@@ -24,8 +24,8 @@ public class SplashActivity extends AppCompatActivity {
                 } finally {
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    SplashActivity.this.finish();
                     startActivity(intent);
+                    SplashActivity.this.finish();
                 }
 
             }

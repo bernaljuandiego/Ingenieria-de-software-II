@@ -12,13 +12,14 @@
 
     <ScrollView
         android:id="@+id/login_form"
-        android:layout_width="match_parent"
+        android:layout_width="414dp"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteY="699dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin">
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:layout_editor_absoluteX="-3dp"
+        tools:layout_editor_absoluteY="699dp">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -132,18 +133,45 @@
 
             </LinearLayout>
 
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/googleButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp" />
-
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/facebookButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginBottom="15dp" />
+                android:layout_marginBottom="15dp"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/googleButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@color/common_google_signin_btn_text_dark_pressed"
+                android:drawableStart="@drawable/googleg_standard_color_18"
+                android:drawableLeft="@drawable/googleg_disabled_color_18"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Google "
+                android:textAllCaps="false"
+                android:textColor="@color/com_facebook_likeview_text_color"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="#3B5991"
+                android:drawableStart="@drawable/com_facebook_button_icon_white"
+                android:drawableLeft="@drawable/com_facebook_favicon_blue"
+                android:onClick="onClickFacebook"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Facebook"
+                android:textAllCaps="false"
+                android:textColor="#ffffff"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>
