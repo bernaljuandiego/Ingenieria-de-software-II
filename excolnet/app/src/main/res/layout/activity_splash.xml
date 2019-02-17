@@ -4,11 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity"
-    android:background="@color/fondoSplash">
+    android:background="@color/fondoSplash"
+    tools:context=".SplashActivity">
+
     <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/splash"/>
+        android:layout_height="535dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="fitStart"
+        android:src="@drawable/splash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gifImageView3"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView3"
+        android:layout_width="match_parent"
+        android:layout_height="127dp"
+        android:layout_marginTop="28dp"
+        android:scaleType="fitEnd"
+        android:src="@drawable/nombre"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
 </android.support.constraint.ConstraintLayout>
