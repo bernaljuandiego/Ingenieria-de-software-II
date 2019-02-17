@@ -1,160 +1,77 @@
 package co.edu.konradlorenz.excolnet;
 
-import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
+import java.util.List;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import java.util.ArrayList;
+import android.view.KeyEvent;
 import android.widget.Button;
+import android.content.Loader;
+import android.content.Intent;
+import android.text.TextUtils;
+import android.database.Cursor;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+import android.widget.LinearLayout;
+import android.widget.ArrayAdapter;
+import android.content.CursorLoader;
+import android.annotation.TargetApi;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
+import android.content.pm.PackageManager;
+import android.view.View.OnClickListener;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.widget.AutoCompleteTextView;
+import android.view.inputmethod.EditorInfo;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.facebook.login.widget.LoginButton;
+import android.support.design.widget.Snackbar;
+import com.facebook.appevents.AppEventsLogger;
+import com.google.firebase.auth.AuthCredential;
+import android.support.v7.app.AppCompatActivity;
+import android.app.LoaderManager.LoaderCallbacks;
 import com.google.firebase.auth.GoogleAuthProvider;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import static android.Manifest.permission.READ_CONTACTS;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
-/**
- * A login screen that offers login via email/password.
- */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    private static final int REQUEST_READ_CONTACTS = 0;
-    private static final int RC_SIGN_IN = 101;
+    // variables de clase ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     private FirebaseAuth mAuth;
-    private GoogleSignInClient mGoogleSignInClient;
-    private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private LinearLayout mProgressView;
+    private LoginButton loginButton;
     private Button mEmailSignInButton;
     private Button googleSignInButton;
+    private LinearLayout mProgressView;
+    private AutoCompleteTextView mEmailView;
     private CallbackManager mCallbackManager;
-    private LoginButton loginButton;
+    private static final int RC_SIGN_IN = 101;
+    private GoogleSignInClient mGoogleSignInClient;
+    private static final int REQUEST_READ_CONTACTS = 0;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        getLayoutComponents();
-        populateAutoComplete();
-        googleFirebaseComponents();
-        googleSignInComponents();
-        facebookSignInComponents();
-        createLiseners();
-    }
-
-    private void facebookSignInComponents() {
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
-
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-
-        mCallbackManager = CallbackManager.Factory.create();
-        loginButton.setReadPermissions("email", "public_profile");
-    }
-
-    private void createLiseners() {
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attemptLogin();
-            }
-        });
-
-        googleSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signIn();
-            }
-        });
-
-        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
-
-            @Override
-            public void onCancel() {
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-            }
-        });
-    }
-
-    private void getLayoutComponents() {
-        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        mProgressView = findViewById(R.id.login_progress);
-        googleSignInButton = findViewById(R.id.googleButton);
-        loginButton = findViewById(R.id.facebookButton);
-    }
-
-    private void googleFirebaseComponents() {
-        mAuth = FirebaseAuth.getInstance();
-    }
-
-    private void googleSignInComponents() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+    //metodos de autocompletado de textedit de correo electronico y pedida de permisos de acceso a contactos--------------------------------------------------------------------------------------------
+    private interface ProfileQuery {
+        String[] PROJECTION = {
+                ContactsContract.CommonDataKinds.Email.ADDRESS,
+                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
+        };
+        int ADDRESS = 0;
     }
 
     private void populateAutoComplete() {
@@ -186,16 +103,91 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return false;
     }
 
-    public void onClickFacebook(View v) {
-            loginButton.performClick();
+    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
+        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(LoginActivity.this, android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
+        mEmailView.setAdapter(adapter);
     }
 
-    /**
-     * Callback received when a permissions request has been completed.
-     */
+    // verificar el api level para mostrar el progressbar (cargando..) ---------------------------------------------------------------------------------------------------------------------------------
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    // metodos heredados de activity para el correcto funcionamiento de la aplicacion ------------------------------------------------------------------------------------------------------------------
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        getLayoutComponents();
+        populateAutoComplete();
+        googleFirebaseComponents();
+        googleSignInComponents();
+        facebookSignInComponents();
+        createLiseners();
+    }
+
+    //metodos de autocompletado de textedit de correo electronico y pedida de permisos de acceso a contactos--------------------------------------------------------------------------------------------
+    @Override
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        return new CursorLoader(this,
+                // Retrieve data rows for the device user's 'profile' contact.
+                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
+                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
+                // Select only email addresses.
+                ContactsContract.Contacts.Data.MIMETYPE +
+                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
+                .CONTENT_ITEM_TYPE},
+                // Show primary email addresses first. Note that there won't be
+                // a primary email address if the user hasn't specified one.
+                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        List<String> emails = new ArrayList<>();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            emails.add(cursor.getString(ProfileQuery.ADDRESS));
+            cursor.moveToNext();
+        }
+        addEmailsToAutoComplete(emails);
+    }
+
+    //metodo que recibe el resultado de la tarea asincrona de inicio de sesion--------------------------------------------------------------------------------------------------------------------------
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account);
+            } catch (ApiException e) {
+                logInError();
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        /**
+         * Callback received when a permissions request has been completed.
+         */
         if (requestCode == REQUEST_READ_CONTACTS) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 populateAutoComplete();
@@ -203,13 +195,111 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    //obtener los componentes para las distintas funcionalidades (el error que aparece es normal)-------------------------------------------------------------------------------------------------------
+    private void getLayoutComponents() {
+        mEmailSignInButton = findViewById(R.id.email_sign_in_button);
+        mPasswordView = findViewById(R.id.password);
+        mEmailView = findViewById(R.id.email);
+        mProgressView = findViewById(R.id.login_progress);
+        googleSignInButton = findViewById(R.id.googleButton);
+        loginButton = findViewById(R.id.facebookButton);
+    }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
-    private void attemptLogin() {
+    private void googleFirebaseComponents() {
+        mAuth = FirebaseAuth.getInstance();
+    }
+
+    private void googleSignInComponents() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
+    private void facebookSignInComponents() {
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+
+        mCallbackManager = CallbackManager.Factory.create();
+        loginButton.setReadPermissions("email", "public_profile");
+    }
+
+    //manejo de los distintos eventos obtenidos en la actividad-----------------------------------------------------------------------------------------------------------------------------------------
+    private void createLiseners() {
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+                    firebaseAuthWithEmail();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                firebaseAuthWithEmail();
+            }
+        });
+
+        googleSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                googleSignIn();
+            }
+        });
+
+        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                firebaseAuthWithFacebook(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                logInError();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                logInConectionFailed();
+            }
+        });
+    }
+
+    public void onClickFacebook(View v) {
+        loginButton.performClick();
+    }
+
+    private void googleSignIn() {
+        showProgress(true);
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
+    }
+
+    private boolean isPasswordValid(String password) {
+        if(password.length() < 6) {
+            return false;
+        }
+        return true;
+    }
+
+    //validacion y persistencia de las cuentas en firebase----------------------------------------------------------------------------------------------------------------------------------------------
+    private void firebaseAuthWithEmail() {
+        /**
+         * Attempts to sign in or register the account specified by the login form.
+         * If there are form errors (invalid email, missing fields, etc.), the
+         * errors are presented and no actual login attempt is made.
+         */
+
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -264,113 +354,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        if (password.length() < 6) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return new CursorLoader(this,
-                // Retrieve data rows for the device user's 'profile' contact.
-                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-                // Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE +
-                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-                .CONTENT_ITEM_TYPE},
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
-        addEmailsToAutoComplete(emails);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-        int ADDRESS = 0;
-    }
-
-    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-        ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(LoginActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-        mEmailView.setAdapter(adapter);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-    }
-
-    private void signIn() {
-        showProgress(true);
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-                showProgress(false);
-                Snackbar.make(findViewById(R.id.main_layout), "Try Again Later.", Snackbar.LENGTH_SHORT).show();
-            }
-        }
-    }
-
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        credentialSingIn(credential);
+        credentialFirebaseSingIn(credential);
     }
 
-    private void handleFacebookAccessToken(AccessToken token) {
+    private void firebaseAuthWithFacebook(AccessToken token) {
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        credentialSingIn(credential);
+        credentialFirebaseSingIn(credential);
     }
 
-    private void credentialSingIn(AuthCredential credential){
+    private void credentialFirebaseSingIn(AuthCredential credential){
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -378,12 +372,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         if (task.isSuccessful()) {
                             logInSucceed();
                         } else {
-                            logInError();
+                            logInConectionFailed();
                         }
                     }
                 });
     }
 
+    //manejo de las distintas alternativas al hacer un inicio de sesion---------------------------------------------------------------------------------------------------------------------------------
     private void logInError() {
         showProgress(false);
         Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
@@ -393,6 +388,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         showProgress(false);
         FirebaseUser user = mAuth.getCurrentUser();
         Snackbar.make(findViewById(R.id.main_layout), "Welcome " + user.getDisplayName() + ".", Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void logInConectionFailed() {
+        showProgress(false);
+        Snackbar.make(findViewById(R.id.main_layout), "Connection Error.", Snackbar.LENGTH_SHORT).show();
     }
 }
 

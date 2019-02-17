@@ -27,13 +27,8 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(intent);
                     SplashActivity.this.finish();
                 }
-
             }
         };
         splashTread.start();
-
     }
-
-
-
 }
