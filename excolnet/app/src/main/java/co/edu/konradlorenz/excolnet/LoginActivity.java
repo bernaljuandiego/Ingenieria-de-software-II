@@ -2,9 +2,10 @@ package co.edu.konradlorenz.excolnet;
 
 import java.util.List;
 import android.net.Uri;
+import java.util.Arrays;
 import android.os.Build;
-import android.os.Bundle;
 import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
 import java.util.ArrayList;
 import android.view.KeyEvent;
@@ -25,6 +26,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.Task;
 import android.content.pm.PackageManager;
 import android.view.View.OnClickListener;
@@ -40,7 +42,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.facebook.login.widget.LoginButton;
 import android.support.design.widget.Snackbar;
-import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.auth.AuthCredential;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -140,6 +141,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        twitterSignInComponents();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getLayoutComponents();
@@ -147,7 +149,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         googleFirebaseComponents();
         googleSignInComponents();
         facebookSignInComponents();
-        twitterSignInComponents();
         createLiseners();
     }
 
@@ -242,7 +243,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void facebookSignInComponents() {
         FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
 
         mCallbackManager = CallbackManager.Factory.create();
         loginFacebookButton.setReadPermissions("email", "public_profile");
@@ -321,6 +321,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public void onClickFacebook(View v) {
+        showProgress(true);
         loginFacebookButton.performClick();
     }
 

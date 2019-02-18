@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -23,6 +24,7 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 public class SesionActivity extends AppCompatActivity{
 
@@ -44,13 +46,21 @@ public class SesionActivity extends AppCompatActivity{
         nameGoogleLogin = (TextView) findViewById(R.id.nameTextView);
         emailGoogleLogin = (TextView) findViewById(R.id.emailTextView);
 
-        nameGoogleLogin.setText(user.getDisplayName());
-        emailGoogleLogin.setText(user.getEmail());
-        Glide.with(this).load(user.getPhotoUrl()).into(photoGoogleLogin);
+        if (user != null) {
+            for (UserInfo profile : user.getProviderData()) {
+                nameGoogleLogin.setText(profile.getDisplayName());
+                emailGoogleLogin.setText(profile.getEmail());
+                Glide.with(this).load(profile.getPhotoUrl()).into(photoGoogleLogin);
+            }
+        }
+
+
+
     }
 
     public void goGoogleLoginOut(View v) {
         mAuth.signOut();
+        LoginManager.getInstance().logOut();
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
