@@ -233,15 +233,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void twitterSignInComponents(){
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(getString(R.string.CONSUMER_KEY), getString(R.string.CONSUMER_SECRET));
-
-        TwitterConfig config = new TwitterConfig.Builder(this)
+        Twitter.initialize(new TwitterConfig.Builder(this)
                 .logger(new DefaultLogger(Log.DEBUG))
-                .twitterAuthConfig(authConfig)
+                .twitterAuthConfig(new TwitterAuthConfig(getString(R.string.CONSUMER_KEY), getString(R.string.CONSUMER_SECRET)))
                 .debug(true)
-                .build();
-
-        Twitter.initialize(config);
+                .build());
     }
 
     private void facebookSignInComponents() {
@@ -439,11 +435,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void logInSucceed() {
-        showProgress(false);
         FirebaseUser user = mAuth.getCurrentUser();
-        Snackbar.make(findViewById(R.id.main_layout), "Welcome " + user.getDisplayName() + ".", Snackbar.LENGTH_SHORT).show();
         Intent i = new Intent(LoginActivity.this, SesionActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        showProgress(false);
         startActivity(i);
     }
 
