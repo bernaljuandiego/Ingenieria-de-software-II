@@ -1,8 +1,6 @@
-package co.edu.konradlorenz.excolnet;
+package co.edu.konradlorenz.excolnet.Fragments;
 
 import android.annotation.TargetApi;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -26,6 +23,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+
+import co.edu.konradlorenz.excolnet.R;
 
 public class PasswordRecoveryFragment extends Fragment {
 
@@ -65,6 +64,7 @@ public class PasswordRecoveryFragment extends Fragment {
         reset_password_button = (Button) getView().findViewById(R.id.reset_password_button);
         mProgressView = getView().findViewById(R.id.login_progress);
         form_password = getView().findViewById(R.id.form_password);
+        email_text.requestFocus();
     }
 
     private void closePasswordRecoveryWindow(){

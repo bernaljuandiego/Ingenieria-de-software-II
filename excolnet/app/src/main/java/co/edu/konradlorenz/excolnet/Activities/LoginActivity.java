@@ -76,7 +76,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
-import co.edu.konradlorenz.excolnet.PasswordRecoveryFragment;
+import co.edu.konradlorenz.excolnet.Fragments.PasswordRecoveryFragment;
 import co.edu.konradlorenz.excolnet.R;
 
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
@@ -167,7 +167,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         googleFirebaseComponents();
         googleSignInComponents();
         facebookSignInComponents();
-        createLiseners();
+        createListeners();
     }
 
     //metodos de autocompletado de textedit de correo electronico y pedida de permisos de acceso a contactos--------------------------------------------------------------------------------------------
@@ -278,7 +278,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    private void createLiseners() {
+    private void createListeners() {
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
