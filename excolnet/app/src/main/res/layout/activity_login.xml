@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".Activities.LoginActivity">
 
     <ScrollView
         android:id="@+id/login_form"
@@ -160,6 +160,7 @@
                     android:textSize="12dp" />
 
                 <TextView
+                    android:id="@+id/forgot_password_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"
