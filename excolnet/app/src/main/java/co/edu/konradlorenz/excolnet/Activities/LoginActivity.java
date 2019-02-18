@@ -446,18 +446,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void credentialFirebaseSingIn(AuthCredential credential) {
-        mAuth.getCurrentUser().linkWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                           // Snackbar.make(findViewById(R.id.main_layout),Snackbar.LENGTH_SHORT,).setText("Account association succesful!").show();
-                        } else {
-
-                        }
-                    }
-                });
-
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
