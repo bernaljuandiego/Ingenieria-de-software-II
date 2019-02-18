@@ -4,6 +4,7 @@ import java.util.List;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import java.util.ArrayList;
 import android.view.KeyEvent;
@@ -32,6 +33,9 @@ import android.support.annotation.NonNull;
 import android.widget.AutoCompleteTextView;
 import android.view.inputmethod.EditorInfo;
 import com.google.firebase.auth.AuthResult;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.Callback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.facebook.login.widget.LoginButton;
@@ -40,12 +44,19 @@ import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.auth.AuthCredential;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
+import com.twitter.sdk.android.core.TwitterConfig;
+import com.twitter.sdk.android.core.DefaultLogger;
+import com.twitter.sdk.android.core.TwitterSession;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.TwitterAuthProvider;
 import com.google.firebase.auth.FacebookAuthProvider;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import static android.Manifest.permission.READ_CONTACTS;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -55,13 +66,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     // variables de clase ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     private FirebaseAuth mAuth;
     private EditText mPasswordView;
-    private LoginButton loginButton;
     private Button mEmailSignInButton;
     private Button googleSignInButton;
     private LinearLayout mProgressView;
+    private LoginButton loginFacebookButton;
     private AutoCompleteTextView mEmailView;
     private CallbackManager mCallbackManager;
     private static final int RC_SIGN_IN = 101;
+    private TwitterLoginButton loginTwitterButton;
     private GoogleSignInClient mGoogleSignInClient;
     private static final int REQUEST_READ_CONTACTS = 0;
 
@@ -119,8 +131,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (mAuth.getCurrentUser() != null) {
+            logInSucceed();
+        } else {
+            showProgress(false);
+        }
     }
 
     @Override
@@ -132,6 +147,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         googleFirebaseComponents();
         googleSignInComponents();
         facebookSignInComponents();
+        twitterSignInComponents();
         createLiseners();
     }
 
@@ -172,6 +188,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        loginTwitterButton.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
@@ -201,12 +218,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView = findViewById(R.id.password);
         mEmailView = findViewById(R.id.email);
         mProgressView = findViewById(R.id.login_progress);
-        googleSignInButton = findViewById(R.id.googleButton);
-        loginButton = findViewById(R.id.facebookButton);
-    }
-
-    private void googleFirebaseComponents() {
-        mAuth = FirebaseAuth.getInstance();
+        googleSignInButton = findViewById(R.id.google_login_button);
+        loginFacebookButton = findViewById(R.id.facebook_login_button);
+        loginTwitterButton = findViewById(R.id.twitter_login_button);
     }
 
     private void googleSignInComponents() {
@@ -218,15 +232,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
+    private void twitterSignInComponents(){
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(getString(R.string.CONSUMER_KEY), getString(R.string.CONSUMER_SECRET));
+
+        TwitterConfig config = new TwitterConfig.Builder(this)
+                .logger(new DefaultLogger(Log.DEBUG))
+                .twitterAuthConfig(authConfig)
+                .debug(true)
+                .build();
+
+        Twitter.initialize(config);
+    }
+
     private void facebookSignInComponents() {
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
 
         mCallbackManager = CallbackManager.Factory.create();
-        loginButton.setReadPermissions("email", "public_profile");
+        loginFacebookButton.setReadPermissions("email", "public_profile");
+    }
+
+    private void googleFirebaseComponents() {
+        mAuth = FirebaseAuth.getInstance();
     }
 
     //manejo de los distintos eventos obtenidos en la actividad-----------------------------------------------------------------------------------------------------------------------------------------
+    private void googleSignIn() {
+        showProgress(true);
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
     private void createLiseners() {
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -253,7 +289,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+        loginFacebookButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 firebaseAuthWithFacebook(loginResult.getAccessToken());
@@ -269,20 +305,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 logInConectionFailed();
             }
         });
+
+        loginTwitterButton.setCallback(new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                firebaseAuthWithTwitter(result.data);
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                logInError();
+            }
+        });
+    }
+
+    public void onClickTwitter(View v) {
+        showProgress(true);
+        loginTwitterButton.performClick();
     }
 
     public void onClickFacebook(View v) {
-        loginButton.performClick();
-    }
-
-    private void googleSignIn() {
-        showProgress(true);
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    private boolean isEmailValid(String email) {
-        return email.contains("@");
+        loginFacebookButton.performClick();
     }
 
     private boolean isPasswordValid(String password) {
@@ -290,6 +333,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return false;
         }
         return true;
+    }
+
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
     }
 
     //validacion y persistencia de las cuentas en firebase----------------------------------------------------------------------------------------------------------------------------------------------
@@ -354,13 +401,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+    private void firebaseAuthWithFacebook(AccessToken token) {
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         credentialFirebaseSingIn(credential);
     }
 
-    private void firebaseAuthWithFacebook(AccessToken token) {
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+    private void firebaseAuthWithTwitter(TwitterSession session) {
+        AuthCredential credential = TwitterAuthProvider.getCredential(
+                session.getAuthToken().token,
+                session.getAuthToken().secret);
+        credentialFirebaseSingIn(credential);
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         credentialFirebaseSingIn(credential);
     }
 
@@ -388,6 +442,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         showProgress(false);
         FirebaseUser user = mAuth.getCurrentUser();
         Snackbar.make(findViewById(R.id.main_layout), "Welcome " + user.getDisplayName() + ".", Snackbar.LENGTH_SHORT).show();
+        Intent i = new Intent(LoginActivity.this, SesionActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
     }
 
     private void logInConectionFailed() {

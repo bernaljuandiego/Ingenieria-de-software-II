@@ -5,7 +5,6 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondoLogin"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".LoginActivity">
@@ -148,7 +147,7 @@
 
 
                 <com.facebook.login.widget.LoginButton
-                    android:id="@+id/facebookButton"
+                    android:id="@+id/facebook_login_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -156,8 +155,15 @@
                     android:layout_weight="1"
                     android:visibility="gone" />
 
+                <com.twitter.sdk.android.core.identity.TwitterLoginButton
+                    android:id="@+id/twitter_login_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+
                 <Button
-                    android:id="@+id/googleButton"
+                    android:id="@+id/google_login_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
@@ -173,7 +179,6 @@
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/button2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
@@ -184,6 +189,23 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:text="Facebook"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:background="@color/tw__composer_blue"
+                    android:drawableStart="@drawable/ic_twitter"
+                    android:onClick="onClickTwitter"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:text="Twitter"
                     android:textAllCaps="false"
                     android:textColor="#ffffff"
                     android:textSize="14sp"

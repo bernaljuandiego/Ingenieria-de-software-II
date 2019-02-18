@@ -9,10 +9,10 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="facebook_app_id">416468552435068</string>
     <string name="fb_login_protocol_scheme">fb416468552435068</string>
+    <string name="CONSUMER_KEY">9G57HWJ6kLzW84hStykoJ0ndW</string>
+    <string name="CONSUMER_SECRET">zj1DGiDdM1q7N2dhuk7I8hQTR7l4nV11NzbhRMU5ntd0A81uAT</string>
 
 </resources>
