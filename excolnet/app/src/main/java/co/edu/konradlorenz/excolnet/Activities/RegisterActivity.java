@@ -1,6 +1,6 @@
 package co.edu.konradlorenz.excolnet.Activities;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import co.edu.konradlorenz.excolnet.R;
