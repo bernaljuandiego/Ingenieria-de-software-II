@@ -15,11 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.SesionActivity"></activity>
+
+        <activity android:name=".Activities.RegisterActivity"></activity>
+
         <activity
             android:name=".Activities.SplashActivity"
-        <activity android:name=".RegisterActivity"></activity>
-        <activity
-            android:name=".SplashActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
