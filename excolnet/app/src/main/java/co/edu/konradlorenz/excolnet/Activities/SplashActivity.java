@@ -1,8 +1,10 @@
-package co.edu.konradlorenz.excolnet;
+package co.edu.konradlorenz.excolnet.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import co.edu.konradlorenz.excolnet.R;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -17,26 +19,18 @@ public class SplashActivity extends AppCompatActivity {
                     int waited = 0;
                     // SplashActivity screen pause time
                     while (waited < 1000) {
-                        sleep(240);
+                        sleep(250);
                         waited += 100;
                     }
-                    Intent intent = new Intent(SplashActivity.this,
-                            LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                } catch (InterruptedException e) {
+                } finally {
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     SplashActivity.this.finish();
-                } catch (InterruptedException e) {
-                    // do nothing
-                } finally {
-                    SplashActivity.this.finish();
                 }
-
             }
         };
         splashTread.start();
-
     }
-
-
-
 }
