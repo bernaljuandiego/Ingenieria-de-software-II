@@ -49,6 +49,9 @@ captures/
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 
+# Google Services (e.g. APIs or Firebase)
+excolnet-firebase-adminsdk-j3i2u-113b9e3d76.json
+
 # Freeline
 freeline.py
 freeline/
