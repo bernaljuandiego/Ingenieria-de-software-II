@@ -15,11 +15,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.io.IOException;
 
@@ -53,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void addUser(){
 
+        final String userCompleteName = usernameTextInput.getText().toString().trim() + " " + lastnameTextInput.getText().toString().trim();
         String emailAdress = emailTextInput.getText().toString().trim();
         String password = passwordTextInput.getText().toString().trim();
 
@@ -63,6 +67,25 @@ public class RegisterActivity extends AppCompatActivity {
                 registration_progressbar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     Toast.makeText(RegisterActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(userCompleteName)
+                            .setPhotoUri(selectedImage)
+                            .build();
+
+                    user.updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(RegisterActivity.this, "User photography updated", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+
                 }else{
                     Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
