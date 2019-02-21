@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +27,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.io.IOException;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import co.edu.konradlorenz.excolnet.R;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -40,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button signInButton;
     private Uri selectedImage;
     private ProgressBar registration_progressbar;
+    private ConstraintLayout register_layout;
 
     private FirebaseAuth firebaseAuth;
 
@@ -60,13 +63,13 @@ public class RegisterActivity extends AppCompatActivity {
         String emailAdress = emailTextInput.getText().toString().trim();
         String password = passwordTextInput.getText().toString().trim();
 
+
         registration_progressbar.setVisibility(View.VISIBLE);
         firebaseAuth.createUserWithEmailAndPassword(emailAdress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 registration_progressbar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
-                    Toast.makeText(RegisterActivity.this, "User Created", Toast.LENGTH_SHORT).show();
 
                     FirebaseUser user = firebaseAuth.getCurrentUser();
 
@@ -80,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        Toast.makeText(RegisterActivity.this, "User photography updated", Toast.LENGTH_SHORT).show();
+                                        Snackbar.make(register_layout, "User Created", Snackbar.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -124,6 +127,7 @@ public class RegisterActivity extends AppCompatActivity {
         selectImageButton = findViewById(R.id.select_image_button);
         signInButton = findViewById(R.id.sign_in_button);
         registration_progressbar = findViewById(R.id.user_registration_progressbar);
+        register_layout = findViewById(R.id.register_layout);
     }
 
     @Override
