@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/gradient_bkg_1"
-    tools:context=".SesionActivity">
+    tools:context=".Activities.SesionActivity">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card"
@@ -62,7 +62,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="goGoogleLoginOut"
-                android:text="Button" />
+                android:text="Cerrar Sesion" />
 
         </LinearLayout>
 

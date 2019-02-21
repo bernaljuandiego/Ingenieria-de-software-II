@@ -1,12 +1,17 @@
-package co.edu.konradlorenz.excolnet;
+package co.edu.konradlorenz.excolnet.Activities;
 
 import java.util.List;
+
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
+
 import java.util.ArrayList;
+
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.content.Loader;
@@ -15,23 +20,28 @@ import android.text.TextUtils;
 import android.database.Cursor;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
+
 import android.widget.LinearLayout;
 import android.widget.ArrayAdapter;
 import android.content.CursorLoader;
 import android.annotation.TargetApi;
+
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.tasks.Task;
+
 import android.content.pm.PackageManager;
 import android.view.View.OnClickListener;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.widget.AutoCompleteTextView;
 import android.view.inputmethod.EditorInfo;
+
 import com.google.firebase.auth.AuthResult;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
@@ -39,11 +49,14 @@ import com.twitter.sdk.android.core.Callback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.facebook.login.widget.LoginButton;
+
 import android.support.design.widget.Snackbar;
-import com.facebook.appevents.AppEventsLogger;
+
 import com.google.firebase.auth.AuthCredential;
+
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
+
 import com.twitter.sdk.android.core.TwitterConfig;
 import com.twitter.sdk.android.core.DefaultLogger;
 import com.twitter.sdk.android.core.TwitterSession;
@@ -54,12 +67,17 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+
 import static android.Manifest.permission.READ_CONTACTS;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
+import co.edu.konradlorenz.excolnet.Fragments.PasswordRecoveryFragment;
+import co.edu.konradlorenz.excolnet.R;
 
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
@@ -70,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private Button googleSignInButton;
     private LinearLayout mProgressView;
     private LoginButton loginFacebookButton;
+    private TextView password_text_link;
     private AutoCompleteTextView mEmailView;
     private CallbackManager mCallbackManager;
     private static final int RC_SIGN_IN = 101;
@@ -140,6 +159,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        twitterSignInComponents();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getLayoutComponents();
@@ -147,8 +167,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         googleFirebaseComponents();
         googleSignInComponents();
         facebookSignInComponents();
-        twitterSignInComponents();
-        createLiseners();
+        createListeners();
     }
 
     //metodos de autocompletado de textedit de correo electronico y pedida de permisos de acceso a contactos--------------------------------------------------------------------------------------------
@@ -221,6 +240,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         googleSignInButton = findViewById(R.id.google_login_button);
         loginFacebookButton = findViewById(R.id.facebook_login_button);
         loginTwitterButton = findViewById(R.id.twitter_login_button);
+        password_text_link = findViewById(R.id.forgot_password_text);
     }
 
     private void googleSignInComponents() {
@@ -232,7 +252,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-    private void twitterSignInComponents(){
+    private void twitterSignInComponents() {
         Twitter.initialize(new TwitterConfig.Builder(this)
                 .logger(new DefaultLogger(Log.DEBUG))
                 .twitterAuthConfig(new TwitterAuthConfig(getString(R.string.CONSUMER_KEY), getString(R.string.CONSUMER_SECRET)))
@@ -242,7 +262,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void facebookSignInComponents() {
         FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
 
         mCallbackManager = CallbackManager.Factory.create();
         loginFacebookButton.setReadPermissions("email", "public_profile");
@@ -259,7 +278,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    private void createLiseners() {
+    private void createListeners() {
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -313,6 +332,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 logInError();
             }
         });
+
+        password_text_link.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new PasswordRecoveryFragment();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.main_layout, fragment);
+                ft.commit();
+            }
+
+        });
     }
 
     public void onClickTwitter(View v) {
@@ -321,11 +351,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public void onClickFacebook(View v) {
+        showProgress(true);
         loginFacebookButton.performClick();
     }
 
     private boolean isPasswordValid(String password) {
-        if(password.length() < 6) {
+        if (password.length() < 6) {
             return false;
         }
         return true;
@@ -414,7 +445,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         credentialFirebaseSingIn(credential);
     }
 
-    private void credentialFirebaseSingIn(AuthCredential credential){
+    private void credentialFirebaseSingIn(AuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -437,7 +468,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void logInSucceed() {
         FirebaseUser user = mAuth.getCurrentUser();
         Intent i = new Intent(LoginActivity.this, SesionActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         showProgress(false);
         startActivity(i);
     }
