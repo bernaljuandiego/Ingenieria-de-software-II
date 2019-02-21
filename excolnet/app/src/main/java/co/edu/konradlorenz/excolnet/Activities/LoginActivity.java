@@ -4,8 +4,8 @@ import java.util.List;
 
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import android.util.Log;
 import android.os.Bundle;
 import android.view.View;
@@ -38,7 +38,7 @@ import com.google.android.gms.tasks.Task;
 import android.content.pm.PackageManager;
 import android.view.View.OnClickListener;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.widget.AutoCompleteTextView;
 import android.view.inputmethod.EditorInfo;
 
@@ -50,11 +50,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.facebook.login.widget.LoginButton;
 
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 
 import com.google.firebase.auth.AuthCredential;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
 import com.twitter.sdk.android.core.TwitterConfig;
@@ -95,6 +95,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private TwitterLoginButton loginTwitterButton;
     private GoogleSignInClient mGoogleSignInClient;
     private static final int REQUEST_READ_CONTACTS = 0;
+    private TextView sign_up_button;
 
     //metodos de autocompletado de textedit de correo electronico y pedida de permisos de acceso a contactos--------------------------------------------------------------------------------------------
     private interface ProfileQuery {
@@ -241,6 +242,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         loginFacebookButton = findViewById(R.id.facebook_login_button);
         loginTwitterButton = findViewById(R.id.twitter_login_button);
         password_text_link = findViewById(R.id.forgot_password_text);
+        sign_up_button = findViewById(R.id.sign_up_button);
     }
 
     private void googleSignInComponents() {
@@ -342,6 +344,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 ft.commit();
             }
 
+        });
+
+        sign_up_button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(newIntent);
+            }
         });
     }
 
