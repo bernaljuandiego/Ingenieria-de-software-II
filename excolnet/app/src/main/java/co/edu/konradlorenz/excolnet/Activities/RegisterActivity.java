@@ -109,7 +109,6 @@ public class RegisterActivity extends AppCompatActivity {
             case PICK_IMAGE_REQUEST:
                 if(resultCode == RESULT_OK){
                     selectedImage = data.getData();
-
                     try{
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                         imageRegisterInput.setImageBitmap(bitmap);
