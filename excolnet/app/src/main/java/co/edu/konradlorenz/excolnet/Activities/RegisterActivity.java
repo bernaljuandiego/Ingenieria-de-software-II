@@ -1,54 +1,16 @@
 package co.edu.konradlorenz.excolnet.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.io.IOException;
 
 import co.edu.konradlorenz.excolnet.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private static final int PICK_IMAGE_REQUEST = 100;
-    private ImageView imageRegisterInput;
-    private TextInputEditText usernameTextInput;
-    private TextInputEditText lastnameTextInput;
-    private TextInputEditText emailTextInput;
-    private TextInputEditText passwordTextInput;
-    private Button selectImageButton;
-    private Button signInButton;
-    private Uri selectedImage;
-    private ProgressBar registration_progressbar;
-
-    private FirebaseAuth firebaseAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        getLayoutComponents();
-        buttonsController();
-
-        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     public void addUser(){
@@ -109,7 +71,6 @@ public class RegisterActivity extends AppCompatActivity {
             case PICK_IMAGE_REQUEST:
                 if(resultCode == RESULT_OK){
                     selectedImage = data.getData();
-
                     try{
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                         imageRegisterInput.setImageBitmap(bitmap);
