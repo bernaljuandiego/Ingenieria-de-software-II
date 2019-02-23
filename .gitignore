@@ -50,7 +50,7 @@ captures/
 .externalNativeBuild
 
 # Google Services (e.g. APIs or Firebase)
-google-services.json
+excolnet-firebase-adminsdk-j3i2u-33d9c177c4.json
 
 # Freeline
 freeline.py
@@ -63,3 +63,4 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+.idea/vcs.xml

@@ -5,4 +5,7 @@
     <color name="colorAccent">#03A9F4</color>
     <color name="fondoSplash">#697CE1</color>
     <color name="fondoLogin">#E8E9EC</color>
+    <color name="transparente_gris">#969C9B9B</color>
+    <color name="inputTextColor">#4dffffff</color>
+
 </resources>
