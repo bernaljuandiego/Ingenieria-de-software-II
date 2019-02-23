@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.view.KeyEvent;
 import android.widget.Button;
@@ -366,14 +368,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     protected boolean isPasswordValid(String password) {
-        if (password.length() < 6) {
-            return false;
-        }
-        return true;
+
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{6,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
     }
 
     protected boolean isEmailValid(String email) {
-        return email.contains("@");
+        if (email.contains("@") &&  email.contains(".")){
+            return true;
+        }else {
+            return false;
+        }
+
     }
 
     //validacion y persistencia de las cuentas en firebase----------------------------------------------------------------------------------------------------------------------------------------------

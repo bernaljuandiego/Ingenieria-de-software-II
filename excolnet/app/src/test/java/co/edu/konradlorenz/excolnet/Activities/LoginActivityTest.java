@@ -22,14 +22,14 @@ public class LoginActivityTest {
 
     //Testing method with punctual security password
     @Test
-    public void validatePunctualPassword() throws  Exception{
-        assertEquals(true , lActivity.isPasswordValid("TestingPr00ves2019*"));
+    public void validateValidPassword() throws  Exception{
+        assertEquals(true , lActivity.isPasswordValid("TestingPr00ves2019#"));
     }
 
     //Testing method with a simple validPassword
     @Test
-    public void validateValidPassword() throws  Exception{
-     assertEquals(true , lActivity.isPasswordValid("testing2013"));
+    public void validateInsecurePassword() throws  Exception{
+     assertEquals(false , lActivity.isPasswordValid("testing2013"));
     }
 
     //Testing method with valid email
