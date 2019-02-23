@@ -365,14 +365,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         loginFacebookButton.performClick();
     }
 
-    private boolean isPasswordValid(String password) {
+    protected boolean isPasswordValid(String password) {
         if (password.length() < 6) {
             return false;
         }
         return true;
     }
 
-    private boolean isEmailValid(String email) {
+    protected boolean isEmailValid(String email) {
         return email.contains("@");
     }
 
