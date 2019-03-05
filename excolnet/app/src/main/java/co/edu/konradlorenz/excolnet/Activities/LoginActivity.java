@@ -488,7 +488,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void logInSucceed() {
         FirebaseUser user = mAuth.getCurrentUser();
-        Intent i = new Intent(LoginActivity.this, SesionActivity.class);
+        Intent i = new Intent(LoginActivity.this, PublicationsActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         showProgress(false);
         startActivity(i);
