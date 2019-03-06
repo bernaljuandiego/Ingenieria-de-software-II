@@ -14,17 +14,14 @@ public class Comentario {
     //Body of comment
     private String textComment;
 
-    //List of interactions of comment
-    private List<Accion> Interacciones;
 
     public Comentario() {
 
     }
 
-    public Comentario(Usuario usuario, String comentario, List<Accion> interacciones) {
+    public Comentario(Usuario usuario, String comentario) {
         this.Usuario = usuario;
         this.textComment = comentario;
-        this.Interacciones = interacciones;
 
     }
     /*
@@ -47,11 +44,4 @@ public class Comentario {
         this.textComment = textComment;
     }
 
-    public List<Accion> getInteracciones() {
-        return Interacciones;
-    }
-
-    public void setInteracciones(List<Accion> interacciones) {
-        Interacciones = interacciones;
-    }
 }
