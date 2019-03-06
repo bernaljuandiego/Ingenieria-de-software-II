@@ -11,19 +11,14 @@ public class Accion {
     //If interaction is like
     private boolean isLike;
 
-    //If interaction is dislike
-    private boolean isDisLike;
-
 
     public Accion() {
 
     }
 
-    public Accion(Usuario usuario, boolean Like, boolean disLike) {
+    public Accion(Usuario usuario, boolean Like) {
         this.Usuario = usuario;
         this.isLike = Like;
-        this.isDisLike = disLike;
-
     }
 
     /*
@@ -45,11 +40,4 @@ public class Accion {
         isLike = like;
     }
 
-    public boolean isDisLike() {
-        return isDisLike;
-    }
-
-    public void setDisLike(boolean disLike) {
-        isDisLike = disLike;
-    }
 }
