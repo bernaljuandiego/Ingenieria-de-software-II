@@ -14,15 +14,17 @@ public class Comentario {
 
     //Body of comment
     private String textComment;
-
+        // Date to post
+        private String fechaComentario;
 
     public Comentario() {
 
     }
 
-    public Comentario(Usuario usuario, String comentario) {
+    public Comentario(Usuario usuario, String comentario, String fechaComentario) {
         this.Usuario = usuario;
         this.textComment = comentario;
+        this.fechaComentario = fechaComentario;
 
     }
     /*
@@ -44,5 +46,10 @@ public class Comentario {
     public void setTextComment(String textComment) {
         this.textComment = textComment;
     }
-
+    public void setFechaComentario( String fechaComentario){
+        this.fechaComentario= fechaComentario;
+    }
+    public String getFechaComentario(){
+        return fechaComentario;
+    }
 }
