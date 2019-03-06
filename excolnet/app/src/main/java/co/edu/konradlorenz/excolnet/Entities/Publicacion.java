@@ -5,6 +5,7 @@ import java.util.List;
 /*
 Entity for manage Publications
 Author: Leonardo Ruiz
+Modificado por Enrique Suarez:6/03/2019
  */
 public class Publicacion {
 
@@ -33,7 +34,6 @@ public class Publicacion {
         this.Comentarios = comentarios;
         this.Interacciones = interacciones;
         this.Imagen = imagen;
-
     }
     /*
     GETTERS & SETTERS

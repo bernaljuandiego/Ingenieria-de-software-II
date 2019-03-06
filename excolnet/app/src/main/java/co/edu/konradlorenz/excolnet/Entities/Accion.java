@@ -3,6 +3,7 @@ package co.edu.konradlorenz.excolnet.Entities;
 /*
 Entity for manage interactions in publications , comments
 Author: Leonardo Ruiz
+Modificado por Enrique Suarez:6/03/2019
  */
 public class Accion {
     //User Owner of the interaction

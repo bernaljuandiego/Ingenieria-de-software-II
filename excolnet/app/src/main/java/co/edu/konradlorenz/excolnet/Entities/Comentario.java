@@ -5,6 +5,7 @@ import java.util.List;
 /*
 Entity for manage Comments
 Author: Leonardo Ruiz
+Modificado por Enrique Suarez:6/03/2019
  */
 public class Comentario {
 
