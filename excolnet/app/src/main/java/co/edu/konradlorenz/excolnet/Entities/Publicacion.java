@@ -21,18 +21,17 @@ public class Publicacion {
     private List<Accion> Interacciones;
 
     //Image of publication (Optional)
-    private Byte[] Imagen;
+    private String Imagen;
 
     public Publicacion() {
 
     }
 
-    public Publicacion(Usuario usuario, String textPub, List<Comentario> comentarios, Byte[] imagen, List<Accion> interacciones) {
+    public Publicacion(Usuario usuario, String textPub, List<Comentario> comentarios, String imagen, List<Accion> interacciones) {
         this.Usuario = usuario;
         this.Texto = textPub;
         this.Comentarios = comentarios;
         this.Interacciones = interacciones;
-        //Parametro opcional (No se como maneje las imagenes firebase)
         this.Imagen = imagen;
 
     }
@@ -72,11 +71,11 @@ public class Publicacion {
         Interacciones = interacciones;
     }
 
-    public Byte[] getImagen() {
+    public String getImagen() {
         return Imagen;
     }
 
-    public void setImagen(Byte[] imagen) {
+    public void setImagen(String imagen) {
         Imagen = imagen;
     }
 }
