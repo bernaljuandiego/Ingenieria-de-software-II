@@ -1,11 +1,12 @@
 package co.edu.konradlorenz.excolnet.Entities;
 /*
 Entity for manage notifications
+Author: Leonardo Ruiz
  */
 public class Notificacion {
 
     //Entity generator of the notification (Can be an user or a group)
-    private Object Generator;
+    private Object generator;
 
     //Body of the notification
     private String textNotification;
@@ -15,7 +16,7 @@ public class Notificacion {
     }
 
     public Notificacion(Object generador , String texto){
-        this.Generator =  generador;
+        this.generator =  generador;
         this.textNotification = texto;
     }
     /*
@@ -23,11 +24,11 @@ public class Notificacion {
      */
 
     public Object getGenerator() {
-        return Generator;
+        return generator;
     }
 
     public void setGenerator(Object generator) {
-        Generator = generator;
+        this.generator = generator;
     }
 
     public String getTextNotification() {

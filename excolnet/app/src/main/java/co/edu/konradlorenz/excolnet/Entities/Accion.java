@@ -7,7 +7,7 @@ Modificado por Enrique Suarez:6/03/2019
  */
 public class Accion {
     //User Owner of the interaction
-    private Usuario Usuario;
+    private Usuario usuario;
 
     //If interaction is like
     private boolean isLike;
@@ -18,7 +18,7 @@ public class Accion {
     }
 
     public Accion(Usuario usuario, boolean Like) {
-        this.Usuario = usuario;
+        this.usuario = usuario;
         this.isLike = Like;
     }
 
@@ -26,11 +26,11 @@ public class Accion {
     GETTERS & SETTERS
      */
     public co.edu.konradlorenz.excolnet.Entities.Usuario getUsuario() {
-        return Usuario;
+        return usuario;
     }
 
     public void setUsuario(co.edu.konradlorenz.excolnet.Entities.Usuario usuario) {
-        Usuario = usuario;
+        this.usuario = usuario;
     }
 
     public boolean isLike() {

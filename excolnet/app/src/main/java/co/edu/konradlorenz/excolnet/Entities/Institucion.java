@@ -13,11 +13,10 @@ public class Institucion {
     private String nombreInstitucion;
 
     //Institution direction
-    private String Direccion;
+    private String direccion;
 
     //For ubicate in a map(Optional)
-    private Ubicacion Ubicacion;
-    
+    private Ubicacion ubicacion;
 
     public Institucion() {
 
@@ -26,8 +25,8 @@ public class Institucion {
     public Institucion(long codInstitucion, String nombre, String direccion, Ubicacion ubicacion) {
         this.codigoInstitucion = codInstitucion;
         this.nombreInstitucion = nombre;
-        this.Direccion = direccion;
-        this.Ubicacion = ubicacion;
+        this.direccion = direccion;
+        this.ubicacion = ubicacion;
     }
 
     public Long getCodigoInstitucion() {
@@ -47,18 +46,18 @@ public class Institucion {
     }
 
     public String getDireccion() {
-        return Direccion;
+        return direccion;
     }
 
     public void setDireccion(String direccion) {
-        Direccion = direccion;
+        this.direccion = direccion;
     }
 
     public Ubicacion getUbicacion() {
-        return Ubicacion;
+        return ubicacion;
     }
 
     public void setUbicacion(Ubicacion ubicacion) {
-        Ubicacion = ubicacion;
+        this.ubicacion = ubicacion;
     }
 }

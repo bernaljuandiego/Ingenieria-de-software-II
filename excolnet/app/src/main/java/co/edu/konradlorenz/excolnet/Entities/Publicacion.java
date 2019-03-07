@@ -37,7 +37,7 @@ public class Publicacion {
         this.comentarios = comentarios;
         this.interacciones = interacciones;
         this.imagen = imagen;
-        this.fechaPublicacion=fechaPublicacion;
+        this.fechaPublicacion = fechaPublicacion;
     }
     /*
     GETTERS & SETTERS
@@ -70,10 +70,12 @@ public class Publicacion {
     public List<Accion> getInteracciones() {
         return interacciones;
     }
-    public void setFechaPublicacion( String fechaPublicacion){
-        this.fechaPublicacion=fechaPublicacion;
+
+    public void setFechaPublicacion(String fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
     }
-    public String getFechaPublicacion(){
+
+    public String getFechaPublicacion() {
         return this.fechaPublicacion;
     }
 

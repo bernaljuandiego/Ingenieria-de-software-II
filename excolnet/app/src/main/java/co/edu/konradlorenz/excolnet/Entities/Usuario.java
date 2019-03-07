@@ -9,7 +9,7 @@ Author: Leonardo Ruiz
  */
 public class Usuario {
     //User identifier
-    private long Codigo;
+    private long codigo;
 
     //User real name
     private String nombre;
@@ -18,13 +18,13 @@ public class Usuario {
     private Pais pais;
 
     //Friends List
-    private List<Usuario> Amigos;
+    private List<Usuario> amigos;
 
     //Groups List
-    private List<Grupo> Grupos;
+    private List<Grupo> grupos;
 
     //Interest`s List
-    private List<Interes> Intereses;
+    private List<Interes> intereses;
 
     //Institution of exchange
     private Institucion institucionIntercambio;
@@ -33,36 +33,37 @@ public class Usuario {
     private Institucion institucionInicial;
 
     //User publications
-    private List<Publicacion> Publicaciones;
+    private List<Publicacion> publicaciones;
 
-    private List<Notificacion> Notificaciones;
+    //User notifications
+    private List<Notificacion> notificaciones;
 
 
     public Usuario() {
     }
 
-    public Usuario(Long codigo, String nombre, Pais pais, List<Usuario> amigos, List<Grupo> Grupos, List<Interes> Intereses, Institucion institucionIntercambio, Institucion institucionInicial, List<Publicacion> publicaciones , List<Notificacion> notifs) {
-        this.Codigo = codigo;
+    public Usuario(Long codigo, String nombre, Pais pais, List<Usuario> amigos, List<Grupo> Grupos, List<Interes> intereses, Institucion institucionIntercambio, Institucion institucionInicial, List<Publicacion> publicaciones , List<Notificacion> notifs) {
+        this.codigo = codigo;
         this.nombre = nombre;
         this.pais = pais;
-        this.Amigos = amigos;
-        this.Grupos = Grupos;
-        this.Intereses = Intereses;
+        this.amigos = amigos;
+        this.grupos = Grupos;
+        this.intereses = intereses;
         this.institucionInicial = institucionInicial;
         this.institucionIntercambio = institucionIntercambio;
-        this.Publicaciones = publicaciones;
-        this.Notificaciones = notifs;
+        this.publicaciones = publicaciones;
+        this.notificaciones = notifs;
     }
 
     /*
     GETTERS & SETTERS
      */
     public long getCodigo() {
-        return Codigo;
+        return codigo;
     }
 
     public void setCodigo(long codigo) {
-        Codigo = codigo;
+        this.codigo = codigo;
     }
 
     public String getNombre() {
@@ -82,27 +83,27 @@ public class Usuario {
     }
 
     public List<Usuario> getAmigos() {
-        return Amigos;
+        return amigos;
     }
 
     public void setAmigos(List<Usuario> amigos) {
-        Amigos = amigos;
+        this.amigos = amigos;
     }
 
     public List<Grupo> getGrupos() {
-        return Grupos;
+        return grupos;
     }
 
     public void setGrupos(List<Grupo> grupos) {
-        Grupos = grupos;
+        this.grupos = grupos;
     }
 
     public List<Interes> getIntereses() {
-        return Intereses;
+        return intereses;
     }
 
     public void setIntereses(List<Interes> intereses) {
-        Intereses = intereses;
+        this.intereses = intereses;
     }
 
     public Institucion getInstitucionIntercambio() {
@@ -122,18 +123,18 @@ public class Usuario {
     }
 
     public List<Publicacion> getPublicaciones() {
-        return Publicaciones;
+        return publicaciones;
     }
 
     public void setPublicaciones(List<Publicacion> publicaciones) {
-        Publicaciones = publicaciones;
+        this.publicaciones = publicaciones;
     }
 
     public List<Notificacion> getNotificaciones() {
-        return Notificaciones;
+        return notificaciones;
     }
 
     public void setNotificaciones(List<Notificacion> notificaciones) {
-        Notificaciones = notificaciones;
+        this.notificaciones = notificaciones;
     }
 }
