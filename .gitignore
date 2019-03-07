@@ -66,3 +66,4 @@ fastlane/readme.md
 .idea/vcs.xml
 Diagramas/Diagrama de Clases/.DS_Store
 .DS_Store
+*.lck
