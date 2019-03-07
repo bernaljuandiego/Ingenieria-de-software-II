@@ -3,6 +3,7 @@ package co.edu.konradlorenz.excolnet.Entities;
 /*
 Entity for manage Institutions
 Author: Leonardo Ruiz
+   Modificado por Enrique Suarez y Bryan Pinzon :6/03/2019
  */
 public class Institucion {
     //Institution Identifier
@@ -16,6 +17,9 @@ public class Institucion {
 
     //For ubicate in a map(Optional)
     private Ubicacion Ubicacion;
+    
+    private List<Usuarios>  
+
 
     public Institucion() {
 

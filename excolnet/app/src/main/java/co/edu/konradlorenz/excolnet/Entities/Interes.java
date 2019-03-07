@@ -3,6 +3,7 @@ package co.edu.konradlorenz.excolnet.Entities;
 /*
 Entity for manage Interest`s
 Author: Leonardo Ruiz
+Modificado por Enrique Suarez y Bryan Pinzon: 6/03/2019
  */
 public class Interes {
 
@@ -13,16 +14,21 @@ public class Interes {
     private String nombreInteres;
 
     //Short Interest Description
-    private String Description;
+    private String description;
+    private String imagenInteres;
+
+    private List<Usuario> listaUsuariosInteresados;
 
     public Interes() {
 
     }
 
-    public Interes(Long codInteres, String nombreInteres, String desc) {
+    public Interes(Long codInteres, String nombreInteres, String desc, String imagenInteres, List<Usuario> listaUsuariosInteresados) {
         this.codigoInteres = codInteres;
         this.nombreInteres = nombreInteres;
-        this.Description = desc;
+        this.description = desc;
+        this.imagenInteres=imagenInteres;
+        this.listaUsuariosInteresados=listaUsuariosInteresados;
     }
 
     /*
@@ -45,10 +51,25 @@ public class Interes {
     }
 
     public String getDescription() {
-        return Description;
+        return this.description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
-}
+    public void setImagenInteres( String imagenInteres){
+        this.imagenInteres= imagenInteres;
+    }
+
+    public String getimagenInteres(){
+        return this.imagenInteres;
+    }
+
+    public void setlistaUsuariosInteresados(List<Usuario> listaUsuariosInteresados){
+        this.listaUsuariosInteresados=listaUsuariosInteresados;
+    }
+    public List<Usuario> getListaUsuariosInteresados(){
+        return this.listaUsuariosInteresados;
+    }
+
+}   

@@ -5,6 +5,7 @@ import java.util.List;
 /*
 Entity for manage Comments
 Author: Leonardo Ruiz
+Modificado por Enrique Suarez:6/03/2019
  */
 public class Comentario {
 
@@ -13,18 +14,17 @@ public class Comentario {
 
     //Body of comment
     private String textComment;
-
-    //List of interactions of comment
-    private List<Accion> Interacciones;
+        // Date to post
+        private String fechaComentario;
 
     public Comentario() {
 
     }
 
-    public Comentario(Usuario usuario, String comentario, List<Accion> interacciones) {
+    public Comentario(Usuario usuario, String comentario, String fechaComentario) {
         this.Usuario = usuario;
         this.textComment = comentario;
-        this.Interacciones = interacciones;
+        this.fechaComentario = fechaComentario;
 
     }
     /*
@@ -46,12 +46,10 @@ public class Comentario {
     public void setTextComment(String textComment) {
         this.textComment = textComment;
     }
-
-    public List<Accion> getInteracciones() {
-        return Interacciones;
+    public void setFechaComentario( String fechaComentario){
+        this.fechaComentario= fechaComentario;
     }
-
-    public void setInteracciones(List<Accion> interacciones) {
-        Interacciones = interacciones;
+    public String getFechaComentario(){
+        return fechaComentario;
     }
 }

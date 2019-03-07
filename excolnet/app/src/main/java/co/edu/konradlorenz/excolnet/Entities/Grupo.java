@@ -4,6 +4,7 @@ import java.util.List;
 
 /*Entity for manage Groups
    Author : Leonardo Ruiz
+   Modificado por Enrique Suarez y Bryan Pinzon :6/03/2019
  */
 public class Grupo {
 
@@ -13,28 +14,26 @@ public class Grupo {
     // Group name
     private String nombreGrupo;
 
-    // Group interest`s
-    private List<Interes> Intereses;
 
     //Group users
     private List<Usuario> Integrantes;
 
+    private List<Publicacion> publicaciones;
 
     public Grupo() {
 
     }
 
-    public Grupo(Long codGrupo, String nombreGrupo, List<Interes> intereses, List<Usuario> integrantes) {
+    public Grupo(Long codGrupo, String nombreGrupo, List<Usuario> integrantes, List<Publicacion> publicaciones) {
         this.CodigoGrupo = codGrupo;
         this.nombreGrupo = nombreGrupo;
-        this.Intereses = intereses;
+        this.publicaciones = publicaciones;
         this.Integrantes = integrantes;
     }
 
     /*
     GETTERS  & SETTERS
      */
-
     public long getCodigoGrupo() {
         return CodigoGrupo;
     }
@@ -51,14 +50,6 @@ public class Grupo {
         this.nombreGrupo = nombreGrupo;
     }
 
-    public List<Interes> getIntereses() {
-        return Intereses;
-    }
-
-    public void setIntereses(List<Interes> intereses) {
-        Intereses = intereses;
-    }
-
     public List<Usuario> getIntegrantes() {
         return Integrantes;
     }
@@ -66,4 +57,13 @@ public class Grupo {
     public void setIntegrantes(List<Usuario> integrantes) {
         Integrantes = integrantes;
     }
+
+    public List<Publicacion> getPublicaciones() {
+        return publicaciones;
+    }
+
+    public void setPublicaciones(List<Publicacion> publicaciones) {
+        this.publicaciones = publicaciones;
+    }
+
 }
