@@ -35,6 +35,7 @@ public class Usuario {
     //User publications
     private List<Publicacion> Publicaciones;
 
+    //User notifications
     private List<Notificacion> Notificaciones;
 
 

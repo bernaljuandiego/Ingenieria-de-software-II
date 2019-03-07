@@ -1,6 +1,7 @@
 package co.edu.konradlorenz.excolnet.Entities;
 /*
 Entity for manage notifications
+Author: Leonardo Ruiz
  */
 public class Notificacion {
 
