@@ -10,7 +10,7 @@ Modificado por Enrique Suarez:6/03/2019
 public class Comentario {
 
     //User owner of comment
-    private Usuario Usuario;
+    private Usuario usuario;
 
     //Body of comment
     private String textComment;
@@ -22,7 +22,7 @@ public class Comentario {
     }
 
     public Comentario(Usuario usuario, String comentario, String fechaComentario) {
-        this.Usuario = usuario;
+        this.usuario = usuario;
         this.textComment = comentario;
         this.fechaComentario = fechaComentario;
 
@@ -32,11 +32,11 @@ public class Comentario {
      */
 
     public co.edu.konradlorenz.excolnet.Entities.Usuario getUsuario() {
-        return Usuario;
+        return usuario;
     }
 
     public void setUsuario(co.edu.konradlorenz.excolnet.Entities.Usuario usuario) {
-        Usuario = usuario;
+        this.usuario = usuario;
     }
 
     public String getTextComment() {

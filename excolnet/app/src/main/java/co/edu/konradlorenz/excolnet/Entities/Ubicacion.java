@@ -7,16 +7,16 @@ Author: Leonardo Ruiz
 public class Ubicacion {
 
     //The institution property of ubication
-    private Institucion Institucion;
+    private Institucion institucion;
 
     //Latitude
-    private Long Latitud;
+    private Long latitud;
 
     //Longitude
-    private Long Longitud;
+    private Long longitud;
 
     //Precisition
-    private Long Precision;
+    private Long precision;
 
     //PlaceId (Provided by google Maps API)
     private Long placeId;
@@ -27,10 +27,10 @@ public class Ubicacion {
     }
 
     public Ubicacion(Institucion institucion, Long latitud, Long longitud, Long precision, Long placeId) {
-        this.Institucion = institucion;
-        this.Latitud = latitud;
-        this.Longitud = longitud;
-        this.Precision = precision;
+        this.institucion = institucion;
+        this.latitud = latitud;
+        this.longitud = longitud;
+        this.precision = precision;
         this.placeId = placeId;
     }
 
@@ -39,35 +39,35 @@ public class Ubicacion {
      */
 
     public Institucion getInstitucion() {
-        return Institucion;
+        return institucion;
     }
 
     public void setInstitucion(Institucion institucion) {
-        Institucion = institucion;
+        this.institucion = institucion;
     }
 
     public Long getLatitud() {
-        return Latitud;
+        return latitud;
     }
 
     public void setLatitud(Long latitud) {
-        Latitud = latitud;
+        this.latitud = latitud;
     }
 
     public Long getLongitud() {
-        return Longitud;
+        return longitud;
     }
 
     public void setLongitud(Long longitud) {
-        Longitud = longitud;
+        this.longitud = longitud;
     }
 
     public Long getPrecision() {
-        return Precision;
+        return precision;
     }
 
     public void setPrecision(Long precision) {
-        Precision = precision;
+        this.precision = precision;
     }
 
     public Long getPlaceId() {

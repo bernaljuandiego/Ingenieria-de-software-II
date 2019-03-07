@@ -9,15 +9,15 @@ import java.util.List;
 public class Grupo {
 
     //Group identifier
-    private long CodigoGrupo;
+    private long codigoGrupo;
 
     // Group name
     private String nombreGrupo;
 
 
     //Group users
-    private List<Usuario> Integrantes;
-
+    private List<Usuario> integrantes;
+    //Group publications
     private List<Publicacion> publicaciones;
 
     public Grupo() {
@@ -25,21 +25,21 @@ public class Grupo {
     }
 
     public Grupo(Long codGrupo, String nombreGrupo, List<Usuario> integrantes, List<Publicacion> publicaciones) {
-        this.CodigoGrupo = codGrupo;
+        this.codigoGrupo = codGrupo;
         this.nombreGrupo = nombreGrupo;
         this.publicaciones = publicaciones;
-        this.Integrantes = integrantes;
+        this.integrantes = integrantes;
     }
 
     /*
     GETTERS  & SETTERS
      */
     public long getCodigoGrupo() {
-        return CodigoGrupo;
+        return codigoGrupo;
     }
 
     public void setCodigoGrupo(long codigoGrupo) {
-        CodigoGrupo = codigoGrupo;
+        this.codigoGrupo = codigoGrupo;
     }
 
     public String getNombreGrupo() {
@@ -51,11 +51,11 @@ public class Grupo {
     }
 
     public List<Usuario> getIntegrantes() {
-        return Integrantes;
+        return integrantes;
     }
 
     public void setIntegrantes(List<Usuario> integrantes) {
-        Integrantes = integrantes;
+        this.integrantes = integrantes;
     }
 
     public List<Publicacion> getPublicaciones() {

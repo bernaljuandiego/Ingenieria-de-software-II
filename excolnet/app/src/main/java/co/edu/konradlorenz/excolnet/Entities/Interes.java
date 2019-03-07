@@ -1,5 +1,7 @@
 package co.edu.konradlorenz.excolnet.Entities;
 
+import java.util.List;
+
 /*
 Entity for manage Interest`s
 Author: Leonardo Ruiz
@@ -15,10 +17,11 @@ public class Interes {
 
     //Short Interest Description
     private String description;
+    /*
     private String imagenInteres;
 
     private List<Usuario> listaUsuariosInteresados;
-
+    */
     public Interes() {
 
     }
@@ -27,8 +30,10 @@ public class Interes {
         this.codigoInteres = codInteres;
         this.nombreInteres = nombreInteres;
         this.description = desc;
+        /*
         this.imagenInteres=imagenInteres;
         this.listaUsuariosInteresados=listaUsuariosInteresados;
+        */
     }
 
     /*
@@ -57,6 +62,7 @@ public class Interes {
     public void setDescription(String description) {
         this.description = description;
     }
+    /*
     public void setImagenInteres( String imagenInteres){
         this.imagenInteres= imagenInteres;
     }
@@ -71,5 +77,6 @@ public class Interes {
     public List<Usuario> getListaUsuariosInteresados(){
         return this.listaUsuariosInteresados;
     }
+    */
 
 }   
