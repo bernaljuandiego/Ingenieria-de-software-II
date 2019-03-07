@@ -52,7 +52,7 @@ public class Publicacion {
     }
 
     public String getTexto() {
-        return Texto;
+        return texto;
     }
 
     public void setTexto(String texto) {

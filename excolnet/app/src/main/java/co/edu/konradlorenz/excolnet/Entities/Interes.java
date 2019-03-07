@@ -1,5 +1,7 @@
 package co.edu.konradlorenz.excolnet.Entities;
 
+import java.util.List;
+
 /*
 Entity for manage Interest`s
 Author: Leonardo Ruiz
