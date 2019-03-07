@@ -18,7 +18,6 @@ public class Institucion {
     //For ubicate in a map(Optional)
     private Ubicacion ubicacion;
 
-
     public Institucion() {
 
     }
