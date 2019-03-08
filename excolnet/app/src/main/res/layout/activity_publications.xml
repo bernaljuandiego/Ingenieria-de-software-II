@@ -63,7 +63,7 @@
         android:backgroundTint="@color/colorAccent"
         app:fabCradleRoundedCornerRadius="30dp"
         app:layout_anchorGravity="end"
-        app:navigationIcon="@drawable/ic_menu" />
+        app:navigationIcon="@drawable/ic_menu"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
