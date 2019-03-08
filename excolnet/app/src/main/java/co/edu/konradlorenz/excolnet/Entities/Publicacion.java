@@ -22,7 +22,7 @@ public class Publicacion {
     private List<Comentario> comentarios;
 
     //List of interactions of publication
-    private List<Accion> interacciones;
+    private List<Usuario> usuariosQueGustan;
 
     //Image of publication
     private String imagen;
@@ -31,6 +31,7 @@ public class Publicacion {
 
     }
 
+<<<<<<< Updated upstream
     public Publicacion(Usuario usuario, String textPub, List<Comentario> comentarios, String imagen, List<Accion> interacciones, String fechaPublicacion) {
         this.usuario = usuario;
         this.texto = textPub;
@@ -44,11 +45,14 @@ public class Publicacion {
      */
 
     public co.edu.konradlorenz.excolnet.Entities.Usuario getUsuario() {
+=======
+    public Usuario getUsuario() {
+>>>>>>> Stashed changes
         return usuario;
     }
 
-    public void setUsuario(co.edu.konradlorenz.excolnet.Entities.Usuario usuario) {
-        usuario = usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public String getTexto() {
@@ -56,7 +60,15 @@ public class Publicacion {
     }
 
     public void setTexto(String texto) {
-        texto = texto;
+        this.texto = texto;
+    }
+
+    public String getFechaPublicacion() {
+        return fechaPublicacion;
+    }
+
+    public void setFechaPublicacion(String fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
     }
 
     public List<Comentario> getComentarios() {
@@ -64,9 +76,10 @@ public class Publicacion {
     }
 
     public void setComentarios(List<Comentario> comentarios) {
-        comentarios = comentarios;
+        this.comentarios = comentarios;
     }
 
+<<<<<<< Updated upstream
     public List<Accion> getInteracciones() {
         return interacciones;
     }
@@ -77,10 +90,14 @@ public class Publicacion {
 
     public String getFechaPublicacion() {
         return this.fechaPublicacion;
+=======
+    public List<Usuario> getUsuariosQueGustan() {
+        return usuariosQueGustan;
+>>>>>>> Stashed changes
     }
 
-    public void setInteracciones(List<Accion> interacciones) {
-        interacciones = interacciones;
+    public void setUsuariosQueGustan(List<Usuario> usuariosQueGustan) {
+        this.usuariosQueGustan = usuariosQueGustan;
     }
 
     public String getImagen() {
@@ -88,6 +105,15 @@ public class Publicacion {
     }
 
     public void setImagen(String imagen) {
-        imagen = imagen;
+        this.imagen = imagen;
+    }
+
+    public Publicacion(Usuario usuario, String texto, String fechaPublicacion, List<Comentario> comentarios, List<Usuario> usuariosQueGustan, String imagen) {
+        this.usuario = usuario;
+        this.texto = texto;
+        this.fechaPublicacion = fechaPublicacion;
+        this.comentarios = comentarios;
+        this.usuariosQueGustan = usuariosQueGustan;
+        this.imagen = imagen;
     }
 }
