@@ -18,7 +18,7 @@
             android:layout_height="48dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
-            app:srcCompat="@drawable/ic_account_circle_black_24dp"/>
+            app:srcCompat="@drawable/ic_account_circle"/>
 
         <TextView
             android:id="@+id/user_name"
@@ -28,8 +28,7 @@
             android:layout_marginTop="16dp"
             android:layout_toLeftOf="@+id/close_image_view"
             android:layout_toRightOf="@+id/profile_image"
-            android:text="Dr. Droid"
-            android:textColor="@android:color/black"
+            android:text="Username"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -42,8 +41,7 @@
             android:layout_marginTop="2dp"
             android:layout_toLeftOf="@+id/close_image_view"
             android:layout_toRightOf="@+id/profile_image"
-            android:text="surender@androhub.com"
-            android:textColor="@android:color/black" />
+            android:text="username@excolnet.com"/>
 
 
         <ImageView
@@ -54,7 +52,7 @@
             android:layout_centerVertical="true"
             android:padding="16dp"
             android:visibility="gone"
-            app:srcCompat="@drawable/ic_close_black_24dp" />
+            app:srcCompat="@drawable/ic_close" />
 
         <View
             android:id="@+id/divider_one"

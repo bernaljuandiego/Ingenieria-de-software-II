@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -67,6 +68,9 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.nav_chat_option:
+                        Toast.makeText(getContext(), "Chat Option Selected", Toast.LENGTH_SHORT);
+                        break;
                 }
                 return false;
             }
