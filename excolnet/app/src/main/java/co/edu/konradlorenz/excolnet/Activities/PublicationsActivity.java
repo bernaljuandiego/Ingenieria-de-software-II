@@ -23,9 +23,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class PublicationsActivity extends AppCompatActivity {
 
@@ -85,7 +88,8 @@ public class PublicationsActivity extends AppCompatActivity {
                 bottomSheetDialogFragment.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
             }
         });
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_publications);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,6 +129,11 @@ public class PublicationsActivity extends AppCompatActivity {
                 Toast.makeText(this, "Notifications Icon Pressed", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.app_bar_profile:
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = mAuth.getCurrentUser();
+                mAuth.signOut();
+                LoginManager.getInstance().logOut();
+
                 Toast.makeText(this, "Profile Icon Pressed", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -211,5 +220,6 @@ public class PublicationsActivity extends AppCompatActivity {
             }
         }
     }
+
 
 
