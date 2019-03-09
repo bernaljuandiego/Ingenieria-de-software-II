@@ -140,7 +140,7 @@ public class NewPuplicationFragment extends Fragment {
 
     private void crearPublicacion() {
         String texto = textPublication.getText().toString();
-        String imagen = "https://firebasestorage.googleapis.com/v0/b/excolnet.appspot.com/o/23c3fb61-2db6-447d-8533-f58dba0eb290?alt=media&token=383f8a67-8186-483b-bf21-d920d73f5148";
+        String imagen = "https://firebasestorage.googleapis.com/v0/b/excolnet.appspot.com/o/23722736_10210496487357606_4915684129591806692_n.jpg?alt=media&token=ca4ebff1-5b8e-44ae-8dc3-95024978ce75";
 
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);

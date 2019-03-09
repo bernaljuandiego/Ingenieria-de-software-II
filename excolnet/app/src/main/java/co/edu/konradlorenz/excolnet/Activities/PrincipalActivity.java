@@ -50,6 +50,11 @@ public class PrincipalActivity extends AppCompatActivity {
         }
 
         BottomAppBar bottomAppBar = findViewById(R.id.app_bar_publications);
+
+        Fragment fragment = new PublicationsFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.contenido, fragment);
+        ft.commit();
     }
 
     public void findLayoutElements() {
@@ -71,14 +76,17 @@ public class PrincipalActivity extends AppCompatActivity {
                         ft.commit();
                         break;
                     case R.id.app_bar_notifications:
+                        Intent intent = new Intent(PrincipalActivity.this, DetailPublicationActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                         Toast.makeText(PrincipalActivity.this, "Notifications Icon Pressed", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.app_bar_profile:
                         mAuth.signOut();
                         LoginManager.getInstance().logOut();
-                        Intent intent = new Intent(PrincipalActivity.this, LoginActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
+                        Intent newintent = new Intent(PrincipalActivity.this, LoginActivity.class);
+                        newintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(newintent);
                         break;
                 }
                 return false;

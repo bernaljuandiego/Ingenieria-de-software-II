@@ -99,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="10"
-                    android:text="TextView" />
+                    android:text="0" />
 
                 <ImageView
                     android:id="@+id/imageView5"
@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="10"
-                    android:text="TextView" />
+                    android:text="0" />
 
                 <ImageView
                     android:id="@+id/imageView6"
@@ -131,7 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="10"
-                    android:text="TextView" />
+                    android:text="0" />
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
