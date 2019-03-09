@@ -74,7 +74,7 @@
                         app:autoSizeTextType="uniform" />
                 </LinearLayout>
             </LinearLayout>
-            <view
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/inputTextColor"/>
@@ -133,7 +133,7 @@
                     android:layout_weight="10"
                     android:text="TextView" />
             </LinearLayout>
-            <view
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/inputTextColor"/>
