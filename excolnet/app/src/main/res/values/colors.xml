@@ -7,5 +7,9 @@
     <color name="fondoLogin">#E8E9EC</color>
     <color name="transparente_gris">#969C9B9B</color>
     <color name="inputTextColor">#4dffffff</color>
+    <color name="publicationsColor">#DADADA</color>
+    <color name="grey">#bfbfbf</color>
+    <color name="white">#fff</color>
+    <color name="black">#000000</color>
 
 </resources>
