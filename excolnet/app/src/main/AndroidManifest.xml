@@ -19,11 +19,11 @@
 
         <activity
             android:name=".Activities.DetailPublicationActivity"
-            android:parentActivityName=".Activities.PublicationsActivity"
+            android:parentActivityName=".Activities.PrincipalActivity"
             android:theme="@style/DetailPublications"/>
 
         <activity
-            android:name=".Activities.PublicationsActivity"
+            android:name=".Activities.PrincipalActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".Activities.SesionActivity" />
         <activity
