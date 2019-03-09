@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_chat_option"
+            android:icon="@drawable/ic_message"
+            android:title="Chat" />
+        <item
+            android:id="@+id/nav_invitation_option"
+            android:icon="@drawable/ic_invitations"
+            android:title="Invitations" />
+        <item
+        android:id="@+id/nav_tourism_agencies_option"
+        android:icon="@drawable/ic_tourism"
+        android:title="Tourism Agencies" />
+        <item
+            android:id="@+id/nav_night_life_option"
+            android:icon="@drawable/ic_night_life"
+            android:title="Night Life" />
+        <item
+            android:id="@+id/nav_living_costs_option"
+            android:icon="@drawable/ic_living_costs"
+            android:title="Living Costs" />
+        <item
+            android:id="@+id/nav_housing_option"
+            android:icon="@drawable/ic_housing"
+            android:title="Housing" />
+        <item
+            android:id="@+id/nav_tourist_sites_option"
+            android:icon="@drawable/ic_tourist_sites"
+            android:title="Tourist Sites" />
+        <item
+            android:id="@+id/nav_settings_option"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+    </group>
+</menu>
