@@ -1,10 +1,11 @@
-            package co.edu.konradlorenz.excolnet;
+            package co.edu.konradlorenz.excolnet.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import co.edu.konradlorenz.excolnet.R;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,4 +108,24 @@ public class PublicationFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

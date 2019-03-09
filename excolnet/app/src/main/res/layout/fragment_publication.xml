@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".PublicationFragment" >
+    tools:context=".Fragments.PublicationFragment" >
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -194,7 +194,7 @@
                     android:layout_width="290dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
-                    android:background="@color/com_facebook_blue"
+                    android:background="@color/colorAccent"
                     android:drawableLeft="@android:drawable/ic_menu_send"
                     android:ellipsize="end"
                     android:padding="10dp" />

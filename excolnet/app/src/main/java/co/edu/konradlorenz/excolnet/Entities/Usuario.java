@@ -55,6 +55,8 @@ public class Usuario {
         this.notificaciones = notifs;
     }
 
+
+
     /*
     GETTERS & SETTERS
      */
