@@ -68,6 +68,15 @@ public class PublicationsActivity extends AppCompatActivity {
         });
     }
 
+    public void toggleFabMode(View view) {
+        //check the fab alignment mode and toggle accordingly
+        if (bottomAppBar.getFabAlignmentMode() == BottomAppBar.FAB_ALIGNMENT_MODE_END) {
+            bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+        } else {
+            bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+        }
+    }
+
 
 
     @Override

@@ -24,6 +24,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:scaleType="center"
+            android:onClick="toggleFabMode"
             android:src="@mipmap/ic_launcher_foreground" />
 
         <androidx.appcompat.widget.Toolbar
