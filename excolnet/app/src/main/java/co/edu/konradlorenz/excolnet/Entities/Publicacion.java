@@ -31,23 +31,7 @@ public class Publicacion {
 
     }
 
-<<<<<<< Updated upstream
-    public Publicacion(Usuario usuario, String textPub, List<Comentario> comentarios, String imagen, List<Accion> interacciones, String fechaPublicacion) {
-        this.usuario = usuario;
-        this.texto = textPub;
-        this.comentarios = comentarios;
-        this.interacciones = interacciones;
-        this.imagen = imagen;
-        this.fechaPublicacion = fechaPublicacion;
-    }
-    /*
-    GETTERS & SETTERS
-     */
-
-    public co.edu.konradlorenz.excolnet.Entities.Usuario getUsuario() {
-=======
     public Usuario getUsuario() {
->>>>>>> Stashed changes
         return usuario;
     }
 
@@ -79,21 +63,8 @@ public class Publicacion {
         this.comentarios = comentarios;
     }
 
-<<<<<<< Updated upstream
-    public List<Accion> getInteracciones() {
-        return interacciones;
-    }
-
-    public void setFechaPublicacion(String fechaPublicacion) {
-        this.fechaPublicacion = fechaPublicacion;
-    }
-
-    public String getFechaPublicacion() {
-        return this.fechaPublicacion;
-=======
     public List<Usuario> getUsuariosQueGustan() {
         return usuariosQueGustan;
->>>>>>> Stashed changes
     }
 
     public void setUsuariosQueGustan(List<Usuario> usuariosQueGustan) {
