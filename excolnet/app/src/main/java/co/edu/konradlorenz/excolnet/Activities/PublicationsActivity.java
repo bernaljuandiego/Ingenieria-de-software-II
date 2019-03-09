@@ -7,12 +7,15 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import co.edu.konradlorenz.excolnet.Fragments.NewPuplicationFragment;
 import co.edu.konradlorenz.excolnet.Fragments.PasswordRecoveryFragment;
+import androidx.appcompat.widget.Toolbar;
+import co.edu.konradlorenz.excolnet.Fragments.BottomSheetNavigationFragment;
 import co.edu.konradlorenz.excolnet.R;
 import co.edu.konradlorenz.excolnet.Utils.Permissions;
 import co.edu.konradlorenz.excolnet.Utils.SectionsPagerAdapter;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,15 +23,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class PublicationsActivity extends AppCompatActivity {
+
+
+    BottomAppBar bottomAppBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publications);
+        findLayoutElements();
+        setUpBottomBar();
 
         if(checkPermissionsArray(Permissions.PERMISSIONS)){
 
@@ -37,9 +49,47 @@ public class PublicationsActivity extends AppCompatActivity {
         }
 
         BottomAppBar bottomAppBar = findViewById(R.id.app_bar_publications);
+
+
+    }
+
+    public void findLayoutElements(){
+        bottomAppBar = findViewById(R.id.app_bar_publications);
+    }
+
+    public void setUpBottomBar(){
+
         setSupportActionBar(bottomAppBar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        bottomAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.app_bar_home:
+                        Toast.makeText(PublicationsActivity.this, "Home Icon Pressed", Toast.LENGTH_SHORT).show();
+                        Intent newIntent = new Intent(PublicationsActivity.this, DetailPublicationActivity.class);
+                        startActivity(newIntent);
+                        break;
+                    case R.id.app_bar_notifications:
+                        Toast.makeText(PublicationsActivity.this, "Notifications Icon Pressed", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.app_bar_profile:
+                        Toast.makeText(PublicationsActivity.this, "Profile Icon Pressed", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return false;
+            }
+        });
+
+        bottomAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BottomSheetDialogFragment bottomSheetDialogFragment = BottomSheetNavigationFragment.newInstance();
+                bottomSheetDialogFragment.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
+            }
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_publications);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +100,17 @@ public class PublicationsActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void toggleFabMode(View view) {
+        //check the fab alignment mode and toggle accordingly
+        if (bottomAppBar.getFabAlignmentMode() == BottomAppBar.FAB_ALIGNMENT_MODE_END) {
+            bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
+        } else {
+            bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);
+        }
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,6 +129,11 @@ public class PublicationsActivity extends AppCompatActivity {
                 Toast.makeText(this, "Notifications Icon Pressed", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.app_bar_profile:
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = mAuth.getCurrentUser();
+                mAuth.signOut();
+                LoginManager.getInstance().logOut();
+
                 Toast.makeText(this, "Profile Icon Pressed", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -154,5 +220,6 @@ public class PublicationsActivity extends AppCompatActivity {
             }
         }
     }
+
 
 
