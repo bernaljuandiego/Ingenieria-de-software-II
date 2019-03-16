@@ -2,6 +2,7 @@ package co.edu.konradlorenz.excolnet.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -46,7 +46,6 @@ public class RegisterActivity extends AppCompatActivity {
     private Uri selectedImage;
     private ProgressBar registration_progressbar;
     private ConstraintLayout register_layout;
-
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -62,25 +61,32 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void addUser(){
 
-        final String userCompleteName = usernameTextInput.getText().toString().trim() + " " + lastnameTextInput.getText().toString().trim();
 
 
 
-
+        usernameTextInput.setError(null);
+        lastnameTextInput.setError(null);
         emailTextInput.setError(null);
         passwordTextInput.setError(null);
 
-
+        String usermame = usernameTextInput.getText().toString().trim();
+        String lastname = lastnameTextInput.getText().toString().trim();
         String emailAdress = emailTextInput.getText().toString().trim();
         String password = passwordTextInput.getText().toString().trim();
+
 
         boolean cancel = false;
         View focusView = null;
 
+        if(TextUtils.isEmpty(usermame)){
+            usernameTextInput.setError(getString(R.string.error_field_required));
+            focusView =  usernameTextInput;
+            cancel = true ;
+        }
 
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            passwordTextInput.setError(getString(R.string.error_invalid_password));
-            focusView = passwordTextInput;
+        if (TextUtils.isEmpty(lastname)){
+            lastnameTextInput.setError(getString(R.string.error_field_required));
+            focusView = lastnameTextInput;
             cancel = true;
         }
 
@@ -89,20 +95,51 @@ public class RegisterActivity extends AppCompatActivity {
             emailTextInput.setError(getString(R.string.error_field_required));
             focusView = emailTextInput;
             cancel = true;
-        } else if (TextUtils.isEmpty(password)) {
-            passwordTextInput.setError(getString(R.string.error_field_required));
-            focusView = passwordTextInput;
-            cancel = true;
         } else if (!isEmailValid(emailAdress)) {
             emailTextInput.setError(getString(R.string.error_invalid_email));
             focusView = emailTextInput;
             cancel = true;
         }
 
+
+        if (TextUtils.isEmpty(password)) {
+            passwordTextInput.setError(getString(R.string.error_field_required));
+            focusView = passwordTextInput;
+            cancel = true;
+        }else if ( !TextUtils.isEmpty(password) && !isPasswordValid(password)){
+            passwordTextInput.setError(getString(R.string.error_invalid_password));
+            focusView = passwordTextInput;
+            cancel = true;
+        }
+
+            //Validate if user upload and image
+            boolean notSelected = false;
+            ImageView defaultImage =  new ImageView(this);
+            defaultImage.setImageResource(R.drawable.select_image);
+
+        if(  imageRegisterInput.getDrawable().getConstantState() ==  defaultImage.getDrawable().getConstantState()){
+            cancel = true;
+            notSelected = true;
+        }
+
+
+
+
+
+
+
+
+
+        final String userCompleteName = usernameTextInput.getText().toString().trim() + " " + lastnameTextInput.getText().toString().trim();
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
-            focusView.requestFocus();
+            if(notSelected){
+                alertNullImage();
+            }else{
+                focusView.requestFocus();
+            }
         }else {
 
             registration_progressbar.setVisibility(View.VISIBLE);
@@ -211,5 +248,17 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
 
+    }
+
+
+    private void alertNullImage(){
+        AlertDialog.Builder builder =  new AlertDialog.Builder(this);
+        builder.setMessage(R.string.image_required)
+                .setTitle("Error");
+
+        builder.setPositiveButton("Ok" , null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

@@ -14,8 +14,5 @@
     <string name="fb_login_protocol_scheme">fb540852029738351</string>
     <string name="CONSUMER_KEY">9G57HWJ6kLzW84hStykoJ0ndW</string>
     <string name="CONSUMER_SECRET">zj1DGiDdM1q7N2dhuk7I8hQTR7l4nV11NzbhRMU5ntd0A81uAT</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="image_required" > User image is required </string>
 </resources>

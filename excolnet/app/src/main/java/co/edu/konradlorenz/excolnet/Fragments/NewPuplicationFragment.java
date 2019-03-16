@@ -1,23 +1,16 @@
 package co.edu.konradlorenz.excolnet.Fragments;
 
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import co.edu.konradlorenz.excolnet.Activities.LoginActivity;
-import co.edu.konradlorenz.excolnet.Activities.PublicationsActivity;
-import co.edu.konradlorenz.excolnet.Activities.SplashActivity;
+import co.edu.konradlorenz.excolnet.Entities.Publicacion;
+import co.edu.konradlorenz.excolnet.Entities.Usuario;
 import co.edu.konradlorenz.excolnet.R;
 import co.edu.konradlorenz.excolnet.Utils.FilePaths;
 import co.edu.konradlorenz.excolnet.Utils.FileSearch;
@@ -38,24 +31,23 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class NewPuplicationFragment extends Fragment {
@@ -74,6 +66,9 @@ public class NewPuplicationFragment extends Fragment {
     private ImageView quitarImagenButton;
     private ImageView userImage;
     private ImageView cerrar;
+    private Button sendButton;
+    private EditText textPublication;
+    private DatabaseReference mDatabase;
 
     //vars
     private ArrayList<String> directories;
@@ -99,6 +94,7 @@ public class NewPuplicationFragment extends Fragment {
     }
 
     private void obtenerElementosLayout() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         userImage = getView().findViewById(R.id.user_image);
@@ -108,30 +104,7 @@ public class NewPuplicationFragment extends Fragment {
         cerrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.out_to_bottom);
-                anim.reset();
-                CardView l = (CardView) getView().findViewById(R.id.card);
-                l.clearAnimation();
-                l.startAnimation(anim);
-                Thread splashTread = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            int waited = 0;
-                            // SplashActivity screen pause time
-                            while (waited < 1000) {
-                                sleep(100);
-                                waited += 100;
-                            }
-                        } catch (InterruptedException e) {
-                            // do nothing
-                        } finally {
-                            closePasswordRecoveryWindow();
-                        }
-
-                    }
-                };
-                splashTread.start();
+                closePasswordRecoveryWindow();
             }
         });
         userName.setText(user.getDisplayName());
@@ -153,14 +126,64 @@ public class NewPuplicationFragment extends Fragment {
                 menuFoto.setVisibility(View.GONE);
             }
         });
+
+        textPublication = getView().findViewById(R.id.text_publication);
+
+        sendButton = getView().findViewById(R.id.send_button);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                crearPublicacion();
+            }
+        });
+    }
+
+    private void crearPublicacion() {
+        String texto = textPublication.getText().toString();
+        String imagen = "https://firebasestorage.googleapis.com/v0/b/excolnet.appspot.com/o/23722736_10210496487357606_4915684129591806692_n.jpg?alt=media&token=ca4ebff1-5b8e-44ae-8dc3-95024978ce75";
+
+        String pattern = "yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String date = simpleDateFormat.format(new Date());
+
+        if(!TextUtils.isEmpty(texto)){
+            Usuario usuario= new Usuario(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getEmail(),mAuth.getCurrentUser().getPhotoUrl().toString(),mAuth.getCurrentUser().getUid());
+            Publicacion nuevaPublicacion = new Publicacion(usuario,texto,date,imagen);
+            mDatabase.child("BaseDatos").child("Publicaciones").child(mDatabase.push().getKey()).setValue(nuevaPublicacion);
+            closePasswordRecoveryWindow();
+        } else {
+            Snackbar.make(getView(), "Error.", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
 
     private void closePasswordRecoveryWindow() {
-        FragmentManager manager = ((Fragment) NewPuplicationFragment.this).getFragmentManager();
-        FragmentTransaction trans = manager.beginTransaction();
-        trans.remove((Fragment) NewPuplicationFragment.this);
-        trans.commit();
+        Animation anim = AnimationUtils.loadAnimation(getActivity(), R.anim.out_to_bottom);
+        anim.reset();
+        CardView l = (CardView) getView().findViewById(R.id.card);
+        l.clearAnimation();
+        l.startAnimation(anim);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                FragmentManager manager = ((Fragment) NewPuplicationFragment.this).getFragmentManager();
+                FragmentTransaction trans = manager.beginTransaction();
+                trans.remove((Fragment) NewPuplicationFragment.this);
+                trans.commit();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
     }
 
     @Nullable
