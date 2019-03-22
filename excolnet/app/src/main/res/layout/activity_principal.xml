@@ -26,19 +26,15 @@
             android:onClick="toggleFabMode"
             android:src="@mipmap/ic_launcher_foreground" />
 
-        <androidx.appcompat.widget.Toolbar
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:padding="10dp">
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@android:drawable/ic_menu_search"
-                android:hint="Search" />
-
-        </androidx.appcompat.widget.Toolbar>
-
+        </androidx.appcompat.widget.SearchView>
 
         <ImageView
             android:layout_width="match_parent"
@@ -56,7 +52,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/app_bar_publications"

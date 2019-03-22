@@ -375,16 +375,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         loginFacebookButton.performClick();
     }
 
-    protected boolean isPasswordValid(String password) {
-
-        Pattern pattern;
-        Matcher matcher;
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!*])(?=\\S+$).{6,}$";
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(password);
-
-        return matcher.matches();
-    }
 
     protected boolean isEmailValid(String email) {
         if (email.contains("@") && email.contains(".")) {
@@ -415,7 +405,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
