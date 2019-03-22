@@ -4,8 +4,10 @@ import java.util.List;
 
 import android.net.Uri;
 import android.os.Build;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.util.Log;
 import android.os.Bundle;
 import android.view.View;
@@ -35,16 +37,23 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.Task;
 
 import android.content.pm.PackageManager;
 import android.view.View.OnClickListener;
 import android.provider.ContactsContract;
+
 import androidx.annotation.NonNull;
+
 import android.widget.AutoCompleteTextView;
 import android.view.inputmethod.EditorInfo;
 
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.Callback;
@@ -57,6 +66,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.LoaderManager.LoaderCallbacks;
 
 import com.twitter.sdk.android.core.TwitterConfig;
@@ -71,13 +81,11 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import static android.Manifest.permission.READ_CONTACTS;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
+import co.edu.konradlorenz.excolnet.Entities.Usuario;
 import co.edu.konradlorenz.excolnet.Fragments.PasswordRecoveryFragment;
 import co.edu.konradlorenz.excolnet.R;
 
@@ -367,21 +375,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         loginFacebookButton.performClick();
     }
 
-    protected boolean isPasswordValid(String password) {
-
-        Pattern pattern;
-        Matcher matcher;
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!*])(?=\\S+$).{6,}$";
-        pattern = Pattern.compile(PASSWORD_PATTERN);
-        matcher = pattern.matcher(password);
-
-        return matcher.matches();
-    }
 
     protected boolean isEmailValid(String email) {
-        if (email.contains("@") &&  email.contains(".")){
+        if (email.contains("@") && email.contains(".")) {
             return true;
-        }else {
+        } else {
             return false;
         }
 
@@ -407,7 +405,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -488,7 +486,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void logInSucceed() {
         FirebaseUser user = mAuth.getCurrentUser();
-        Intent i = new Intent(LoginActivity.this, PublicationsActivity.class);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        Usuario newUser = new Usuario(user.getDisplayName(), user.getEmail(),user.getPhotoUrl().toString(),user.getUid());
+        mDatabase.child("BaseDatos").child("Users").child(user.getUid()).setValue(newUser);
+        Intent i = new Intent(LoginActivity.this, PrincipalActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         showProgress(false);
         startActivity(i);

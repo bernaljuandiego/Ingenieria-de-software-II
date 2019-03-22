@@ -87,4 +87,11 @@ public class Publicacion {
         this.usuariosQueGustan = usuariosQueGustan;
         this.imagen = imagen;
     }
+
+    public Publicacion(Usuario usuario, String texto, String fechaPublicacion, String imagen) {
+        this.usuario = usuario;
+        this.texto = texto;
+        this.fechaPublicacion = fechaPublicacion;
+        this.imagen = imagen;
+    }
 }
