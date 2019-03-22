@@ -73,10 +73,10 @@ public class PrincipalActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.recyclerViewSearch);
         searchView = findViewById(R.id.searchView);
 
-        //Fragment fragment = new PublicationsFragment();
-        //FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //ft.replace(R.id.contenido, fragment);
-        //ft.commit();
+        Fragment fragment = new PublicationsFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.contenido, fragment);
+        ft.commit();
     }
 
     @Override
