@@ -25,7 +25,6 @@
         <activity
             android:name=".Activities.PrincipalActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Activities.SesionActivity" />
         <activity
             android:name=".Activities.RegisterActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
