@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#AAA"
-    tools:context="Activities.ProfileActivity">
+    tools:context=".Activities.ProfileActivity">
 
     <com.github.florent37.diagonallayout.DiagonalLayout
         android:id="@+id/diagonalLayout"
@@ -28,16 +28,16 @@
             android:src="@drawable/diagonallayout_background"/>
 
         <TextView
+            android:id="@+id/name_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hugh Jackman"
-            android:textColor="@android:color/white"
             android:layout_gravity="top|left"
-            android:fontFamily="sans-serif-light"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="70dp"
-            android:textSize="25sp"
-            />
+            android:fontFamily="sans-serif-light"
+            android:text="Hugh Jackman"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -50,25 +50,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ACTOR"
-                android:textColor="@android:color/white"
                 android:layout_gravity="top|left"
-                android:textStyle="bold"
                 android:fontFamily="sans-serif-condensed"
+                android:textColor="@android:color/white"
                 android:textSize="14sp"
-                />
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PRODUCER"
-                android:textStyle="bold"
-                android:textColor="@android:color/white"
                 android:layout_gravity="top|left"
-                android:fontFamily="sans-serif-condensed"
                 android:layout_marginLeft="10dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@android:color/white"
                 android:textSize="14sp"
-                />
+                android:textStyle="bold" />
         </LinearLayout>
 
     </com.github.florent37.diagonallayout.DiagonalLayout>
@@ -110,11 +106,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Followers"
-                android:textColor="#3E3E3E"
-                android:fontFamily="sans-serif-condensed"
                 android:layout_marginLeft="10dp"
-                android:textSize="14sp"/>
+                android:fontFamily="sans-serif-condensed"
+                android:text="Friends"
+                android:textColor="#3E3E3E"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -138,11 +134,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="sans-serif-condensed"
                 android:text="Following"
                 android:textColor="#3E3E3E"
-                android:fontFamily="sans-serif-condensed"
-                android:layout_marginLeft="10dp"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -160,12 +156,13 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/fragmento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="320dp"
         android:layout_marginRight="30dp"
-        android:textColor="#717171"
-        android:text="@string/diagonallayout_description"/>
+        android:text="@string/diagonallayout_description"
+        android:textColor="#717171" />
 
 </RelativeLayout>
