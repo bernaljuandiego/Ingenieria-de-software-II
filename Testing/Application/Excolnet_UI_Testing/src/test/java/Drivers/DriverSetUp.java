@@ -10,14 +10,15 @@ public class DriverSetUp {
 
 
 
-    public  static AndroidDriver initDriver(){
+    public  static AndroidDriver initDriver(String platformName , String deviceName  ){
         AndroidDriver androidDriver  =  null;
         DesiredCapabilities cap = new DesiredCapabilities();
-        cap.setCapability(MobileCapabilityType.PLATFORM_NAME,"android");
-        cap.setCapability(MobileCapabilityType.DEVICE_NAME,"leo");
+        cap.setCapability(MobileCapabilityType.PLATFORM_NAME,platformName);
+        cap.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
         cap.setCapability("autoGrantPermissions", "true");
         cap.setCapability("noReset", true);
         cap.setCapability("fullReset", false);
+        cap.setCapability("autoGrantPermissions" , "true" );
         cap.setCapability(MobileCapabilityType.APP, "C:\\Users\\Asus-Pc\\Desktop\\Konrad\\7th semester\\Software 2\\Ingenieria-de-software-II\\excolnet\\app\\build\\outputs\\apk\\debug\\app-debug.apk");
 
         String serverUrl = "http://127.0.0.1:4723/wd/hub";

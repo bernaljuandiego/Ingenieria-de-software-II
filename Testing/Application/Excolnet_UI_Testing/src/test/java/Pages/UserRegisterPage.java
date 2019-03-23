@@ -16,7 +16,7 @@ public class UserRegisterPage {
 
     public static void main(String[] args){
         //Driver creation
-        AndroidDriver driver = DriverSetUp.initDriver();
+        AndroidDriver driver = DriverSetUp.initDriver("Android" , "Moto E (4) Plus");
         driver.manage().timeouts().implicitlyWait(5 , TimeUnit.SECONDS);
         TouchAction touch =  new TouchAction(driver) ;
 
