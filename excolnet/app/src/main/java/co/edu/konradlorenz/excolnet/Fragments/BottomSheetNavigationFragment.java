@@ -1,85 +1,50 @@
 package co.edu.konradlorenz.excolnet.Fragments;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.ViewGroup;
 import android.widget.Toast;
-
-
-import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import androidx.annotation.NonNull;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.annotation.Nullable;
 import co.edu.konradlorenz.excolnet.Activities.LoginActivity;
-import co.edu.konradlorenz.excolnet.Activities.PrincipalActivity;
-import co.edu.konradlorenz.excolnet.Activities.ProfileActivity;
 import co.edu.konradlorenz.excolnet.R;
 
 
 public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
 
-    public static BottomSheetNavigationFragment newInstance() {
+    private View view;
+    private NavigationView navigationView;
 
-        Bundle args = new Bundle();
 
-        BottomSheetNavigationFragment fragment = new BottomSheetNavigationFragment();
-        fragment.setArguments(args);
-        return fragment;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        view = inflater.inflate(R.layout.bottom_navigation_drawer, container, false);
+
+        findMaterialElements();
+        menuItemsHandler();
+
+        return view;
     }
 
-    //Bottom Sheet Callback
-    private BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
-
-        @Override
-        public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                dismiss();
-            }
-
-        }
-
-        @Override
-        public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-            //check the slide offset and change the visibility of close button
-            if (slideOffset > 0.5) {
-                closeButton.setVisibility(View.VISIBLE);
-            } else {
-                closeButton.setVisibility(View.GONE);
-            }
-        }
-    };
-
-    private ImageView closeButton;
-
-    @SuppressLint("RestrictedApi")
-    @Override
-    public void setupDialog(Dialog dialog, int style) {
-        super.setupDialog(dialog, style);
-        //Get the content View
-        View contentView = View.inflate(getContext(), R.layout.bottom_navigation_drawer, null);
-        dialog.setContentView(contentView);
-
-        NavigationView navigationView = contentView.findViewById(R.id.navigation_view);
-
-        //implement navigation menu item click event
+    private void menuItemsHandler(){
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                switch(menuItem.getItemId()){
                     case R.id.nav_chat_option:
-                        Toast.makeText(getContext(), "Chat Option Selected", Toast.LENGTH_SHORT);
-                        break;
+                        Toast.makeText(getContext(), "Chat Option Selected", Toast.LENGTH_SHORT).show();
+                        return true;
                     case R.id.nav_signout_option:
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
                         mAuth.signOut();
@@ -87,30 +52,15 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                         Intent newintent = new Intent(getContext(), LoginActivity.class);
                         newintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(newintent);
-
-                        break;
+                        return true;
                 }
-                return false;
+
+                return true;
             }
         });
-        closeButton = contentView.findViewById(R.id.close_image_view);
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //dismiss bottom sheet
-                dismiss();
-            }
-        });
+    }
 
-        //Set the coordinator layout behavior
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();
-        CoordinatorLayout.Behavior behavior = params.getBehavior();
-
-        //Set callback
-        if (behavior instanceof BottomSheetBehavior) {
-            ((BottomSheetBehavior) behavior).setBottomSheetCallback(mBottomSheetBehaviorCallback);
-        }
-
-
+    private void findMaterialElements(){
+        navigationView = view.findViewById(R.id.navigation_view);
     }
 }

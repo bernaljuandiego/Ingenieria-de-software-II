@@ -52,7 +52,7 @@
             android:layout_centerVertical="true"
             android:padding="16dp"
             android:visibility="gone"
-            app:srcCompat="@drawable/ic_close" />
+            android:src="@drawable/ic_close" />
 
         <View
             android:id="@+id/divider_one"
