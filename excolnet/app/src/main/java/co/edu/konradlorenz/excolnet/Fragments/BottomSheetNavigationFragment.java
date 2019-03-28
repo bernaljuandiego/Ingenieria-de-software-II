@@ -7,21 +7,31 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import co.edu.konradlorenz.excolnet.Activities.LoginActivity;
 import co.edu.konradlorenz.excolnet.R;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
 
     private View view;
     private NavigationView navigationView;
+    private FirebaseUser user;
+    private ImageView userPicture;
+    private TextView userName;
+    private TextView userEmail;
 
 
     @Nullable
@@ -30,10 +40,30 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
 
         view = inflater.inflate(R.layout.bottom_navigation_drawer, container, false);
 
+        firebaseLoadData();
         findMaterialElements();
+        userInfoSetUpLayout();
         menuItemsHandler();
 
         return view;
+    }
+
+    private void findMaterialElements(){
+        navigationView = view.findViewById(R.id.navigation_view);
+        userPicture = view.findViewById(R.id.profile_image_bottom_sheet);
+        userName = view.findViewById(R.id.user_name_bottom_sheet);
+        userEmail = view.findViewById(R.id.user_email_bottom_sheet);
+    }
+
+    private void userInfoSetUpLayout(){
+        userName.setText(user.getDisplayName());
+        userEmail.setText(user.getEmail());
+        Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(userPicture);
+    }
+
+    private void firebaseLoadData(){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
     }
 
     private void menuItemsHandler(){
@@ -58,9 +88,5 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                 return true;
             }
         });
-    }
-
-    private void findMaterialElements(){
-        navigationView = view.findViewById(R.id.navigation_view);
     }
 }

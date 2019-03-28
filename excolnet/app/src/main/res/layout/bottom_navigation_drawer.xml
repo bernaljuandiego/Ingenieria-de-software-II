@@ -13,35 +13,35 @@
         android:background="#D8D8D8">
 
         <ImageView
-            android:id="@+id/profile_image"
+            android:id="@+id/profile_image_bottom_sheet"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
-            android:src="@drawable/profilepicture"/>
+            android:src="@drawable/select_image"/>
 
         <TextView
-            android:id="@+id/user_name"
+            android:id="@+id/user_name_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="16dp"
             android:layout_toLeftOf="@+id/close_image_view"
-            android:layout_toRightOf="@+id/profile_image"
-            android:text="Juan Diego Bernal Pedroza"
+            android:layout_toRightOf="@+id/profile_image_bottom_sheet"
+            android:text="Username"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/user_email"
+            android:id="@+id/user_email_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/user_name"
+            android:layout_below="@+id/user_name_bottom_sheet"
             android:layout_marginLeft="12dp"
             android:layout_marginTop="2dp"
             android:layout_toLeftOf="@+id/close_image_view"
-            android:layout_toRightOf="@+id/profile_image"
-            android:text="juandiego@excolnet.com"/>
+            android:layout_toRightOf="@+id/profile_image_bottom_sheet"
+            android:text="username@excolnet.com"/>
 
 
         <ImageView
@@ -58,7 +58,7 @@
             android:id="@+id/divider_one"
             android:layout_width="match_parent"
             android:layout_height="2dip"
-            android:layout_below="@+id/user_email"
+            android:layout_below="@+id/user_email_bottom_sheet"
             android:layout_marginTop="15dp"
             android:background="#447e7e7e" />
     </RelativeLayout>
