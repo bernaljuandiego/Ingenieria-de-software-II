@@ -2,6 +2,7 @@ package co.edu.konradlorenz.excolnet.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
+import com.facebook.login.LoginManager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -19,6 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import co.edu.konradlorenz.excolnet.Activities.LoginActivity;
+import co.edu.konradlorenz.excolnet.Activities.PrincipalActivity;
+import co.edu.konradlorenz.excolnet.Activities.ProfileActivity;
 import co.edu.konradlorenz.excolnet.R;
 
 
@@ -74,6 +79,15 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                 switch (item.getItemId()) {
                     case R.id.nav_chat_option:
                         Toast.makeText(getContext(), "Chat Option Selected", Toast.LENGTH_SHORT);
+                        break;
+                    case R.id.nav_signout_option:
+                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                        mAuth.signOut();
+                        LoginManager.getInstance().logOut();
+                        Intent newintent = new Intent(getContext(), LoginActivity.class);
+                        newintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(newintent);
+
                         break;
                 }
                 return false;

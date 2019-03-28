@@ -18,7 +18,7 @@
             android:layout_height="48dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
-            app:srcCompat="@drawable/ic_account_circle"/>
+            android:src="@drawable/profilepicture"/>
 
         <TextView
             android:id="@+id/user_name"
@@ -28,7 +28,7 @@
             android:layout_marginTop="16dp"
             android:layout_toLeftOf="@+id/close_image_view"
             android:layout_toRightOf="@+id/profile_image"
-            android:text="Username"
+            android:text="Juan Diego Bernal Pedroza"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -41,7 +41,7 @@
             android:layout_marginTop="2dp"
             android:layout_toLeftOf="@+id/close_image_view"
             android:layout_toRightOf="@+id/profile_image"
-            android:text="username@excolnet.com"/>
+            android:text="juandiego@excolnet.com"/>
 
 
         <ImageView
