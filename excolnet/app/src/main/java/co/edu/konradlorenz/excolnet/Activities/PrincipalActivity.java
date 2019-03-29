@@ -10,26 +10,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import co.edu.konradlorenz.excolnet.Entities.Usuario;
 import co.edu.konradlorenz.excolnet.Fragments.NewPuplicationFragment;
-import androidx.appcompat.widget.Toolbar;
 import co.edu.konradlorenz.excolnet.Fragments.BottomSheetNavigationFragment;
 import co.edu.konradlorenz.excolnet.Fragments.PublicationsFragment;
 import co.edu.konradlorenz.excolnet.R;
 import co.edu.konradlorenz.excolnet.Utils.AdapterSearch;
 import co.edu.konradlorenz.excolnet.Utils.Permissions;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Debug;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
-import com.facebook.login.LoginManager;
 import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -171,11 +164,8 @@ public class PrincipalActivity extends AppCompatActivity {
                 Toast.makeText(PrincipalActivity.this, "Notifications Icon Pressed", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.app_bar_profile:
-                //mAuth.signOut();
-                //LoginManager.getInstance().logOut();
                 Intent newintent = new Intent(PrincipalActivity.this, ProfileActivity.class);
                 startActivity(newintent);
-                //newintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
             case android.R.id.home:
                 BottomSheetNavigationFragment bottomNavigationDrawerFragment = new BottomSheetNavigationFragment();
@@ -185,7 +175,7 @@ public class PrincipalActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    // Ejecuta el efecto del Bottom App Bar
     public void runFabEffect(View view) {
         //check the fab alignment mode and toggle accordingly
         if (bottomAppBar.getFabAlignmentMode() == BottomAppBar.FAB_ALIGNMENT_MODE_END) {
@@ -195,7 +185,7 @@ public class PrincipalActivity extends AppCompatActivity {
         }
     }
 
-
+    // Llena el Bottom App Bar con los 3 íconos disponibles.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bottom_bar_menu, menu);
