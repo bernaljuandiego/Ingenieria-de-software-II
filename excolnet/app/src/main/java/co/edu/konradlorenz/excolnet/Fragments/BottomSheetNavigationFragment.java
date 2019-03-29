@@ -75,6 +75,27 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                     case R.id.nav_chat_option:
                         Toast.makeText(getContext(), "Chat Option Selected", Toast.LENGTH_SHORT).show();
                         return true;
+                    case R.id.nav_invitation_option:
+                        Toast.makeText(getContext(), "Invitations Option Selected", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.nav_tourism_agencies_option:
+                        Toast.makeText(getContext(), "Tourism agencies Option Selected", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.nav_night_life_option:
+                        Toast.makeText(getContext(), "Night Life Option Selected", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.nav_living_costs_option:
+                        Toast.makeText(getContext(), "Living Costs Option Selected", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.nav_housing_option:
+                        Toast.makeText(getContext(), "Housing Option Selected", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.nav_tourist_sites_option:
+                        Toast.makeText(getContext(), "Tourist Sites Option Selected", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.nav_settings_option:
+                        Toast.makeText(getContext(), "Settings Option Selected", Toast.LENGTH_SHORT).show();
+                        return true;
                     case R.id.nav_signout_option:
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
                         mAuth.signOut();
