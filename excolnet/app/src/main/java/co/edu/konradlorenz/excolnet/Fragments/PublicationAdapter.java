@@ -55,11 +55,15 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
         Glide.with(context).load(items.get(position).getUsuario().getPhotoUrl()).into(holder.fotoUsuario);
         Glide.with(context).load(items.get(position).getImagen()).into(holder.imagenPublicacion);
 
+        //Maneja los clics de cada publicación.
         cardViewPublication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(view.getContext(), DetailPublicationActivity.class);
                 newIntent.putExtra("user", items.get(position).getUsuario());
+                newIntent.putExtra("publication_date", items.get(position).getFechaPublicacion());
+                newIntent.putExtra("publication_description", items.get(position).getTexto());
+                newIntent.putExtra("publication_image", items.get(position).getImagen());
                 view.getContext().startActivity(newIntent);
             }
         });

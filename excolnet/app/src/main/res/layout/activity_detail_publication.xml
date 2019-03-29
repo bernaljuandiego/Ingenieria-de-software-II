@@ -63,12 +63,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/detail_publication_title"
+                        android:id="@+id/detail_publication_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nueva galaxia en el sistema solar"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"
+                        android:text="Publication Date"
+                        android:textSize="14sp"
                         android:layout_gravity="center"
                         android:gravity="center"/>
 
@@ -76,14 +76,16 @@
                         android:id="@+id/detail_publication_image"
                         android:layout_width="200dp"
                         android:layout_height="200dp"
+                        android:layout_marginTop="15dp"
                         android:src="@drawable/test_image"
                         android:layout_gravity="center"/>
 
                     <TextView
+                        android:id="@+id/detail_publication_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Prueba de mas pruebas y así"
+                        android:layout_marginTop="15dp"
+                        android:text="Description"
                         android:inputType="text"
                         android:focusable="false"
                         android:gravity="center"/>

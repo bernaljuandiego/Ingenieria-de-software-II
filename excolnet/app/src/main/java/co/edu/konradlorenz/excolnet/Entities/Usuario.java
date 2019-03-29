@@ -2,7 +2,7 @@ package co.edu.konradlorenz.excolnet.Entities;
 
 
 import java.io.Serializable;
-import java.util.List;
+
 
 /*
 Entity for manage Users

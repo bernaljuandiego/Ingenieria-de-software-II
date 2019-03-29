@@ -18,8 +18,11 @@ public class DetailPublicationActivity extends AppCompatActivity {
 
 
     private TextView userName;
+    private TextView publicationDate;
+    private TextView publicationDescription;
     private Usuario publicationUser;
     private ImageView userImage;
+    private ImageView publicationImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +41,17 @@ public class DetailPublicationActivity extends AppCompatActivity {
         publicationUser = (Usuario) getIntent().getSerializableExtra("user");
         userName.setText(publicationUser.getDisplayName());
         Glide.with(getApplicationContext()).load(publicationUser.getPhotoUrl()).into(userImage);
+        publicationDate.setText(getIntent().getExtras().getString("publication_date"));
+        publicationDescription.setText(getIntent().getExtras().getString("publication_description"));
+        Glide.with(getApplicationContext()).load(getIntent().getExtras().getString("publication_image")).into(publicationImage);
     }
 
     private void findMaterialElements(){
         userName = findViewById(R.id.username_detail_publication);
         userImage = findViewById(R.id.user_image_detail_publication);
+        publicationDate = findViewById(R.id.detail_publication_date);
+        publicationDescription = findViewById(R.id.detail_publication_description);
+        publicationImage = findViewById(R.id.detail_publication_image);
     }
 
 
