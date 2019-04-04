@@ -157,11 +157,11 @@ public class PrincipalActivity extends AppCompatActivity {
                         Toast.makeText(PrincipalActivity.this, "Notifications Icon Pressed", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.app_bar_profile:
-                        mAuth.signOut();
-                        LoginManager.getInstance().logOut();
-                        Intent newintent = new Intent(PrincipalActivity.this, LoginActivity.class);
-                        newintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        //mAuth.signOut();
+                        //LoginManager.getInstance().logOut();
+                        Intent newintent = new Intent(PrincipalActivity.this, ProfileActivity.class);
                         startActivity(newintent);
+                        //newintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         break;
                 }
                 return false;

@@ -23,6 +23,9 @@
             android:theme="@style/DetailPublications"/>
 
         <activity
+            android:name=".Activities.ProfileActivity"
+            android:theme="@style/AppTheme"/>
+        <activity
             android:name=".Activities.PrincipalActivity"
             android:theme="@style/AppTheme" />
         <activity
