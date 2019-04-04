@@ -179,7 +179,9 @@
                         app:boxBackgroundColor="@color/inputTextColor"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
-                        android:hint="Coment">
+                        android:hint="Coment"
+                        android:focusableInTouchMode="true"
+                        android:focusable="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/username_text_input"
