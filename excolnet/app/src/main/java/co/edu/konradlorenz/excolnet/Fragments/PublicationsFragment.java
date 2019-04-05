@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +33,7 @@ public class PublicationsFragment extends Fragment {
     private DatabaseReference baseDeDatos;
     private ArrayList<Publicacion> publicaciones;
     private ValueEventListener lisener;
+    private FirebaseUser user;
 
 
     @Nullable
@@ -44,6 +47,8 @@ public class PublicationsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         baseDeDatos = FirebaseDatabase.getInstance().getReference("BaseDatos");
         publicaciones = new ArrayList<>();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
     }
 
     @Override
@@ -67,7 +72,7 @@ public class PublicationsFragment extends Fragment {
                 items.setLayoutManager(mLayoutManager);
 
                 // specify an adapter (see also next example)
-                mAdapter = new PublicationAdapter(getContext(),publicaciones);
+                mAdapter = new PublicationAdapter(getContext(),publicaciones,user);
                 items.setAdapter(mAdapter);
             }
             @Override
