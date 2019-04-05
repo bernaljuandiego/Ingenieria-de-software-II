@@ -1,13 +1,14 @@
 package co.edu.konradlorenz.excolnet.Entities;
 
 
-import java.util.List;
+import java.io.Serializable;
+
 
 /*
 Entity for manage Users
 Author: Leonardo Ruiz
  */
-public class Usuario {
+public class Usuario implements Serializable {
 
     private String displayName;
     private String email;

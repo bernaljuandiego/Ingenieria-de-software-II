@@ -10,26 +10,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import co.edu.konradlorenz.excolnet.Entities.Usuario;
 import co.edu.konradlorenz.excolnet.Fragments.NewPuplicationFragment;
-import androidx.appcompat.widget.Toolbar;
 import co.edu.konradlorenz.excolnet.Fragments.BottomSheetNavigationFragment;
 import co.edu.konradlorenz.excolnet.Fragments.PublicationsFragment;
 import co.edu.konradlorenz.excolnet.R;
 import co.edu.konradlorenz.excolnet.Utils.AdapterSearch;
 import co.edu.konradlorenz.excolnet.Utils.Permissions;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Debug;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
-import com.facebook.login.LoginManager;
 import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -49,15 +42,20 @@ public class PrincipalActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private ArrayList<Usuario> listaUsuarios;
     private RecyclerView.LayoutManager mLayoutManager;
-    RecyclerView recyclerView;
-    SearchView searchView;
+    private FloatingActionButton fabPublications;
+    private RecyclerView recyclerView;
+    private SearchView searchView;
+    private AdapterSearch adapterSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
-        findLayoutElements();
-        setUpBottomBar();
+
+
+        findMaterialElements();
+        setSupportActionBar(bottomAppBar);
+        fabPublicationsHandler();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -67,10 +65,10 @@ public class PrincipalActivity extends AppCompatActivity {
             verifyPermissions(Permissions.PERMISSIONS);
         }
 
-        BottomAppBar bottomAppBar = findViewById(R.id.app_bar_publications);
+
         //Search
         mDatabase = FirebaseDatabase.getInstance().getReference("BaseDatos");
-        recyclerView=findViewById(R.id.recyclerViewSearch);
+        recyclerView = findViewById(R.id.recyclerViewSearch);
         searchView = findViewById(R.id.searchView);
 
         Fragment fragment = new PublicationsFragment();
@@ -82,14 +80,13 @@ public class PrincipalActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        listaUsuarios = new ArrayList<>();
         DatabaseReference usuarios = mDatabase.child("Users");
 
         usuarios.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    listaUsuarios = new ArrayList<>();
                     for (DataSnapshot dato : dataSnapshot.getChildren()) {
                         listaUsuarios.add(dato.getValue(Usuario.class));
                     }
@@ -102,7 +99,7 @@ public class PrincipalActivity extends AppCompatActivity {
             }
         });
 
-        if(searchView !=null){
+        if (searchView != null) {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
@@ -117,67 +114,29 @@ public class PrincipalActivity extends AppCompatActivity {
             });
         }
     }
-    private void search(String str){
+
+    private void search(String str) {
         ArrayList<Usuario> myListUsuarios = new ArrayList<>();
-        for (Usuario usuarioBuscado: listaUsuarios ) {
-            if (usuarioBuscado.getDisplayName().toLowerCase().contains(str.toLowerCase())){
+        for (Usuario usuarioBuscado : listaUsuarios) {
+            if (usuarioBuscado.getDisplayName().toLowerCase().contains(str.toLowerCase())) {
                 myListUsuarios.add(usuarioBuscado);
             }
         }
-        AdapterSearch adapterSearch = new AdapterSearch(getApplicationContext(),myListUsuarios );
-
+        adapterSearch = new AdapterSearch(getApplicationContext(), myListUsuarios);
         recyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(adapterSearch);
     }
 
-    public void findLayoutElements() {
+    public void findMaterialElements() {
         bottomAppBar = findViewById(R.id.app_bar_publications);
+        fabPublications = findViewById(R.id.fab_publications);
     }
 
-    public void setUpBottomBar() {
-
-        setSupportActionBar(bottomAppBar);
-
-        bottomAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.app_bar_home:
-                        Fragment fragment = new PublicationsFragment();
-                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.contenido, fragment);
-                        ft.commit();
-                        break;
-                    case R.id.app_bar_notifications:
-                        Intent intent = new Intent(PrincipalActivity.this, DetailPublicationActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        Toast.makeText(PrincipalActivity.this, "Notifications Icon Pressed", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.app_bar_profile:
-                        //mAuth.signOut();
-                        //LoginManager.getInstance().logOut();
-                        Intent newintent = new Intent(PrincipalActivity.this, ProfileActivity.class);
-                        startActivity(newintent);
-                        //newintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        break;
-                }
-                return false;
-            }
-        });
-
-        bottomAppBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BottomSheetDialogFragment bottomSheetDialogFragment = BottomSheetNavigationFragment.newInstance();
-                bottomSheetDialogFragment.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
-            }
-        });
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_publications);
-        fab.setOnClickListener(new View.OnClickListener() {
+    //Maneja el botón central flotante de agregar publicaciones.
+    private void fabPublicationsHandler(){
+        fabPublications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Fragment fragment = new NewPuplicationFragment();
@@ -188,7 +147,33 @@ public class PrincipalActivity extends AppCompatActivity {
         });
     }
 
-    public void toggleFabMode(View view) {
+    //Maneja las opciones del menú del Bottom App Bar
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.app_bar_home:
+                Fragment fragment = new PublicationsFragment();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.contenido, fragment);
+                ft.commit();
+                break;
+            case R.id.app_bar_notifications:
+                Toast.makeText(PrincipalActivity.this, "Notifications Icon Pressed", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.app_bar_profile:
+                Intent newintent = new Intent(PrincipalActivity.this, MainActivity.class);
+                startActivity(newintent);
+                break;
+            case android.R.id.home:
+                BottomSheetNavigationFragment bottomNavigationDrawerFragment = new BottomSheetNavigationFragment();
+                bottomNavigationDrawerFragment.show(getSupportFragmentManager(), bottomNavigationDrawerFragment.getTag());
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Ejecuta el efecto del Bottom App Bar
+    public void runFabEffect(View view) {
         //check the fab alignment mode and toggle accordingly
         if (bottomAppBar.getFabAlignmentMode() == BottomAppBar.FAB_ALIGNMENT_MODE_END) {
             bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_CENTER);
@@ -197,7 +182,7 @@ public class PrincipalActivity extends AppCompatActivity {
         }
     }
 
-
+    // Llena el Bottom App Bar con los 3 íconos disponibles.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bottom_bar_menu, menu);
