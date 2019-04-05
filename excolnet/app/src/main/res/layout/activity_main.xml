@@ -30,26 +30,26 @@
                 android:background="@drawable/header"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"/>
+                app:layout_collapseMode="parallax" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_gravity="top"
-                android:fitsSystemWindows="true"/>
+                android:fitsSystemWindows="true" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:layout_gravity="bottom"
-                android:background="@drawable/scrim"/>
+                android:background="@drawable/scrim" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/anim_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -57,14 +57,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/fragmento"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="320dp"
-        android:layout_marginRight="30dp"
-        android:orientation="vertical"></LinearLayout>
+    <include layout="@layout/content_principal" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

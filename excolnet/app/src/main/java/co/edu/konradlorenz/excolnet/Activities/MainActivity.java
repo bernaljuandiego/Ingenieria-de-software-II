@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadPublications(){
         Fragment fragment = new PublicationsFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragmento, fragment);
+        ft.replace(R.id.contenido, fragment);
         ft.commit();
     }
 
