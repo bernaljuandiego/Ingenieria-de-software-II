@@ -15,5 +15,7 @@
     <color name="fabBackground">#D81B60</color>
     <color name="primary_500">#3F51B5</color>
     <color name="black_trans80">#33000000</color>
+    <color name="grey_Icons_publications">#60676F</color>
+    <color name="transparent">#00FFFFFF</color>
 
 </resources>

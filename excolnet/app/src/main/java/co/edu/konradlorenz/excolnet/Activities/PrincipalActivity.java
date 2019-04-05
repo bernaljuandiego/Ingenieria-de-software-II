@@ -111,7 +111,9 @@ public class PrincipalActivity extends AppCompatActivity {
                     search(newText);
                     return true;
                 }
+
             });
+
         }
     }
 
