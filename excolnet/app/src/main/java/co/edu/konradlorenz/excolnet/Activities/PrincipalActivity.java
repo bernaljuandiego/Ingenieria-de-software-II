@@ -161,7 +161,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 Toast.makeText(PrincipalActivity.this, "Notifications Icon Pressed", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.app_bar_profile:
-                Intent newintent = new Intent(PrincipalActivity.this, MainActivity.class);
+                Intent newintent = new Intent(PrincipalActivity.this, ProfileActivity.class);
                 startActivity(newintent);
                 break;
             case android.R.id.home:
