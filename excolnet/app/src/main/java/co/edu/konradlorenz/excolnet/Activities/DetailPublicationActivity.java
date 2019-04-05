@@ -23,18 +23,39 @@ public class DetailPublicationActivity extends AppCompatActivity {
     private Usuario publicationUser;
     private ImageView userImage;
     private ImageView publicationImage;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_publication);
 
-        getSupportActionBar().setTitle("@username");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        firebaseLoadData();
+        setUpToolbar();
         findMaterialElements();
 
         setUpLayoutData();
+    }
+
+    private void setUpToolbar(){
+        String[] firebaseName = user.getDisplayName().split(" ");
+        String userName = "@";
+
+        for(int i = 0; i < firebaseName.length; i++){
+            if (i == (firebaseName.length - 1)) {
+                userName += firebaseName[i];
+            }else{
+                userName += firebaseName[i] + "_";
+            }
+        }
+
+        getSupportActionBar().setTitle(userName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void firebaseLoadData() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
     }
 
     private void setUpLayoutData(){
