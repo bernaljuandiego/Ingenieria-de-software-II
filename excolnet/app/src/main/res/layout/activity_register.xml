@@ -33,7 +33,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/ic_launcher_foreground" />
+                    android:src="@drawable/ic_launcher_foreground" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
