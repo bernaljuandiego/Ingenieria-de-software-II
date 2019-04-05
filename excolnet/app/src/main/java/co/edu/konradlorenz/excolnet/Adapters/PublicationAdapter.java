@@ -1,4 +1,4 @@
-package co.edu.konradlorenz.excolnet.Fragments;
+package co.edu.konradlorenz.excolnet.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import co.edu.konradlorenz.excolnet.Activities.DetailPublicationActivity;
 import co.edu.konradlorenz.excolnet.Entities.Publicacion;

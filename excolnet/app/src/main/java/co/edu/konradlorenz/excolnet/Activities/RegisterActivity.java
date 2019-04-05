@@ -115,7 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
             //Validate if user upload and image
             boolean notSelected = false;
             ImageView defaultImage =  new ImageView(this);
-            defaultImage.setImageResource(R.drawable.select_image);
+            defaultImage.setImageResource(R.drawable.ic_select_photo);
 
         if(  imageRegisterInput.getDrawable().getConstantState() ==  defaultImage.getDrawable().getConstantState()){
             cancel = true;

@@ -159,7 +159,7 @@
                 android:layout_marginRight="30dp"
                 android:gravity="center"
                 android:backgroundTint="@color/inputTextColor"
-                android:background="@drawable/customborder">
+                android:background="@drawable/transparent_border">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -171,7 +171,7 @@
                         android:id="@+id/image_selected_view"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/select_image"/>
+                        android:src="@drawable/ic_select_photo"/>
 
                     <Button
                         android:id="@+id/select_image_button"

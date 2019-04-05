@@ -35,8 +35,9 @@
                         android:id="@+id/user_image_detail_publication"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:src="@drawable/select_image"
-                        android:layout_weight="3"/>
+                        android:layout_weight="3"
+                        android:src="@drawable/ic_profile"
+                        android:tint="@color/common_google_signin_btn_text_dark_focused" />
 
                     <TextView
                         android:id="@+id/username_detail_publication"

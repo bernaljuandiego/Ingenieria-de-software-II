@@ -18,7 +18,7 @@
             android:layout_height="48dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
-            android:src="@drawable/select_image"/>
+            android:src="@drawable/ic_profile" />
 
         <TextView
             android:id="@+id/user_name_bottom_sheet"
