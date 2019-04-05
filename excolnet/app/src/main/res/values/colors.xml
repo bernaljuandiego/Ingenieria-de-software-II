@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#512DA8</color>
-    <color name="colorPrimaryDark">#673AB7</color>
+    <color name="colorPrimaryDark">#689F38</color>
+    <color name="colorPrimary">#8BC34A</color>
     <color name="colorAccent">#03A9F4</color>
     <color name="fondoSplash">#697CE1</color>
     <color name="fondoLogin">#E8E9EC</color>
@@ -15,5 +15,7 @@
     <color name="fabBackground">#D81B60</color>
     <color name="primary_500">#3F51B5</color>
     <color name="black_trans80">#33000000</color>
+    <color name="grey_Icons_publications">#60676F</color>
+    <color name="transparent">#00FFFFFF</color>
 
 </resources>

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import androidx.annotation.NonNull;
@@ -25,10 +26,12 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
     private Context context;
     private LinearLayout cardViewPublication;
     private View view;
+    private FirebaseUser user;
 
-    public PublicationAdapter(Context context, ArrayList<Publicacion> items) {
+    public PublicationAdapter(Context context, ArrayList<Publicacion> items, FirebaseUser user) {
         this.items = items;
         this.context = context;
+        this.user = user;
     }
 
     public ArrayList<Publicacion> getItems() {
@@ -59,6 +62,11 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
                 .fitCenter()//this method help to fit image into center of your ImageView
                 .apply(RequestOptions.circleCropTransform()).into(holder.fotoUsuario);
         Glide.with(context).load(items.get(position).getImagen()).into(holder.imagenPublicacion);
+        Glide.with(context).load(user.getPhotoUrl())
+                .placeholder(R.drawable.ic_profile) //this would be your default image (like default profile or logo etc). it would be loaded at initial time and it will replace with your loaded image once glide successfully load image using url.
+                .error(R.drawable.com_facebook_profile_picture_blank_square)//in case of any glide exception or not able to download then this image will be appear . if you won't mention this error() then nothing to worry placeHolder image would be remain as it is.
+                .fitCenter()//this method help to fit image into center of your ImageView
+                .apply(RequestOptions.circleCropTransform()).into(holder.fotoUsuarioActual);
 
         //Maneja los clics de cada publicación.
         cardViewPublication.setOnClickListener(new View.OnClickListener() {
@@ -87,9 +95,10 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
         TextView fechaPublicacion;
         ImageView imagenPublicacion;
         TextView descripcionPublicacion;
-
+        ImageView fotoUsuarioActual;
         PublicationHolder(View itemView) {
             super(itemView);
+            fotoUsuarioActual = itemView.findViewById(R.id.user_imagen);
             fotoUsuario = itemView.findViewById(R.id.foto_usuario_publicacion);
             nombreUsuario = itemView.findViewById(R.id.usuario_publicacion);
             fechaPublicacion = itemView.findViewById(R.id.fecha_publicacion);

@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:showIn="@layout/adapter_publication">
 
     <View
         android:id="@+id/view3"
@@ -22,7 +24,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
@@ -31,25 +32,25 @@
                 android:id="@+id/like_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_like_selected"
-                android:tint="@color/colorAccent" />
+                android:src="@drawable/ic_like_deselected"
+                android:tint="@color/grey_Icons_publications" />
 
             <ImageView
                 android:id="@+id/share_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_share"
-                android:tint="@color/colorAccent" />
+                android:tint="@color/grey_Icons_publications" />
 
             <ImageView
                 android:id="@+id/user_imagen"
                 android:layout_width="44dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="5dp"
                 android:padding="8dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/com_facebook_profile_picture_blank_square" />
@@ -58,20 +59,18 @@
                 android:id="@+id/comentario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Comment" />
+                android:hint="Comment"
+                android:inputType="textPersonName" />
 
         </LinearLayout>
 
         <Button
             android:id="@+id/boton_comentar"
-            android:layout_width="290dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_weight="5"
-            android:background="@color/colorAccent"
+            android:background="@color/transparent"
             android:drawableLeft="@android:drawable/ic_menu_send"
             android:ellipsize="end" />
 
