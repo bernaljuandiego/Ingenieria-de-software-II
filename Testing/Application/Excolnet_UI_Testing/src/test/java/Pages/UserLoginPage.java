@@ -2,6 +2,7 @@ package Pages;
 
 
 import Drivers.DriverSetUp;
+import com.github.javafaker.Faker;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.By;
@@ -12,18 +13,65 @@ import java.util.concurrent.TimeUnit;
 
 public class UserLoginPage {
 
-     //private AndroidDriver driver = DriverSetUp.initDriver();
 
-    public static void main(String[] args){
-        //Driver creation
-        AndroidDriver driver = DriverSetUp.initDriver();
-        driver.manage().timeouts().implicitlyWait(5 , TimeUnit.SECONDS);
-        MobileElement el1 = (MobileElement) driver.findElementById("co.edu.konradlorenz.excolnet:id/email");
-        el1.sendKeys("juan.paramo@cocomobile.co");
-        MobileElement el2 = (MobileElement) driver.findElementById("co.edu.konradlorenz.excolnet:id/password");
-        el2.sendKeys("Juanp2019*");
-        MobileElement el3 = (MobileElement) driver.findElementById("co.edu.konradlorenz.excolnet:id/email_sign_in_button");
-        el3.click();
+    private AndroidDriver pageDriver;
+
+    private MobileElement emailField;
+
+    private MobileElement passwordField;
+
+    private MobileElement logInButton;
+
+    private MobileElement signUpLabel;
+
+
+    private Faker faker;
+
+
+    public UserLoginPage(AndroidDriver androidDriver) {
+        this.pageDriver = androidDriver;
+        this.faker = Faker.instance();
+        initComponents();
+    }
+
+    public void initComponents() {
+        this.emailField = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/email");
+        this.passwordField = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/password");
+        this.logInButton = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/email_sign_in_button");
+        this.signUpLabel = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/sign_up_button");
+    }
+
+
+    public MobileElement getEmailField() {
+        return emailField;
+    }
+
+    public void typeEmailField() {
+        this.emailField.sendKeys(faker.internet().safeEmailAddress());
+    }
+
+    public MobileElement getPasswordField() {
+        return passwordField;
+    }
+
+    public void typePasswordField() {
+        this.passwordField.sendKeys(faker.internet().password(6, 10, true, true));
+    }
+
+    public MobileElement getLogInButton() {
+        return logInButton;
+    }
+
+    public void clickLogInButton() {
+        this.logInButton.click();
+    }
+
+    public MobileElement getSignUpLabel() {
+        return signUpLabel;
+    }
+
+    public void clickSignUp() {
+        this.signUpLabel.click();
     }
 
 
