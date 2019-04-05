@@ -1,13 +1,10 @@
 package co.edu.konradlorenz.excolnet.Entities;
 
+import java.io.Serializable;
 import java.util.List;
 
-/*
-Entity for manage Publications
-Author: Leonardo Ruiz
-Modificado por Enrique Suarez:6/03/2019
- */
-public class Publicacion {
+
+public class Publicacion implements Serializable {
 
     // User owner of publication
     private Usuario usuario;
