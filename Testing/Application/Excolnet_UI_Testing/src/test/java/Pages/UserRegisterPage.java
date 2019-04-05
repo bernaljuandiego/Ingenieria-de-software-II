@@ -1,6 +1,8 @@
 package Pages;
 
+import Commons.DriverCommons;
 import Drivers.DriverSetUp;
+import com.github.javafaker.Faker;
 import com.google.gson.annotations.Since;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
@@ -9,45 +11,117 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class UserRegisterPage {
 
+    private AndroidDriver pageDriver;
 
-    public static void main(String[] args){
-        //Driver creation
-        AndroidDriver driver = DriverSetUp.initDriver("Android" , "Moto E (4) Plus");
-        driver.manage().timeouts().implicitlyWait(5 , TimeUnit.SECONDS);
-        TouchAction touch =  new TouchAction(driver) ;
+    private MobileElement userNameField;
 
-            System.out.println("intentando hacer swipe");
+    private MobileElement userLastNameField;
 
-        touch.waitAction(new WaitOptions().withDuration(Duration.ofMillis(5000)))
-                .press(new PointOption().withCoordinates(586 , 681))
-                .moveTo(new PointOption().withCoordinates(597 , 291))
+    private MobileElement emailField;
 
-                .perform();
+    private MobileElement passwordField;
 
+    private MobileElement imageButton;
 
+    private MobileElement signInButton;
 
+    private String snackBarReference;
 
-        MobileElement el1 = (MobileElement) driver.findElementById("co.edu.konradlorenz.excolnet:id/sign_up_button");
-        el1.click();
-        MobileElement el2 = (MobileElement) driver.findElementById("co.edu.konradlorenz.excolnet:id/username_text_input");
-        el2.sendKeys("juan");
-        MobileElement el3 = (MobileElement) driver.findElementById("co.edu.konradlorenz.excolnet:id/lastname_text_input");
-        el3.sendKeys("paramo");
-        MobileElement el4 = (MobileElement) driver.findElementById("co.edu.konradlorenz.excolnet:id/email_text_input");
-        el4.sendKeys("juan.paramo@cocomobile.co");
-        MobileElement el5 = (MobileElement) driver.findElementById("co.edu.konradlorenz.excolnet:id/password_text_input");
-        el5.sendKeys("Juanp2019*");
-        MobileElement el6 = (MobileElement) driver.findElementById("co.edu.konradlorenz.excolnet:id/sign_in_button");
-        el6.click();
+    private Faker faker;
 
-        driver.manage().timeouts().implicitlyWait(3 , TimeUnit.SECONDS);
-
-        driver.navigate().back();
+    private List<MobileElement> images;
 
 
+    public UserRegisterPage(AndroidDriver androidDriver) {
+        this.pageDriver = androidDriver;
+        this.faker = Faker.instance();
+        initComponents();
     }
+
+
+    public void initComponents() {
+        this.userNameField = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/username_text_input");
+        this.userLastNameField = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/lastname_text_input");
+        this.emailField = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/email_text_input");
+        this.passwordField = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/password_text_input");
+        this.signInButton = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/sign_in_button");
+        this.imageButton = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/select_image_button");
+        this.snackBarReference = "co.edu.konradlorenz.excolnet:id/snackbar_text";
+    }
+
+
+    public MobileElement getUserNameField() {
+        return userNameField;
+    }
+
+    public void typeuserNameField() {
+        this.userNameField.sendKeys(faker.name().firstName());
+    }
+
+    public MobileElement getUserLastNameField() {
+        return userLastNameField;
+    }
+
+    public void typeUserLastNameField() {
+        this.userLastNameField.sendKeys(faker.name().lastName());
+    }
+
+    public MobileElement getEmailField() {
+        return emailField;
+    }
+
+    public void typeEmailField() {
+        this.emailField.sendKeys(faker.internet().emailAddress());
+    }
+
+    public MobileElement getPasswordField() {
+        return passwordField;
+    }
+
+    public void typePasswordField() {
+        this.passwordField.sendKeys(faker.internet().password(8, 12, true, true));
+    }
+
+    public MobileElement getImageButton() {
+        return imageButton;
+    }
+
+    public void clickImageButton() {
+        this.imageButton.click();
+    }
+
+    public MobileElement getSignInButton() {
+        return signInButton;
+    }
+
+    public void clickSignInButton() {
+        this.signInButton.click();
+    }
+
+
+    public String getSnackBarReference() {
+        return snackBarReference;
+    }
+
+    public void setSnackBarReference(String snackBarReference) {
+        this.snackBarReference = snackBarReference;
+    }
+
+    public List<MobileElement> getImages() {
+        return images;
+    }
+
+    public void getRandomImage() {
+        this.images = (List<MobileElement>) pageDriver.findElementsById("com.android.documentsui:id/icon_thumb");
+        System.out.println("images size : " + images.size());
+        Random random = new Random();
+        this.images.get(random.nextInt(this.images.size())).click();
+    }
+
 }
