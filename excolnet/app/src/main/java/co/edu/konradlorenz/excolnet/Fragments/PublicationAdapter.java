@@ -6,8 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -20,7 +23,7 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
 
     private ArrayList<Publicacion> items;
     private Context context;
-    private CardView cardViewPublication;
+    private LinearLayout cardViewPublication;
     private View view;
 
     public PublicationAdapter(Context context, ArrayList<Publicacion> items) {
@@ -40,9 +43,7 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
     @Override
     public PublicationHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_publication, parent, false);
-
         cardViewPublication = view.findViewById(R.id.publication_card);
-
         PublicationHolder pvh = new PublicationHolder(view);
         return pvh;
     }
@@ -52,7 +53,11 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
         holder.nombreUsuario.setText(items.get(position).getUsuario().getDisplayName());
         holder.fechaPublicacion.setText(items.get(position).getFechaPublicacion());
         holder.descripcionPublicacion.setText(items.get(position).getTexto());
-        Glide.with(context).load(items.get(position).getUsuario().getPhotoUrl()).into(holder.fotoUsuario);
+        Glide.with(context).load(items.get(position).getUsuario().getPhotoUrl())
+                .placeholder(R.drawable.ic_profile) //this would be your default image (like default profile or logo etc). it would be loaded at initial time and it will replace with your loaded image once glide successfully load image using url.
+                .error(R.drawable.com_facebook_profile_picture_blank_square)//in case of any glide exception or not able to download then this image will be appear . if you won't mention this error() then nothing to worry placeHolder image would be remain as it is.
+                .fitCenter()//this method help to fit image into center of your ImageView
+                .apply(RequestOptions.circleCropTransform()).into(holder.fotoUsuario);
         Glide.with(context).load(items.get(position).getImagen()).into(holder.imagenPublicacion);
 
         //Maneja los clics de cada publicación.

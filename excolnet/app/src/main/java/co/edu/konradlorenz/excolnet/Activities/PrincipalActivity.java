@@ -43,13 +43,15 @@ public class PrincipalActivity extends AppCompatActivity {
     private ArrayList<Usuario> listaUsuarios;
     private RecyclerView.LayoutManager mLayoutManager;
     private FloatingActionButton fabPublications;
-    RecyclerView recyclerView;
-    SearchView searchView;
+    private RecyclerView recyclerView;
+    private SearchView searchView;
+    private AdapterSearch adapterSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
+
 
         findMaterialElements();
         setSupportActionBar(bottomAppBar);
@@ -78,14 +80,13 @@ public class PrincipalActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        listaUsuarios = new ArrayList<>();
         DatabaseReference usuarios = mDatabase.child("Users");
 
         usuarios.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    listaUsuarios = new ArrayList<>();
                     for (DataSnapshot dato : dataSnapshot.getChildren()) {
                         listaUsuarios.add(dato.getValue(Usuario.class));
                     }
@@ -121,8 +122,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 myListUsuarios.add(usuarioBuscado);
             }
         }
-        AdapterSearch adapterSearch = new AdapterSearch(getApplicationContext(), myListUsuarios);
-
+        adapterSearch = new AdapterSearch(getApplicationContext(), myListUsuarios);
         recyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);

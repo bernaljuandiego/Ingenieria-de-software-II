@@ -9,7 +9,9 @@
     <color name="inputTextColor">#4dffffff</color>
     <color name="publicationsColor">#DADADA</color>
     <color name="grey">#bfbfbf</color>
-    <color name="black">#000000</color>
+    <color name="white">#fff</color>
+    <color name="black">#DCDE16</color>
+    <color name="divider_grey">#DCDEE2</color>
 
     <color name="fabBackground">#D81B60</color>
     <color name="white">#ffffff</color>
