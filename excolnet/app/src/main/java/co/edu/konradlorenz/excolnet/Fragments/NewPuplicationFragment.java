@@ -142,9 +142,9 @@ public class NewPuplicationFragment extends Fragment {
         String texto = textPublication.getText().toString();
         String imagen = "https://firebasestorage.googleapis.com/v0/b/excolnet.appspot.com/o/23722736_10210496487357606_4915684129591806692_n.jpg?alt=media&token=ca4ebff1-5b8e-44ae-8dc3-95024978ce75";
 
+        String id = mDatabase.push().getKey();
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String id = mDatabase.push().getKey();
         String date = simpleDateFormat.format(new Date());
 
         if(!TextUtils.isEmpty(texto)){

@@ -1,6 +1,7 @@
 package co.edu.konradlorenz.excolnet.Entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,7 +27,8 @@ public class Publicacion implements Serializable {
     private String imagen;
 
     public Publicacion() {
-
+        this.comentarios = new ArrayList<>();
+        this.usuariosQueGustan = new ArrayList<>();
     }
 
     public String getId() {
@@ -86,6 +88,8 @@ public class Publicacion implements Serializable {
     }
 
     public Publicacion(String id,Usuario usuario, String texto, String fechaPublicacion, String imagen) {
+        this.comentarios = new ArrayList<>();
+        this.usuariosQueGustan = new ArrayList<>();
         this.id = id;
         this.usuario = usuario;
         this.texto = texto;
