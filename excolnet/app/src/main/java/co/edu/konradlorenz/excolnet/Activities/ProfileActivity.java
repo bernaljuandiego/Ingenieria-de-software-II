@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +38,8 @@ public class ProfileActivity extends AppCompatActivity {
     private de.hdodenhof.circleimageview.CircleImageView circleImageView;
     private TextView userName;
     private FirebaseUser user;
-    private LinearLayout userTextData;
+    private LinearLayout userDataLinearLayout;
+    private LinearLayout buttonOptionsLinearLayout;
 
 
     @Override
@@ -102,7 +105,8 @@ public class ProfileActivity extends AppCompatActivity {
         collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         circleImageView = findViewById(R.id.circle_image);
         userName = findViewById(R.id.username_text_profile);
-        userTextData = findViewById(R.id.user_text_data);
+        userDataLinearLayout = findViewById(R.id.user_data_linear_layout);
+        buttonOptionsLinearLayout = findViewById(R.id.button_options_linear_layout);
     }
 
     public void setUpAppBarLayout() {
@@ -113,18 +117,20 @@ public class ProfileActivity extends AppCompatActivity {
                 Log.d(ProfileActivity.class.getSimpleName(), "onOffsetChanged: verticalOffset: " + verticalOffset);
 
                 //vertical offset == 0 indicates appBar is fully expanded.
-                if (Math.abs(verticalOffset) > 390) {
+                if (Math.abs(verticalOffset) > 650) {
                     appBarExpanded = false;
                     invalidateOptionsMenu();
                     toolbar.setTitle(user.getDisplayName());
-                    circleImageView.setVisibility(View.GONE);
-                    userTextData.setVisibility(View.GONE);
+                    //circleImageView.setVisibility(View.GONE);
+                    userDataLinearLayout.setVisibility(View.GONE);
+                    buttonOptionsLinearLayout.setVisibility(View.GONE);
                 } else {
                     appBarExpanded = true;
                     invalidateOptionsMenu();
                     toolbar.setTitle("");
-                    circleImageView.setVisibility(View.VISIBLE);
-                    userTextData.setVisibility(View.VISIBLE);
+                    //circleImageView.setVisibility(View.VISIBLE);
+                    userDataLinearLayout.setVisibility(View.VISIBLE);
+                    buttonOptionsLinearLayout.setVisibility(View.VISIBLE);
                 }
             }
         });
