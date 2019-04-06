@@ -14,11 +14,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -43,6 +52,13 @@ public class ProfileActivity extends AppCompatActivity {
     private LinearLayout buttonOptionsLinearLayout;
     private ImageButton addUserButton;
     private Usuario userPrincipalPublication;
+    private DatabaseReference mDatabase;
+    private DatabaseReference mUserDatabase;
+    private String mcurrentState;
+    private DatabaseReference mFriendREqDatabase;
+    private String user_id;
+    private TextView maddUserText;
+
 
 
     @Override
@@ -59,6 +75,7 @@ public class ProfileActivity extends AppCompatActivity {
         setUpAddUser();
 
         activityWhoCalledThis();
+
     }
 
     private void activityWhoCalledThis() {
@@ -79,10 +96,47 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setUpAddUser() {
+
+        user_id =getIntent().getStringExtra("USER_ID");
+        if(user_id==null){
+            user_id=user.getUid();
+            addUserButton.setEnabled(false);
+            addUserButton.setVisibility(View.INVISIBLE);
+            maddUserText.setText("");
+        }
+
+        mUserDatabase = mDatabase.child("Users").child(user_id);
+
+
+
         addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(ProfileActivity.this, "Add User clicked", Toast.LENGTH_SHORT).show();
+                if(mcurrentState.equals("not_friends")){
+
+                mFriendREqDatabase.child(user.getUid()).child(user_id).child("request_type").setValue("sent").addOnCompleteListener(
+                        new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    mFriendREqDatabase.child(user_id).child(user.getUid()).child("request_type")
+                                            .setValue("received").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(ProfileActivity.this, "Request Sent Succesfully", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    });
+
+                                }else{
+                                    Toast.makeText(ProfileActivity.this, "Failed Sending Request", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+
+                );}
+
             }
         });
     }
@@ -91,6 +145,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void firebaseLoadData() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+
     }
 
     private void setUpUserData(String activityCalled) {
@@ -151,6 +206,13 @@ public class ProfileActivity extends AppCompatActivity {
         userDataLinearLayout = findViewById(R.id.user_data_linear_layout);
         buttonOptionsLinearLayout = findViewById(R.id.button_options_linear_layout);
         addUserButton = findViewById(R.id.add_friend_button);
+        maddUserText = findViewById(R.id.add_friend_text);
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("BaseDatos");
+
+
+        mcurrentState="not_friends";
+        mFriendREqDatabase = FirebaseDatabase.getInstance().getReference().child("BaseDatos").child("FriendReq");
+
     }
 
     public void setUpAppBarLayout() {
