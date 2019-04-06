@@ -98,7 +98,7 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
                 //Toast.makeText(view.getContext(), "Profile Clicked", Toast.LENGTH_SHORT).show();
                 Intent newIntent2 = new Intent(view.getContext(), ProfileActivity.class);
                 newIntent2.putExtra("ACTIVITY_CALLED_NAME", ACTIVITY_NAME);
-                newIntent2.putExtra("USER_ID", items.get(position));
+                newIntent2.putExtra("USER_ID", items.get(position).getUsuario().getUid());
                 newIntent2.putExtra("USER", items.get(position).getUsuario());
                 view.getContext().startActivity(newIntent2);
             }

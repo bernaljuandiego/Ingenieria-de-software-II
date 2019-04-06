@@ -122,7 +122,7 @@ public class PrincipalActivity extends AppCompatActivity {
     private void search(String str) {
         ArrayList<Usuario> myListUsuarios = new ArrayList<>();
         for (Usuario usuarioBuscado : listaUsuarios) {
-            if (usuarioBuscado.getDisplayName().toLowerCase().contains(str.toLowerCase())) {
+            if (usuarioBuscado.getDisplayName().toLowerCase().contains(str.toLowerCase())&&!str.equals("")&&!str.equals(" ")) {
                 myListUsuarios.add(usuarioBuscado);
             }
         }
