@@ -1,29 +1,65 @@
 package co.edu.konradlorenz.excolnet.Activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import co.edu.konradlorenz.excolnet.Adapters.CommentAdapter;
+import co.edu.konradlorenz.excolnet.Adapters.PublicationAdapter;
+import co.edu.konradlorenz.excolnet.Entities.Comentario;
+import co.edu.konradlorenz.excolnet.Entities.Publicacion;
 import co.edu.konradlorenz.excolnet.Entities.Usuario;
 import co.edu.konradlorenz.excolnet.R;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class DetailPublicationActivity extends AppCompatActivity {
 
-
+    private RecyclerView items;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    Publicacion publicacion;
+    EditText comentario;
+    Button botonComentar;
     private TextView userName;
     private TextView publicationDate;
     private TextView publicationDescription;
     private Usuario publicationUser;
+    private ImageView actualUserImage;
     private ImageView userImage;
     private ImageView publicationImage;
     private FirebaseUser user;
+    private DatabaseReference mDatabase;
+    private ValueEventListener lisener;
+
+    private TextView cantidadComentarios;
+    private TextView cantidadLikes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +69,10 @@ public class DetailPublicationActivity extends AppCompatActivity {
         firebaseLoadData();
         setUpToolbar();
         findMaterialElements();
+
+
+
+
 
         setUpLayoutData();
     }
@@ -56,23 +96,77 @@ public class DetailPublicationActivity extends AppCompatActivity {
     private void firebaseLoadData() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+        mDatabase = FirebaseDatabase.getInstance().getReference("BaseDatos");
     }
 
     private void setUpLayoutData(){
-        publicationUser = (Usuario) getIntent().getSerializableExtra("user");
-        userName.setText(publicationUser.getDisplayName());
-        Glide.with(getApplicationContext()).load(publicationUser.getPhotoUrl()).into(userImage);
-        publicationDate.setText(getIntent().getExtras().getString("publication_date"));
-        publicationDescription.setText(getIntent().getExtras().getString("publication_description"));
-        Glide.with(getApplicationContext()).load(getIntent().getExtras().getString("publication_image")).into(publicationImage);
+
+
+
+
+        String id = getIntent().getExtras().getString("id");
+        mDatabase.child("Publicaciones").child(id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                publicacion = dataSnapshot.getValue(Publicacion.class);
+                Glide.with(getApplicationContext()).load(publicacion.getUsuario().getPhotoUrl()).into(userImage);
+                Glide.with(getApplicationContext()).load(publicacion.getImagen()).into(publicationImage);
+
+                Glide.with(getApplicationContext()).load(user.getPhotoUrl()).placeholder(R.drawable.ic_profile).error(R.drawable.com_facebook_profile_picture_blank_square).fitCenter().apply(RequestOptions.circleCropTransform()).into(actualUserImage);
+                userName.setText(publicacion.getUsuario().getDisplayName());
+                publicationDate.setText(publicacion.getFechaPublicacion());
+                publicationDescription.setText(publicacion.getTexto());
+                try{
+                    cantidadLikes.setText(publicacion.getUsuariosQueGustan().size()+" Likes");
+                    cantidadComentarios.setText(publicacion.getComentarios().size()+" Comments");
+                } catch (NullPointerException e){ }
+
+                ArrayList<Comentario> comentarios = publicacion.getComentarios();
+                Log.e("holi",""+comentarios.size());
+                items = (RecyclerView) findViewById(R.id.recicler_comentarios);
+                items.setHasFixedSize(true);
+
+                // use a linear layout manager
+                mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                items.setLayoutManager(mLayoutManager);
+
+                // specify an adapter (see also next example)
+                mAdapter = new CommentAdapter(comentarios,getApplicationContext());
+                items.setAdapter(mAdapter);
+
+                botonComentar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(comentario.getText().toString()!= ""){
+                            String pattern = "yyyy-MM-dd";
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                            String date = simpleDateFormat.format(new Date());
+                            Usuario newUser = new Usuario(user.getDisplayName(),user.getEmail(),user.getPhotoUrl().toString(),user.getUid());
+                            publicacion.getComentarios().add(new Comentario(newUser,comentario.getText().toString(),date));
+                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("BaseDatos");
+                            mDatabase.child("Publicaciones").child(publicacion.getId()).setValue(publicacion);
+                        }
+                    }
+                });
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void findMaterialElements(){
-        userName = findViewById(R.id.username_detail_publication);
-        userImage = findViewById(R.id.user_image_detail_publication);
-        publicationDate = findViewById(R.id.detail_publication_date);
-        publicationDescription = findViewById(R.id.detail_publication_description);
-        publicationImage = findViewById(R.id.detail_publication_image);
+        botonComentar = findViewById(R.id.boton_comentar);
+        comentario = findViewById(R.id.comentario);
+        actualUserImage = findViewById(R.id.user_imagen);
+        userName = findViewById(R.id.usuario_publicacion);
+        userImage = findViewById(R.id.foto_usuario_publicacion);
+        publicationDate = findViewById(R.id.fecha_publicacion);
+        publicationDescription = findViewById(R.id.descripcion_publicacion);
+        publicationImage = findViewById(R.id.imagen_publicacion);
+        cantidadComentarios = findViewById(R.id.cantidad_comentarios);
+        cantidadLikes = findViewById(R.id.cantidad_likes);
     }
 
 

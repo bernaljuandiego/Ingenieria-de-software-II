@@ -142,15 +142,15 @@ public class NewPuplicationFragment extends Fragment {
         String texto = textPublication.getText().toString();
         String imagen = "https://firebasestorage.googleapis.com/v0/b/excolnet.appspot.com/o/23722736_10210496487357606_4915684129591806692_n.jpg?alt=media&token=ca4ebff1-5b8e-44ae-8dc3-95024978ce75";
 
+        String id = mDatabase.push().getKey();
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
         String date = simpleDateFormat.format(new Date());
 
         if(!TextUtils.isEmpty(texto)){
             Usuario usuario= new Usuario(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getEmail(),mAuth.getCurrentUser().getPhotoUrl().toString(),mAuth.getCurrentUser().getUid());
-            Publicacion nuevaPublicacion = new Publicacion(usuario,texto,date,imagen);
-            mDatabase.child("BaseDatos").child("Publicaciones").child(mDatabase.push().getKey()).setValue(nuevaPublicacion);
+            Publicacion nuevaPublicacion = new Publicacion(id,usuario,texto,date,imagen);
+            mDatabase.child("BaseDatos").child("Publicaciones").child(id).setValue(nuevaPublicacion);
             closePasswordRecoveryWindow();
         } else {
             Snackbar.make(getView(), "Error.", Snackbar.LENGTH_SHORT).show();

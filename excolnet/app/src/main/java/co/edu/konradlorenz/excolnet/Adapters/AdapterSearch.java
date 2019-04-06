@@ -1,4 +1,4 @@
-package co.edu.konradlorenz.excolnet.Utils;
+package co.edu.konradlorenz.excolnet.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

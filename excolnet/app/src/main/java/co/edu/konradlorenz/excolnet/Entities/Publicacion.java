@@ -1,11 +1,13 @@
 package co.edu.konradlorenz.excolnet.Entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Publicacion implements Serializable {
 
+    private String id;
     // User owner of publication
     private Usuario usuario;
 
@@ -16,7 +18,7 @@ public class Publicacion implements Serializable {
     private String fechaPublicacion;
 
     // Comments list
-    private List<Comentario> comentarios;
+    private ArrayList<Comentario> comentarios;
 
     //List of interactions of publication
     private List<Usuario> usuariosQueGustan;
@@ -25,7 +27,16 @@ public class Publicacion implements Serializable {
     private String imagen;
 
     public Publicacion() {
+        this.comentarios = new ArrayList<>();
+        this.usuariosQueGustan = new ArrayList<>();
+    }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Usuario getUsuario() {
@@ -52,11 +63,11 @@ public class Publicacion implements Serializable {
         this.fechaPublicacion = fechaPublicacion;
     }
 
-    public List<Comentario> getComentarios() {
+    public ArrayList<Comentario> getComentarios() {
         return comentarios;
     }
 
-    public void setComentarios(List<Comentario> comentarios) {
+    public void setComentarios(ArrayList<Comentario> comentarios) {
         this.comentarios = comentarios;
     }
 
@@ -76,16 +87,10 @@ public class Publicacion implements Serializable {
         this.imagen = imagen;
     }
 
-    public Publicacion(Usuario usuario, String texto, String fechaPublicacion, List<Comentario> comentarios, List<Usuario> usuariosQueGustan, String imagen) {
-        this.usuario = usuario;
-        this.texto = texto;
-        this.fechaPublicacion = fechaPublicacion;
-        this.comentarios = comentarios;
-        this.usuariosQueGustan = usuariosQueGustan;
-        this.imagen = imagen;
-    }
-
-    public Publicacion(Usuario usuario, String texto, String fechaPublicacion, String imagen) {
+    public Publicacion(String id,Usuario usuario, String texto, String fechaPublicacion, String imagen) {
+        this.comentarios = new ArrayList<>();
+        this.usuariosQueGustan = new ArrayList<>();
+        this.id = id;
         this.usuario = usuario;
         this.texto = texto;
         this.fechaPublicacion = fechaPublicacion;
