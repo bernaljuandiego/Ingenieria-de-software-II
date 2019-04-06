@@ -1,6 +1,7 @@
 package co.edu.konradlorenz.excolnet.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
 
 public class PrincipalActivity extends AppCompatActivity {
 
-
+    private String ACTIVITY_NAME = "PrincipalActivity";
     private static final int VERIFY_PERMISSIONS_REQUEST = 1;
     private BottomAppBar bottomAppBar;
     private FirebaseAuth mAuth;
@@ -75,6 +76,7 @@ public class PrincipalActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.contenido, fragment);
         ft.commit();
+
     }
 
     @Override
@@ -164,6 +166,7 @@ public class PrincipalActivity extends AppCompatActivity {
                 break;
             case R.id.app_bar_profile:
                 Intent newintent = new Intent(PrincipalActivity.this, ProfileActivity.class);
+                newintent.putExtra("ACTIVITY_CALLED_NAME", ACTIVITY_NAME);
                 startActivity(newintent);
                 break;
             case android.R.id.home:

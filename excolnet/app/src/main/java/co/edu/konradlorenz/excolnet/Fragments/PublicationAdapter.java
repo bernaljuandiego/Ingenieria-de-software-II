@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import co.edu.konradlorenz.excolnet.Activities.DetailPublicationActivity;
+import co.edu.konradlorenz.excolnet.Activities.ProfileActivity;
 import co.edu.konradlorenz.excolnet.Entities.Publicacion;
 import co.edu.konradlorenz.excolnet.R;
 
@@ -25,6 +28,8 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
     private ArrayList<Publicacion> items;
     private Context context;
     private LinearLayout cardViewPublication;
+    private LinearLayout userPublicationClick;
+    private String ACTIVITY_NAME = "PublicationsAdapter";
     private View view;
     private FirebaseUser user;
 
@@ -46,9 +51,15 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
     @Override
     public PublicationHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_publication, parent, false);
-        cardViewPublication = view.findViewById(R.id.publication_card);
+        findMaterialElements();
         PublicationHolder pvh = new PublicationHolder(view);
         return pvh;
+
+    }
+
+    private void findMaterialElements() {
+        cardViewPublication = view.findViewById(R.id.publication_card);
+        userPublicationClick = view.findViewById(R.id.user_publication_click);
     }
 
     @Override
@@ -78,6 +89,18 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
                 newIntent.putExtra("publication_description", items.get(position).getTexto());
                 newIntent.putExtra("publication_image", items.get(position).getImagen());
                 view.getContext().startActivity(newIntent);
+            }
+        });
+
+        userPublicationClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(view.getContext(), "Profile Clicked", Toast.LENGTH_SHORT).show();
+                Intent newIntent2 = new Intent(view.getContext(), ProfileActivity.class);
+                newIntent2.putExtra("ACTIVITY_CALLED_NAME", ACTIVITY_NAME);
+                newIntent2.putExtra("USER_ID", items.get(position));
+                newIntent2.putExtra("USER", items.get(position).getUsuario());
+                view.getContext().startActivity(newIntent2);
             }
         });
     }
