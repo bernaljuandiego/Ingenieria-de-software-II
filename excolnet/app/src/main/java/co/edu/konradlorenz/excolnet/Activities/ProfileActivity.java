@@ -1,5 +1,6 @@
 package co.edu.konradlorenz.excolnet.Activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.palette.graphics.Palette;
+import co.edu.konradlorenz.excolnet.Entities.Usuario;
 import co.edu.konradlorenz.excolnet.Fragments.PublicationsFragment;
 import co.edu.konradlorenz.excolnet.R;
 
@@ -36,7 +39,10 @@ public class ProfileActivity extends AppCompatActivity {
     private de.hdodenhof.circleimageview.CircleImageView circleImageView;
     private TextView userName;
     private FirebaseUser user;
-    private LinearLayout userTextData;
+    private LinearLayout userDataLinearLayout;
+    private LinearLayout buttonOptionsLinearLayout;
+    private ImageButton addUserButton;
+    private Usuario userPrincipalPublication;
 
 
     @Override
@@ -50,18 +56,58 @@ public class ProfileActivity extends AppCompatActivity {
         setUpToolbarLayout();
         setUpHeaderColor();
         setUpAppBarLayout();
-        setUpUserData();
-        loadPublications();
+        setUpAddUser();
+
+        activityWhoCalledThis();
     }
+
+    private void activityWhoCalledThis() {
+
+        String activityCalled = getIntent().getStringExtra("ACTIVITY_CALLED_NAME");
+
+        switch (activityCalled){
+            case "PrincipalActivity":
+                setUpUserData(activityCalled);
+                loadPublications();
+                break;
+            case "PublicationsAdapter":
+                userPrincipalPublication = (Usuario) getIntent().getSerializableExtra("USER");
+                setUpUserData(activityCalled);
+                break;
+        }
+
+    }
+
+    private void setUpAddUser() {
+        addUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ProfileActivity.this, "Add User clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void firebaseLoadData() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
     }
 
-    private void setUpUserData() {
-        Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(circleImageView);
-        userName.setText(user.getDisplayName());
+    private void setUpUserData(String activityCalled) {
+
+        switch(activityCalled){
+            case "PrincipalActivity":
+                Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(circleImageView);
+                userName.setText(user.getDisplayName());
+                break;
+
+            case "PublicationsAdapter":
+                Glide.with(getApplicationContext()).load(userPrincipalPublication.getPhotoUrl()).into(circleImageView);
+                userName.setText(userPrincipalPublication.getDisplayName());
+                break;
+        }
+
+
     }
 
     private void setUpToolbarLayout() {
@@ -102,7 +148,9 @@ public class ProfileActivity extends AppCompatActivity {
         collapsingToolbar = findViewById(R.id.collapsing_toolbar);
         circleImageView = findViewById(R.id.circle_image);
         userName = findViewById(R.id.username_text_profile);
-        userTextData = findViewById(R.id.user_text_data);
+        userDataLinearLayout = findViewById(R.id.user_data_linear_layout);
+        buttonOptionsLinearLayout = findViewById(R.id.button_options_linear_layout);
+        addUserButton = findViewById(R.id.add_friend_button);
     }
 
     public void setUpAppBarLayout() {
@@ -113,18 +161,20 @@ public class ProfileActivity extends AppCompatActivity {
                 Log.d(ProfileActivity.class.getSimpleName(), "onOffsetChanged: verticalOffset: " + verticalOffset);
 
                 //vertical offset == 0 indicates appBar is fully expanded.
-                if (Math.abs(verticalOffset) > 390) {
+                if (Math.abs(verticalOffset) > 650) {
                     appBarExpanded = false;
                     invalidateOptionsMenu();
                     toolbar.setTitle(user.getDisplayName());
-                    circleImageView.setVisibility(View.GONE);
-                    userTextData.setVisibility(View.GONE);
+                    //circleImageView.setVisibility(View.GONE);
+                    userDataLinearLayout.setVisibility(View.GONE);
+                    buttonOptionsLinearLayout.setVisibility(View.GONE);
                 } else {
                     appBarExpanded = true;
                     invalidateOptionsMenu();
                     toolbar.setTitle("");
-                    circleImageView.setVisibility(View.VISIBLE);
-                    userTextData.setVisibility(View.VISIBLE);
+                    //circleImageView.setVisibility(View.VISIBLE);
+                    userDataLinearLayout.setVisibility(View.VISIBLE);
+                    buttonOptionsLinearLayout.setVisibility(View.VISIBLE);
                 }
             }
         });
