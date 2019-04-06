@@ -55,27 +55,16 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
         holder.nombreUsuario.setText(items.get(position).getUsuario().getDisplayName());
         holder.fechaPublicacion.setText(items.get(position).getFechaPublicacion());
         holder.descripcionPublicacion.setText(items.get(position).getTexto());
-        Glide.with(context).load(items.get(position).getUsuario().getPhotoUrl())
-                .placeholder(R.drawable.ic_profile) //this would be your default image (like default profile or logo etc). it would be loaded at initial time and it will replace with your loaded image once glide successfully load image using url.
-                .error(R.drawable.com_facebook_profile_picture_blank_square)//in case of any glide exception or not able to download then this image will be appear . if you won't mention this error() then nothing to worry placeHolder image would be remain as it is.
-                .fitCenter()//this method help to fit image into center of your ImageView
-                .apply(RequestOptions.circleCropTransform()).into(holder.fotoUsuario);
-        Glide.with(context).load(items.get(position).getImagen()).into(holder.imagenPublicacion);
-        Glide.with(context).load(user.getPhotoUrl())
-                .placeholder(R.drawable.ic_profile) //this would be your default image (like default profile or logo etc). it would be loaded at initial time and it will replace with your loaded image once glide successfully load image using url.
-                .error(R.drawable.com_facebook_profile_picture_blank_square)//in case of any glide exception or not able to download then this image will be appear . if you won't mention this error() then nothing to worry placeHolder image would be remain as it is.
-                .fitCenter()//this method help to fit image into center of your ImageView
-                .apply(RequestOptions.circleCropTransform()).into(holder.fotoUsuarioActual);
 
-        //Maneja los clics de cada publicación.
+        Glide.with(context).load(items.get(position).getUsuario().getPhotoUrl()).placeholder(R.drawable.ic_profile).error(R.drawable.com_facebook_profile_picture_blank_square).fitCenter().apply(RequestOptions.circleCropTransform()).into(holder.fotoUsuario);
+        Glide.with(context).load(items.get(position).getImagen()).into(holder.imagenPublicacion);
+        Glide.with(context).load(user.getPhotoUrl()).placeholder(R.drawable.ic_profile).error(R.drawable.com_facebook_profile_picture_blank_square).fitCenter().apply(RequestOptions.circleCropTransform()).into(holder.fotoUsuarioActual);
+
         cardViewPublication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(view.getContext(), DetailPublicationActivity.class);
-                newIntent.putExtra("user", items.get(position).getUsuario());
-                newIntent.putExtra("publication_date", items.get(position).getFechaPublicacion());
-                newIntent.putExtra("publication_description", items.get(position).getTexto());
-                newIntent.putExtra("publication_image", items.get(position).getImagen());
+                newIntent.putExtra("id",items.get(position).getId());
                 view.getContext().startActivity(newIntent);
             }
         });

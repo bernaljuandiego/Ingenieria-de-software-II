@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Publicacion implements Serializable {
 
+    private String id;
     // User owner of publication
     private Usuario usuario;
 
@@ -26,6 +27,14 @@ public class Publicacion implements Serializable {
 
     public Publicacion() {
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Usuario getUsuario() {
@@ -76,16 +85,8 @@ public class Publicacion implements Serializable {
         this.imagen = imagen;
     }
 
-    public Publicacion(Usuario usuario, String texto, String fechaPublicacion, List<Comentario> comentarios, List<Usuario> usuariosQueGustan, String imagen) {
-        this.usuario = usuario;
-        this.texto = texto;
-        this.fechaPublicacion = fechaPublicacion;
-        this.comentarios = comentarios;
-        this.usuariosQueGustan = usuariosQueGustan;
-        this.imagen = imagen;
-    }
-
-    public Publicacion(Usuario usuario, String texto, String fechaPublicacion, String imagen) {
+    public Publicacion(String id,Usuario usuario, String texto, String fechaPublicacion, String imagen) {
+        this.id = id;
         this.usuario = usuario;
         this.texto = texto;
         this.fechaPublicacion = fechaPublicacion;
