@@ -25,11 +25,12 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/app_logo"
                     android:layout_width="56dp"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_launcher_foreground"
-                    tools:ignore="VectorDrawableCompat" />
+                    tools:ignore="VectorDrawableCompat"
+                    android:onClick="runFabEffect"/>
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/searchView"
