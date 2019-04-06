@@ -170,7 +170,6 @@
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.LinearLayoutCompat
-                                android:id="@+id/add_friend_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
@@ -178,6 +177,7 @@
                                 android:layout_marginLeft="40dp">
 
                                 <ImageButton
+                                    android:id="@+id/add_friend_button"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:background="@drawable/boton_redondo"

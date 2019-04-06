@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser user;
     private LinearLayout userDataLinearLayout;
     private LinearLayout buttonOptionsLinearLayout;
+    private ImageButton addUserButton;
 
 
     @Override
@@ -55,7 +55,18 @@ public class ProfileActivity extends AppCompatActivity {
         setUpAppBarLayout();
         setUpUserData();
         loadPublications();
+        setUpAddUser();
     }
+
+    private void setUpAddUser() {
+        addUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ProfileActivity.this, "Add User clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void firebaseLoadData() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -107,6 +118,7 @@ public class ProfileActivity extends AppCompatActivity {
         userName = findViewById(R.id.username_text_profile);
         userDataLinearLayout = findViewById(R.id.user_data_linear_layout);
         buttonOptionsLinearLayout = findViewById(R.id.button_options_linear_layout);
+        addUserButton = findViewById(R.id.add_friend_button);
     }
 
     public void setUpAppBarLayout() {
