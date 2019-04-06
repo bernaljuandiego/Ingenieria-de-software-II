@@ -144,13 +144,13 @@ public class NewPuplicationFragment extends Fragment {
 
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
+        String id = mDatabase.push().getKey();
         String date = simpleDateFormat.format(new Date());
 
         if(!TextUtils.isEmpty(texto)){
             Usuario usuario= new Usuario(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getEmail(),mAuth.getCurrentUser().getPhotoUrl().toString(),mAuth.getCurrentUser().getUid());
-            Publicacion nuevaPublicacion = new Publicacion(usuario,texto,date,imagen);
-            mDatabase.child("BaseDatos").child("Publicaciones").child(mDatabase.push().getKey()).setValue(nuevaPublicacion);
+            Publicacion nuevaPublicacion = new Publicacion(id,usuario,texto,date,imagen);
+            mDatabase.child("BaseDatos").child("Publicaciones").child(id).setValue(nuevaPublicacion);
             closePasswordRecoveryWindow();
         } else {
             Snackbar.make(getView(), "Error.", Snackbar.LENGTH_SHORT).show();

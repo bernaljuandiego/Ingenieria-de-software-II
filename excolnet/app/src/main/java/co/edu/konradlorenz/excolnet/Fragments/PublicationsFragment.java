@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import co.edu.konradlorenz.excolnet.Entities.Publicacion;
-import co.edu.konradlorenz.excolnet.Fragments.PublicationAdapter;
+import co.edu.konradlorenz.excolnet.Adapters.PublicationAdapter;
 import co.edu.konradlorenz.excolnet.R;
 
 import android.util.Log;

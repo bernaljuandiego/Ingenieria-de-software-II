@@ -14,7 +14,7 @@ import co.edu.konradlorenz.excolnet.Fragments.NewPuplicationFragment;
 import co.edu.konradlorenz.excolnet.Fragments.BottomSheetNavigationFragment;
 import co.edu.konradlorenz.excolnet.Fragments.PublicationsFragment;
 import co.edu.konradlorenz.excolnet.R;
-import co.edu.konradlorenz.excolnet.Utils.AdapterSearch;
+import co.edu.konradlorenz.excolnet.Adapters.AdapterSearch;
 import co.edu.konradlorenz.excolnet.Utils.Permissions;
 import android.content.Intent;
 import android.content.pm.PackageManager;
