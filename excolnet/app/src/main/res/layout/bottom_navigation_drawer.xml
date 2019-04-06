@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#D8D8D8">
+        android:background="@color/colorPrimaryDark">
 
         <ImageView
             android:id="@+id/profile_image_bottom_sheet"
