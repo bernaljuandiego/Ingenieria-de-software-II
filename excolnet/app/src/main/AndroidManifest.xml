@@ -25,13 +25,10 @@
             android:parentActivityName=".Activities.PrincipalActivity"
             android:theme="@style/DetailPublications"/>
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".Activities.ProfileActivity"
             android:parentActivityName=".Activities.PrincipalActivity"
             android:theme="@style/AppTheme"/>
 
-        <activity
-            android:name=".Activities.ProfileActivity"
-            android:theme="@style/AppTheme"/>
         <activity
             android:name=".Activities.PrincipalActivity"
             android:theme="@style/AppTheme" />
