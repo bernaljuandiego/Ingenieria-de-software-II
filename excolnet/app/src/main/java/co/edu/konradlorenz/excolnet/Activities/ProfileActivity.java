@@ -1,5 +1,6 @@
 package co.edu.konradlorenz.excolnet.Activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.palette.graphics.Palette;
+import co.edu.konradlorenz.excolnet.Entities.Usuario;
 import co.edu.konradlorenz.excolnet.Fragments.PublicationsFragment;
 import co.edu.konradlorenz.excolnet.R;
 
@@ -40,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
     private LinearLayout userDataLinearLayout;
     private LinearLayout buttonOptionsLinearLayout;
     private ImageButton addUserButton;
+    private Usuario userPrincipalPublication;
 
 
     @Override
@@ -53,9 +56,26 @@ public class ProfileActivity extends AppCompatActivity {
         setUpToolbarLayout();
         setUpHeaderColor();
         setUpAppBarLayout();
-        setUpUserData();
-        loadPublications();
         setUpAddUser();
+
+        activityWhoCalledThis();
+    }
+
+    private void activityWhoCalledThis() {
+
+        String activityCalled = getIntent().getStringExtra("ACTIVITY_CALLED_NAME");
+
+        switch (activityCalled){
+            case "PrincipalActivity":
+                setUpUserData(activityCalled);
+                loadPublications();
+                break;
+            case "PublicationsAdapter":
+                userPrincipalPublication = (Usuario) getIntent().getSerializableExtra("USER");
+                setUpUserData(activityCalled);
+                break;
+        }
+
     }
 
     private void setUpAddUser() {
@@ -73,9 +93,21 @@ public class ProfileActivity extends AppCompatActivity {
         user = mAuth.getCurrentUser();
     }
 
-    private void setUpUserData() {
-        Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(circleImageView);
-        userName.setText(user.getDisplayName());
+    private void setUpUserData(String activityCalled) {
+
+        switch(activityCalled){
+            case "PrincipalActivity":
+                Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(circleImageView);
+                userName.setText(user.getDisplayName());
+                break;
+
+            case "PublicationsAdapter":
+                Glide.with(getApplicationContext()).load(userPrincipalPublication.getPhotoUrl()).into(circleImageView);
+                userName.setText(userPrincipalPublication.getDisplayName());
+                break;
+        }
+
+
     }
 
     private void setUpToolbarLayout() {
