@@ -18,7 +18,7 @@ public class Publicacion implements Serializable {
     private String fechaPublicacion;
 
     // Comments list
-    private List<Comentario> comentarios;
+    private ArrayList<Comentario> comentarios;
 
     //List of interactions of publication
     private List<Usuario> usuariosQueGustan;
@@ -63,11 +63,11 @@ public class Publicacion implements Serializable {
         this.fechaPublicacion = fechaPublicacion;
     }
 
-    public List<Comentario> getComentarios() {
+    public ArrayList<Comentario> getComentarios() {
         return comentarios;
     }
 
-    public void setComentarios(List<Comentario> comentarios) {
+    public void setComentarios(ArrayList<Comentario> comentarios) {
         this.comentarios = comentarios;
     }
 

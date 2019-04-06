@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import co.edu.konradlorenz.excolnet.Activities.DetailPublicationActivity;
 import co.edu.konradlorenz.excolnet.Activities.ProfileActivity;
@@ -34,8 +35,8 @@ import co.edu.konradlorenz.excolnet.R;
 public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.PublicationHolder> {
 
     private ArrayList<Publicacion> items;
-    private Context context;
     private LinearLayout cardViewPublication;
+    private Context context;
     private LinearLayout userPublicationClick;
     private String ACTIVITY_NAME = "PublicationsAdapter";
     private View view;
