@@ -10,15 +10,13 @@ import org.junit.Test;
 public class UserPublicationTest {
 
     private AndroidDriver driver;
-
     private DriverCommons driverCommons;
-
     private PublicationPage publicationPage;
 
 
     @Before
     public void initComponents(){
-        this.driver = DriverSetUp.initDriver("8350ca1a");
+        this.driver = DriverSetUp.initDriver();
         this.driverCommons = new DriverCommons(this.driver);
     }
 

@@ -17,19 +17,13 @@ public class UserLoginTest {
 
     @Before
     public void initComponents() {
-
-        this.driver = DriverSetUp.initDriver("8350ca1a");
+        this.driver = DriverSetUp.initDriver();
         this.driverCommons = new DriverCommons(this.driver);
-
-
     }
 
 
     @Test
     public void initLogin() {
-
-        try {
-
 
             driverCommons.addImplicitlyWait(5);
             userLoginPage = new UserLoginPage(driver);
@@ -43,21 +37,18 @@ public class UserLoginTest {
 
             String currActivity = driver.currentActivity();
 
-            if (currActivity.contains("LoginActivity")) {
+            /*if (currActivity.contains("LoginActivity")) {
                 System.out.println("User not Loged yet , executing registry");
                 userLoginPage.clickSignUp();
                 driverCommons.addImplicitlyWait(5);
                 UserRegisterTest test = new UserRegisterTest(this.driver, this.driverCommons);
                 test.doRegistry();
 
-            }
+            }*/
 
-        } catch (Exception ex) {
-            System.out.println("UserLoginTest.initLogin exception : " + ex.getMessage());
+            assert !currActivity.contains("LoginActivity");
+
         }
-
-
-    }
 
     @After
     public void finalize() {
