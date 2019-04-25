@@ -1,5 +1,6 @@
 package co.edu.konradlorenz.excolnet.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import co.edu.konradlorenz.excolnet.Entities.Publicacion;
 import co.edu.konradlorenz.excolnet.Adapters.PublicationAdapter;
+import co.edu.konradlorenz.excolnet.Entities.Usuario;
 import co.edu.konradlorenz.excolnet.R;
 
 import android.util.Log;
@@ -34,6 +36,15 @@ public class PublicationsFragment extends Fragment {
     private ArrayList<Publicacion> publicaciones;
     private ValueEventListener lisener;
     private FirebaseUser user;
+    private Usuario usuario;
+
+    @SuppressLint("ValidFragment")
+    public PublicationsFragment(Usuario user) {
+        this.usuario = user;
+    }
+
+    public PublicationsFragment() {
+    }
 
 
     @Nullable
@@ -59,9 +70,16 @@ public class PublicationsFragment extends Fragment {
             public void onDataChange(DataSnapshot snapshot) {
                 publicaciones.clear();
 
-                for (DataSnapshot asistenteSnapshot: snapshot.getChildren()) {
-                    Publicacion publicacion = asistenteSnapshot.getValue(Publicacion.class);
-                    publicaciones.add(publicacion);
+                for (DataSnapshot asistenteSnapshot : snapshot.getChildren()) {
+                    if (usuario == null) {
+                        Publicacion publicacion = asistenteSnapshot.getValue(Publicacion.class);
+                        publicaciones.add(publicacion);
+                    } else {
+                        Publicacion publicacion = asistenteSnapshot.getValue(Publicacion.class);
+                        if (publicacion.getUsuario().getDisplayName().equals(usuario.getDisplayName())) {
+                            publicaciones.add(publicacion);
+                        }
+                    }
                 }
 
                 items = (RecyclerView) getView().findViewById(R.id.lista_publicaciones);
@@ -72,15 +90,17 @@ public class PublicationsFragment extends Fragment {
                 items.setLayoutManager(mLayoutManager);
 
                 // specify an adapter (see also next example)
-                mAdapter = new PublicationAdapter(getContext(),publicaciones,user);
+                mAdapter = new PublicationAdapter(getContext(), publicaciones, user);
                 items.setAdapter(mAdapter);
             }
+
             @Override
             public void onCancelled(DatabaseError firebaseError) {
-                Log.e("The read failed: " ,firebaseError.getMessage());
+                Log.e("The read failed: ", firebaseError.getMessage());
             }
         };
         baseDeDatos.child("Publicaciones").addValueEventListener(lisener);
+
     }
 
     @Override

@@ -96,6 +96,7 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
                     items.get(position).getComentarios().add(new Comentario(newUser,holder.comentario.getText().toString(),date));
                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("BaseDatos");
                     mDatabase.child("Publicaciones").child(items.get(position).getId()).setValue(items.get(position));
+                    holder.comentario.setText("");
                 }
             }
         });

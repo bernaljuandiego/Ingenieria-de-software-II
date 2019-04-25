@@ -2,6 +2,7 @@ package TestCases;
 
 import Commons.DriverCommons;
 import Drivers.DriverSetUp;
+import Pages.UserLoginPage;
 import Pages.UserRegisterPage;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.Before;
@@ -12,32 +13,20 @@ public class UserRegisterTest {
     private AndroidDriver driver;
     private DriverCommons driverCommons;
     private UserRegisterPage userRegisterPage;
-
-
-    public UserRegisterTest(AndroidDriver driver, DriverCommons driverCommons) {
-
-        this.driver = driver;
-        this.driverCommons = driverCommons;
-
-
-
-    }
+    private UserLoginPage userLoginPage;
 
     @Before
     public void initComponents() {
-        if (driver == null && driverCommons == null && userRegisterPage == null) {
-
-            this.driver = DriverSetUp.initDriver("8350ca1a");
-            this.driverCommons = new DriverCommons(this.driver);
-
-
-        } else {
-            System.out.println("test comes from another test , skipping .. ");
-        }
+        this.driver = DriverSetUp.initDriver();
+        this.driverCommons = new DriverCommons(this.driver);
     }
 
     @Test
     public void doRegistry() {
+        driverCommons.addImplicitlyWait(5);
+        driverCommons.performSwipeUp();
+        userLoginPage = new UserLoginPage(driver);
+        userLoginPage.clickSignUp();
 
         this.userRegisterPage = new UserRegisterPage(driver);
         userRegisterPage.typeuserNameField();
@@ -51,17 +40,11 @@ public class UserRegisterTest {
         driverCommons.addImplicitlyWait(5);
         userRegisterPage.clickSignInButton();
         boolean isDisplayedComponent = driverCommons.waitForPresence(5, userRegisterPage.getSnackBarReference());
-
         if (isDisplayedComponent) {
              driverCommons.waitForDissapear(5 , userRegisterPage.getSnackBarReference());
-
             driverCommons.navigateBack();
-
         } else {
             System.out.println("not found yet");
         }
-
-
     }
-
 }
