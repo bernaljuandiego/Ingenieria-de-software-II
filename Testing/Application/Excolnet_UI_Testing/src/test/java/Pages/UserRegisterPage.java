@@ -1,19 +1,10 @@
 package Pages;
 
-import Commons.DriverCommons;
-import Drivers.DriverSetUp;
-import com.github.javafaker.Faker;
-import com.google.gson.annotations.Since;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.PointOption;
-
-import java.time.Duration;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
+import com.github.javafaker.Faker;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
 
 public class UserRegisterPage {
 

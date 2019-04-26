@@ -94,6 +94,7 @@ public class ProfileActivity extends AppCompatActivity {
             case "PublicationsAdapter":
                 userPrincipalPublication = (Usuario) getIntent().getSerializableExtra("USER");
                 setUpUserData(activityCalled);
+                loadPublications(userPrincipalPublication);
                 break;
         }
 
@@ -264,6 +265,13 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void loadPublications() {
         Fragment fragment = new PublicationsFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.contenido, fragment);
+        ft.commit();
+    }
+
+    private void loadPublications(Usuario user) {
+        Fragment fragment = new PublicationsFragment(user);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.contenido, fragment);
         ft.commit();

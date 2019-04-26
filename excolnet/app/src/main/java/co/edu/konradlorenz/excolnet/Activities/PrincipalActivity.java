@@ -84,7 +84,6 @@ public class PrincipalActivity extends AppCompatActivity {
         super.onStart();
         listaUsuarios = new ArrayList<>();
         DatabaseReference usuarios = mDatabase.child("Users");
-
         usuarios.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

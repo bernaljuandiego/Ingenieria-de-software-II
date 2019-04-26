@@ -8,7 +8,7 @@ import io.appium.java_client.android.AndroidDriver;
 public class SearchPage {
 
     public static void main( String args[]){
-        AndroidDriver driver =DriverSetUp.initDriver("8350ca1a");
+        AndroidDriver driver =DriverSetUp.initDriver();
 
         DriverCommons dc =  new DriverCommons(driver);
 
