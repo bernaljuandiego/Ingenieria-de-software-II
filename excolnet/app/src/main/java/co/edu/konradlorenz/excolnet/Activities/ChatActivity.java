@@ -2,6 +2,7 @@ package co.edu.konradlorenz.excolnet.Activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,7 +46,8 @@ public class ChatActivity extends AppCompatActivity  {
     private Usuario chatUser;
     //Current User
     private FirebaseUser currentUser;
-    private DatabaseReference currentConversation;
+    private DatabaseReference myConversation;
+    private DatabaseReference externalConversation;
     private DatabaseReference chatReference;
     private ArrayList<Mensaje> messages;
     private ValueEventListener valueEventListener;
@@ -65,10 +67,13 @@ public class ChatActivity extends AppCompatActivity  {
         getFirebaseComponents();
         addMessageListener();
 
+
+
         this.messages = new ArrayList<>();
 
 
     }
+
 
 
     @Override
@@ -99,6 +104,8 @@ public class ChatActivity extends AppCompatActivity  {
     }
 
 
+
+
     public void changeChatLayoutValues(){
          if(chatUser != null){
              Glide.with(getApplicationContext()).load(chatUser.getPhotoUrl()).placeholder(R.drawable.ic_profile).error(R.drawable.com_facebook_profile_picture_blank_square).into(userChatImage);
@@ -110,40 +117,18 @@ public class ChatActivity extends AppCompatActivity  {
         FirebaseAuth auth =  FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
         chatReference = FirebaseDatabase.getInstance().getReference("BaseDatos").child("Chat");
-        validatePrivateChatCollection(currentUser.getUid() + "_" + chatUser.getUid());
-
-        if (currentConversation == null ){
-            validatePrivateChatCollection(chatUser.getUid() + "_" + currentUser.getUid() );
-        }
-
-        if (currentConversation == null){
-            currentConversation = chatReference.child(currentUser.getUid() + "_" + chatUser.getUid());
-        }
+        myConversation = chatReference.child(currentUser.getUid());
+        externalConversation = chatReference.child(chatUser.getUid());
 
 
-        Log.i("ChatActivitygetFBcomps " , currentConversation.getKey());
     }
 
 
-    public void validatePrivateChatCollection(final String pattern){
-        chatReference.orderByKey().equalTo(pattern).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                currentConversation = chatReference.child(pattern);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("ChatActivityONr" , currentConversation.getKey());
         getChatData();
     }
 
@@ -157,15 +142,26 @@ public class ChatActivity extends AppCompatActivity  {
 
                 for(DataSnapshot dataSnap : dataSnapshot.getChildren()){
                     Mensaje  msg = dataSnap.getValue(Mensaje.class);
-                    messages.add(msg);
+
+                    if(msg.getSenderUID().equals(currentUser.getUid())){
+                        if(msg.getDestinyUUID().equals(chatUser.getUid())){
+                            messages.add(msg);
+                        }
+                    }else if (msg.getSenderUID().equals(chatUser.getUid())) {
+                        if (msg.getDestinyUUID().equals(currentUser.getUid())) {
+                            messages.add(msg);
+                        }
+
+                    }
+
 
                 }
-                Log.i("ChatActivity msgs" , messages.toString());
-                Log.i("ChatActivity currConv" , currentConversation.getKey());
                 adapter = new ChatAdapter(messages , getApplicationContext());
                 messageList.setHasFixedSize(true);
                 messageList.setLayoutManager(layoutManager);
                 messageList.setAdapter(adapter);
+
+
 
 
             }
@@ -176,7 +172,7 @@ public class ChatActivity extends AppCompatActivity  {
             }
         };
 
-        currentConversation.addValueEventListener(valueEventListener);
+        myConversation.addValueEventListener(valueEventListener);
 
     }
 
@@ -184,10 +180,22 @@ public class ChatActivity extends AppCompatActivity  {
     @Override
     protected void onPause() {
         super.onPause();
-        currentConversation.removeEventListener(valueEventListener);
+        myConversation.removeEventListener(valueEventListener);
     }
 
     public void addMessageListener(){
+
+        messageInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    Log.i("Scroll" ,  "scrolling to " + messages.size() +" -1");
+                    messageList.smoothScrollToPosition(messages.size() -1);
+
+                }
+            }
+        });
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,6 +211,7 @@ public class ChatActivity extends AppCompatActivity  {
                     mensaje.setSenderDisplayName(currentUser.getDisplayName());
                     mensaje.setSenderImage(currentUser.getPhotoUrl().toString());
                     mensaje.setSenderUID(currentUser.getUid());
+                    mensaje.setDestinyUUID(chatUser.getUid());
                     mensaje.setMessage(message);
                     final String currentDate= DateFormat.getDateTimeInstance().format(new Date());
                     mensaje.setSenderTime(currentDate);
@@ -210,9 +219,11 @@ public class ChatActivity extends AppCompatActivity  {
                     //adapter.addMessage(mensaje);
 
 
-                    currentConversation.push().setValue(mensaje);
+                    myConversation.push().setValue(mensaje);
+                    externalConversation.push().setValue(mensaje);
 
                     messageInput.setText("");
+
                 }
             }
         });
