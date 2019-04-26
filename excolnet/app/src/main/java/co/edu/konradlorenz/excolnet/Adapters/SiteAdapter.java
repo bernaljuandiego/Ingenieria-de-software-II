@@ -1,6 +1,7 @@
 package co.edu.konradlorenz.excolnet.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import co.edu.konradlorenz.excolnet.Activities.SitesActivity;
 import co.edu.konradlorenz.excolnet.Entities.Lugar;
 import co.edu.konradlorenz.excolnet.R;
 
@@ -49,7 +51,18 @@ public class SiteAdapter extends RecyclerView.Adapter<SiteAdapter.SiteHolder> {
     holder.tituloSite.setText(lugares.get(position).getTitulo());
     holder.descripcionSite.setText(lugares.get(position).getDescripcion());
         Glide.with(context).load(lugares.get(position).getImagen_lugar()).into(holder.imagenSite);
+        cardViewLugares.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(view.getContext(), SitesActivity.class);
+                intent.putExtra("id", lugares.get(position).getId());
+                intent.putExtra("latitud", lugares.get(position).getLatitud());
+                intent.putExtra("longitud", lugares.get(position).getLongitud());
+                intent.putExtra("titulo", lugares.get(position).getTitulo());
 
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     private void findMaterialElements(){
