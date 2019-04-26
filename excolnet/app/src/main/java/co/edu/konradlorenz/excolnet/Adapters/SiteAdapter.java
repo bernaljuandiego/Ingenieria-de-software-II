@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import co.edu.konradlorenz.excolnet.Entities.Lugar;
 import co.edu.konradlorenz.excolnet.R;
@@ -20,7 +22,7 @@ import co.edu.konradlorenz.excolnet.R;
 public class SiteAdapter extends RecyclerView.Adapter<SiteAdapter.SiteHolder> {
 
     private ArrayList<Lugar> lugares;
-    private LinearLayout cardViewLugares;
+        private CardView cardViewLugares;
     private Context context;
     private String ACTIVITY_NAME ="SitesAdapter";
     private View view;
