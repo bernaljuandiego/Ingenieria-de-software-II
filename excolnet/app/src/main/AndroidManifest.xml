@@ -28,6 +28,10 @@
             android:name=".Activities.ProfileActivity"
             android:parentActivityName=".Activities.PrincipalActivity"
             android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".Activities.ChatActivity"
+            android:parentActivityName=".Activities.PrincipalActivity"
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name=".Activities.PrincipalActivity"
@@ -70,6 +74,12 @@
             </intent-filter>
         </activity>
         <activity android:name="com.twitter.sdk.android.core.identity.OAuthActivity" />
+
+        <service android:name=".Services.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
