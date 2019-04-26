@@ -104,7 +104,6 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                         Toast.makeText(getContext(), "Housing Option Selected", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.nav_tourist_sites_option:
-                        Toast.makeText(getContext(), "Tourist Sites Option Selected", Toast.LENGTH_SHORT).show();
 
                         Fragment fragment = new TouristSitesFragment();
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
@@ -112,6 +111,7 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                         ft.addToBackStack(null);
                         ft.commit();
                         BottomSheetNavigationFragment.super.dismiss();
+                        return true;
                     case R.id.nav_settings_option:
                         Toast.makeText(getContext(), "Settings Option Selected", Toast.LENGTH_SHORT).show();
                         return true;

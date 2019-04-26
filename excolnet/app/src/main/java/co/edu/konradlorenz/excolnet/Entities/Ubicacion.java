@@ -6,8 +6,7 @@ Author: Leonardo Ruiz
  */
 public class Ubicacion {
 
-    //The institution property of ubication
-    private Institucion institucion;
+
 
     //Latitude
     private Long latitud;
@@ -26,8 +25,7 @@ public class Ubicacion {
 
     }
 
-    public Ubicacion(Institucion institucion, Long latitud, Long longitud, Long precision, Long placeId) {
-        this.institucion = institucion;
+    public Ubicacion( Long latitud, Long longitud, Long precision, Long placeId) {
         this.latitud = latitud;
         this.longitud = longitud;
         this.precision = precision;
@@ -38,13 +36,6 @@ public class Ubicacion {
     GETTERS & SETTERS
      */
 
-    public Institucion getInstitucion() {
-        return institucion;
-    }
-
-    public void setInstitucion(Institucion institucion) {
-        this.institucion = institucion;
-    }
 
     public Long getLatitud() {
         return latitud;
