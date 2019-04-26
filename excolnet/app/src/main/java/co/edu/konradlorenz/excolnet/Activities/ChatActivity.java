@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,8 +27,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import co.edu.konradlorenz.excolnet.Adapters.ChatAdapter;
 import co.edu.konradlorenz.excolnet.Entities.Mensaje;
@@ -41,7 +45,7 @@ public class ChatActivity extends AppCompatActivity  {
     private TextView userChatName;
     private RecyclerView messageList;
     private EditText messageInput;
-    private Button sendButton;
+    private ImageButton sendButton;
     //External User
     private Usuario chatUser;
     //Current User
@@ -65,7 +69,9 @@ public class ChatActivity extends AppCompatActivity  {
         getLayoutComponents();
         getIntentUser();
         getFirebaseComponents();
+        initializeRecycleView();
         addMessageListener();
+
 
 
 
@@ -88,8 +94,8 @@ public class ChatActivity extends AppCompatActivity  {
         this.userChatName = (TextView) findViewById(R.id.UserChatName);
         this.messageList = (RecyclerView) findViewById(R.id.MessageList);
         this.messageInput = (EditText) findViewById(R.id.message_input);
-        this.sendButton = (Button)  findViewById(R.id.sendMessage_button);
-        this.layoutManager = new LinearLayoutManager(getApplicationContext());
+        this.sendButton = (ImageButton)  findViewById(R.id.sendMessage_button);
+
     }
 
     public void getIntentUser(){
@@ -121,6 +127,41 @@ public class ChatActivity extends AppCompatActivity  {
         externalConversation = chatReference.child(chatUser.getUid());
 
 
+
+    }
+
+    public  void initializeRecycleView(){
+        this.layoutManager = new LinearLayoutManager(getApplicationContext());
+        adapter = new ChatAdapter(getApplicationContext() , currentUser.getUid());
+
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                ScrollBar();
+            }
+        });
+
+        messageList.setHasFixedSize(true);
+        messageList.setLayoutManager(layoutManager);
+        messageList.setAdapter(adapter);
+    }
+
+    public void restartAdapter(){
+        ChatAdapter newAdapter = new ChatAdapter(getApplicationContext() , currentUser.getUid());
+        adapter = newAdapter;
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                ScrollBar();
+            }
+        });
+
+    }
+
+    public void ScrollBar(){
+        messageList.scrollToPosition(adapter.getItemCount() -1);
     }
 
 
@@ -134,10 +175,12 @@ public class ChatActivity extends AppCompatActivity  {
 
 
     public void getChatData(){
+
+
         this.valueEventListener  =  new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                messages.clear();
+                restartAdapter();
 
 
                 for(DataSnapshot dataSnap : dataSnapshot.getChildren()){
@@ -145,20 +188,17 @@ public class ChatActivity extends AppCompatActivity  {
 
                     if(msg.getSenderUID().equals(currentUser.getUid())){
                         if(msg.getDestinyUUID().equals(chatUser.getUid())){
-                            messages.add(msg);
+                            adapter.addMessage(msg);
                         }
                     }else if (msg.getSenderUID().equals(chatUser.getUid())) {
                         if (msg.getDestinyUUID().equals(currentUser.getUid())) {
-                            messages.add(msg);
+                            adapter.addMessage(msg);
                         }
 
                     }
 
 
                 }
-                adapter = new ChatAdapter(messages , getApplicationContext());
-                messageList.setHasFixedSize(true);
-                messageList.setLayoutManager(layoutManager);
                 messageList.setAdapter(adapter);
 
 
@@ -194,18 +234,19 @@ public class ChatActivity extends AppCompatActivity  {
 
 
 
-                String message =  messageInput.getText().toString();
 
+                String message =  messageInput.getText().toString();
+                String time = getMessageTime();
 
                 if(message != null && !message.isEmpty()){
                     Mensaje mensaje  =  new Mensaje();
-                    mensaje.setSenderDisplayName(currentUser.getDisplayName());
+                    restartAdapter();    mensaje.setSenderDisplayName(currentUser.getDisplayName());
                     mensaje.setSenderImage(currentUser.getPhotoUrl().toString());
                     mensaje.setSenderUID(currentUser.getUid());
                     mensaje.setDestinyUUID(chatUser.getUid());
                     mensaje.setMessage(message);
-                    final String currentDate= DateFormat.getDateTimeInstance().format(new Date());
-                    mensaje.setSenderTime(currentDate);
+                    //final String currentDate= DateFormat.getDateTimeInstance().format(new Date());
+                    mensaje.setSenderTime(time);
 
                     //adapter.addMessage(mensaje);
 
@@ -219,5 +260,25 @@ public class ChatActivity extends AppCompatActivity  {
             }
         });
 
+    }
+
+
+    public String getMessageTime(){
+        String returnString="";
+        String amPm = "";
+        Calendar time =  new GregorianCalendar();
+        int hour= time.get(Calendar.HOUR);
+        int minute = time.get(Calendar.MINUTE);
+        int amOrPm = time.get(Calendar.AM_PM);
+
+        if(amOrPm == 0){
+            amPm ="a.m.";
+        }else{
+            amPm ="p.m.";
+        }
+
+        returnString = hour + ":" + minute + " " + amPm;
+
+        return returnString;
     }
 }
