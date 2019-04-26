@@ -18,9 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import co.edu.konradlorenz.excolnet.Activities.LoginActivity;
 import co.edu.konradlorenz.excolnet.R;
 
@@ -76,7 +74,16 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
 
                 switch(menuItem.getItemId()){
                     case R.id.nav_chat_option:
-                        Toast.makeText(getContext(), "Chat Option Selected", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "Chat Option Selected", Toast.LENGTH_SHORT).show();
+                        FriendsFragment friendsFragment =  new FriendsFragment();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.contenido , friendsFragment)
+                                .commit();
+
+                        BottomSheetNavigationFragment.super.dismiss();
+
+
+
                         return true;
                     case R.id.nav_invitation_option:
                         Toast.makeText(getContext(), "Invitations Option Selected", Toast.LENGTH_SHORT).show();
