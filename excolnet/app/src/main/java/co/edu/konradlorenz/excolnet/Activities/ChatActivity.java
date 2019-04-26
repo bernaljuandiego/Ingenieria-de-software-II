@@ -185,16 +185,7 @@ public class ChatActivity extends AppCompatActivity  {
 
     public void addMessageListener(){
 
-        messageInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    Log.i("Scroll" ,  "scrolling to " + messages.size() +" -1");
-                    messageList.smoothScrollToPosition(messages.size() -1);
 
-                }
-            }
-        });
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
