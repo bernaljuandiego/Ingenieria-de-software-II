@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/site_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view_s"
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
+        <ImageView
+            android:id="@+id/imagen_site"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:scaleType="fitXY" />
+        <TextView
+        android:id="@+id/titulo_site"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imagen_site"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/browser_actions_text_color"
+        android:textSize="20dp" />
+        <TextView
+            android:id="@+id/descripcion_site"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titulo_site"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="15dp"
+
+            />
+
+    </RelativeLayout>
+</FrameLayout>
