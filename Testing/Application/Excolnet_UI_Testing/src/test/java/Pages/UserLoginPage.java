@@ -1,30 +1,16 @@
 package Pages;
 
-
-import Drivers.DriverSetUp;
 import com.github.javafaker.Faker;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.MobileElement;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-
-import java.util.concurrent.TimeUnit;
 
 public class UserLoginPage {
 
-
     private AndroidDriver pageDriver;
-
     private MobileElement emailField;
-
     private MobileElement passwordField;
-
     private MobileElement logInButton;
-
     private MobileElement signUpLabel;
-
-
     private Faker faker;
 
 
@@ -66,13 +52,8 @@ public class UserLoginPage {
         this.logInButton.click();
     }
 
-    public MobileElement getSignUpLabel() {
-        return signUpLabel;
-    }
-
     public void clickSignUp() {
         this.signUpLabel.click();
     }
-
 
 }

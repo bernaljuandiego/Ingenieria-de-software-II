@@ -84,7 +84,6 @@ public class PrincipalActivity extends AppCompatActivity {
         super.onStart();
         listaUsuarios = new ArrayList<>();
         DatabaseReference usuarios = mDatabase.child("Users");
-
         usuarios.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -223,5 +222,13 @@ public class PrincipalActivity extends AppCompatActivity {
         } else {
             return true;
         }
+    }
+
+    public ArrayList<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
     }
 }

@@ -5,8 +5,6 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -35,33 +33,24 @@ public class DriverCommons {
         this.touch.waitAction(new WaitOptions().withDuration(Duration.ofMillis(5000)))
                 .press(new PointOption().withCoordinates(94, 1991))
                 .moveTo(new PointOption().withCoordinates(94, 399))
-
                 .perform();
-
-
     }
 
 
     public void performSwipeUp() {
         touch.waitAction(new WaitOptions().withDuration(Duration.ofMillis(5000)))
-                .press(new PointOption().withCoordinates(1014, 892))
-                .moveTo(new PointOption().withCoordinates(1019, 1202))
-
+                .press(new PointOption().withCoordinates(375, 1130))
+                .moveTo(new PointOption().withCoordinates(375, 375))
                 .perform();
     }
 
-
     public void hideKeyBoard() {
         this.driver.hideKeyboard();
-
     }
-
 
     public boolean waitForPresence(int LimitTimeSeconds, String resourceTarget) {
         Boolean isElementDisplayed;
         try {
-
-
             MobileElement mobileElement = (MobileElement) this.driver.findElementByAndroidUIAutomator("UiSelector().resourceId(\"" + resourceTarget + "\")");
             WebDriverWait wait = new WebDriverWait(this.driver, LimitTimeSeconds);
             wait.until(ExpectedConditions.visibilityOf(mobileElement));
@@ -73,11 +62,9 @@ public class DriverCommons {
             System.out.println(e.getMessage());
             return isElementDisplayed;
         }
-
     }
 
     public void waitForDissapear(int LimitTimeSeconds, String resourceTarget) {
-
         try {
             MobileElement mobileElement = (MobileElement) this.driver.findElementByAndroidUIAutomator("UiSelector().resourceId(\"" + resourceTarget + "\")");
             WebDriverWait wait = new WebDriverWait(this.driver, LimitTimeSeconds);
@@ -87,10 +74,7 @@ public class DriverCommons {
             System.out.println(e.getMessage());
 
         }
-
     }
-
-
 
     public void navigateBack() {
         this.driver.navigate().back();

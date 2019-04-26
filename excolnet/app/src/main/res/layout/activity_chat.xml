@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".Activities.ChatActivity"
+        >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:id="@+id/contactChatBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circleAvatarImage"
+                android:layout_width="48sp"
+                android:layout_height="48sp"
+                android:src="@mipmap/ic_launcher"
+                android:layout_marginLeft="5dp"/>
+
+
+            <TextView
+                android:id="@+id/UserChatName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Leo"
+                android:layout_gravity="center"
+                android:layout_marginLeft="13dp"/>
+
+        </LinearLayout>
+
+
+
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+<include layout="@layout/content_chat"></include>
+
+
+
+
+        <LinearLayout
+            android:id="@+id/input_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:orientation="horizontal"
+            android:background="@drawable/drawable_back"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+            <EditText
+                android:id="@+id/message_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint=" Escribe un mensaje"
+                android:layout_gravity="center"
+                android:layout_marginRight="5dp"
+                android:background="@android:color/transparent"
+                android:paddingLeft="10sp"
+                android:textCursorDrawable="@color/colorPrimary"
+
+                />
+        </LinearLayout>
+
+
+            <Button
+                android:id="@+id/sendMessage_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="enviar"
+                />
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>

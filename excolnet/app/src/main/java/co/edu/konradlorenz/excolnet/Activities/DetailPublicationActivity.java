@@ -121,7 +121,7 @@ public class DetailPublicationActivity extends AppCompatActivity {
                     cantidadComentarios.setText(publicacion.getComentarios().size()+" Comments");
                 } catch (NullPointerException e){ }
 
-                ArrayList<Comentario> comentarios = publicacion.getComentarios();
+                final ArrayList<Comentario> comentarios = publicacion.getComentarios();
                 Log.e("holi",""+comentarios.size());
                 items = (RecyclerView) findViewById(R.id.recicler_comentarios);
                 items.setHasFixedSize(true);
@@ -145,6 +145,7 @@ public class DetailPublicationActivity extends AppCompatActivity {
                             publicacion.getComentarios().add(new Comentario(newUser,comentario.getText().toString(),date));
                             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("BaseDatos");
                             mDatabase.child("Publicaciones").child(publicacion.getId()).setValue(publicacion);
+                            comentario.setText("");
                         }
                     }
                 });
