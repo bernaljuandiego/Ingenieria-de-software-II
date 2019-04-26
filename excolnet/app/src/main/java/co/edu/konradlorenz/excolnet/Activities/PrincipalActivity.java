@@ -223,4 +223,12 @@ public class PrincipalActivity extends AppCompatActivity {
             return true;
         }
     }
+
+    public ArrayList<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
+    }
 }
