@@ -57,6 +57,8 @@ public class SiteAdapter extends RecyclerView.Adapter<SiteAdapter.SiteHolder> {
                 Intent intent = new Intent(view.getContext(), SitesActivity.class);
                 intent.putExtra("id", lugares.get(position).getId());
                 intent.putExtra("latitud", lugares.get(position).getLatitud());
+                intent.putExtra("nameActivity",ACTIVITY_NAME);
+
                 intent.putExtra("longitud", lugares.get(position).getLongitud());
                 intent.putExtra("titulo", lugares.get(position).getTitulo());
 

@@ -14,6 +14,35 @@ public class Mensaje {
 
     private String message;
 
+    private String photoUrl;
+
+    private String message_type;
+
+    public Mensaje(){
+
+    }
+
+    //Simple message
+    public Mensaje(String senderUID, String destinyUUID, String senderDisplayName, String senderImage, String senderTime, String message, String message_type) {
+        SenderUID = senderUID;
+        DestinyUUID = destinyUUID;
+        this.senderDisplayName = senderDisplayName;
+        this.senderImage = senderImage;
+        this.senderTime = senderTime;
+        this.message = message;
+        this.message_type = message_type;
+    }
+    //Image message
+    public Mensaje(String senderUID, String destinyUUID, String senderDisplayName, String senderImage, String senderTime, String message, String photoUrl, String message_type) {
+        SenderUID = senderUID;
+        DestinyUUID = destinyUUID;
+        this.senderDisplayName = senderDisplayName;
+        this.senderImage = senderImage;
+        this.senderTime = senderTime;
+        this.message = message;
+        this.photoUrl = photoUrl;
+        this.message_type = message_type;
+    }
 
     public String getSenderUID() {
         return SenderUID;
@@ -61,5 +90,21 @@ public class Mensaje {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public String getMessage_type() {
+        return message_type;
+    }
+
+    public void setMessage_type(String message_type) {
+        this.message_type = message_type;
     }
 }
