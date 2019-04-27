@@ -18,6 +18,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import co.edu.konradlorenz.excolnet.Activities.LoginActivity;
 import co.edu.konradlorenz.excolnet.R;
@@ -101,7 +104,13 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                         Toast.makeText(getContext(), "Housing Option Selected", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.nav_tourist_sites_option:
-                        Toast.makeText(getContext(), "Tourist Sites Option Selected", Toast.LENGTH_SHORT).show();
+
+                        Fragment fragment = new TouristSitesFragment();
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.contenido,fragment);
+                        ft.addToBackStack(null);
+                        ft.commit();
+                        BottomSheetNavigationFragment.super.dismiss();
                         return true;
                     case R.id.nav_settings_option:
                         Toast.makeText(getContext(), "Settings Option Selected", Toast.LENGTH_SHORT).show();
