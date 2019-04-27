@@ -8,15 +8,16 @@
     <color name="transparente_gris">#969C9B9B</color>
     <color name="inputTextColor">#4dffffff</color>
     <color name="publicationsColor">#DADADA</color>
-    <color name="grey">#bfbfbf</color>
+    <color name="grey">#BFBFBF</color>
     <color name="white">#fff</color>
     <color name="black">#DCDE16</color>
-    <color name="divider_grey">#DCDEE2</color>
+    <color name="divider_grey">#E0E0E0</color>
     <color name="fabBackground">#D81B60</color>
     <color name="primary_500">#3F51B5</color>
     <color name="black_trans80">#33000000</color>
-    <color name="grey_Icons_publications">#60676F</color>
+    <color name="grey_Icons_publications">#616161</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="divider_greys">#E7E6E6</color>
     <color name="chatBackground">#E4F3D3</color>
     <color name="blue">#E0F5FF</color>
 
