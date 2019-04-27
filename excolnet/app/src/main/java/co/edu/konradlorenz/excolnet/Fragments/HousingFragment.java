@@ -1,111 +1,130 @@
 package co.edu.konradlorenz.excolnet.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+import co.edu.konradlorenz.excolnet.Activities.SitesActivity;
+import co.edu.konradlorenz.excolnet.Adapters.HostAdapter;
+import co.edu.konradlorenz.excolnet.Adapters.SiteAdapter;
+import co.edu.konradlorenz.excolnet.Entities.Host;
+import co.edu.konradlorenz.excolnet.Entities.Lugar;
 import co.edu.konradlorenz.excolnet.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HousingFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HousingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HousingFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private RecyclerView itemHosts;
+    private  RecyclerView.Adapter mAdapterH;
+    private RecyclerView.LayoutManager mlayoutManagerH;
+    private DatabaseReference baseDatos;
+    private ArrayList<Host> hosts;
+    private ValueEventListener listener;
+    private FirebaseUser user;
+    private Button hostButton;
+    private ArrayList<Double> latitudes;
+    private ArrayList<Double> longitudes;
+    private View view;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
 
     public HousingFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HousingFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HousingFragment newInstance(String param1, String param2) {
-        HousingFragment fragment = new HousingFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_housing, container, false);
+        view= inflater.inflate(R.layout.fragment_housing, container, false);
+        hostButton = view.findViewById(R.id.buttonHousting);
+        buttonHandler();
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    private void buttonHandler() {
+        hostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(view.getContext(), SitesActivity.class);
+                intent.putExtra("nameActivity", "Housing");
+                view.getContext().startActivity(intent);
+
+
+            }
+        });
+    }
+
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        baseDatos = FirebaseDatabase.getInstance().getReference("BaseDatos");
+        hosts = new ArrayList<>();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                hosts.clear();
+
+                for(DataSnapshot asistenteSnapshot : dataSnapshot.getChildren()){
+                    Host host = asistenteSnapshot.getValue(Host.class);
+                    hosts.add(host);
+                }
+                itemHosts =(RecyclerView) getView().findViewById(R.id.recyclerHousting);
+                itemHosts.setHasFixedSize(true);
+
+                mlayoutManagerH = new LinearLayoutManager(getContext());
+                itemHosts.setLayoutManager(mlayoutManagerH);
+
+                mAdapterH = new HostAdapter(getContext(), hosts);
+                itemHosts.setAdapter(mAdapterH);
+            }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("The read failed: ", databaseError.getMessage());
+            }
+
+        };
+        baseDatos.child("Hosts").addValueEventListener(listener);
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public void onPause() {
+        super.onPause();
+        baseDatos.child("Hosts").removeEventListener(listener);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

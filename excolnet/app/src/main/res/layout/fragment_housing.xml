@@ -5,10 +5,65 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.HousingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="#8BC34A"
+                android:fontFamily="sans-serif-smallcaps"
+                android:lineSpacingExtra="8sp"
+                android:text="Housing"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="30sp"
+                android:typeface="sans" />
+        </LinearLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardHoousting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linear">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/background_dark"
+                android:fontFamily="casual"
+                android:text="Cerca de ti:"
+                android:textAlignment="textStart"
+                android:textColor="#FCF9F9"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/buttonHousting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cardHoousting"
+            android:layout_marginTop="5dp"
+            android:background="#8BC34A"
+            android:text="Ver en Mapa" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerHousting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonHousting">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
 </FrameLayout>
