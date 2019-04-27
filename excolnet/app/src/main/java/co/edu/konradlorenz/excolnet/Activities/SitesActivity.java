@@ -1,6 +1,8 @@
 package co.edu.konradlorenz.excolnet.Activities;
 
 import androidx.fragment.app.FragmentActivity;
+
+import co.edu.konradlorenz.excolnet.Entities.Host;
 import co.edu.konradlorenz.excolnet.R;
 
 import android.os.Bundle;
@@ -14,13 +16,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 public class SitesActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private DatabaseReference mDatabase;
     private double latitud;
     private double longitud;
-    private String site="";
+    private String titulo="";
+    private String nameActivityEntrante;
+    private double[] latitudes;
+    private double[] longitudes;
+
 
 
     @Override
@@ -37,11 +45,15 @@ public class SitesActivity extends FragmentActivity implements OnMapReadyCallbac
         String id=getIntent().getExtras().getString("id");
         Double lat= getIntent().getExtras().getDouble("latitud");
          Double lon = getIntent().getExtras().getDouble("longitud");
-         site =getIntent().getExtras().getString("titulo");
+         titulo =getIntent().getExtras().getString("titulo");
+        nameActivityEntrante =getIntent().getExtras().getString("nameActivity");
 
          if(lat !=null && lon!=null){
              latitud=lat;
              longitud=lon;
+         }
+         if(titulo==null){
+             titulo ="";
          }
 
         firebaseLoadData();
@@ -57,11 +69,32 @@ public class SitesActivity extends FragmentActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        if(nameActivityEntrante.equals("Housing")){
+            LatLng site = new LatLng(4.6724736, -74.0477403);
+            LatLng site2 = new LatLng(4.66081, -74.0495811);
+            LatLng site3 = new LatLng(4.7121263, -74.1267447);
 
-        // Add a marker in Sydney and move the camera
+
+            mMap.addMarker(new MarkerOptions().position(site).title("Apartamento en Chico Reservado"));
+            mMap.addMarker(new MarkerOptions().position(site2).title("Altos del Nogal Pijao"));
+            mMap.addMarker(new MarkerOptions().position(site3).title("Montecarlo 4 Villas"));
+
+
+            float zoomLevel = (float)6.0f;
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(site,zoomLevel));
+        }else{
+
+
+
+
         LatLng site = new LatLng(latitud, longitud);
 
-        mMap.addMarker(new MarkerOptions().position(site).title("Marker in "+site));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(site));
+        mMap.addMarker(new MarkerOptions().position(site).title(titulo));
+
+        float zoomLevel = (float)16.0f;
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(site,zoomLevel));
+    }
     }
 }
