@@ -17,5 +17,7 @@
     <color name="black_trans80">#33000000</color>
     <color name="grey_Icons_publications">#60676F</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="chatBackground">#E4F3D3</color>
+    <color name="blue">#E0F5FF</color>
 
 </resources>
