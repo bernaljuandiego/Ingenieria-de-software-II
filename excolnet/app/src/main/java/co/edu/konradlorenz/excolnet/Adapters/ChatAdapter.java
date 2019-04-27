@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -65,8 +66,37 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
         Glide.with(myContext).load(messages.get(position).getSenderImage()).placeholder(R.drawable.ic_profile).error(R.drawable.com_facebook_profile_picture_blank_square).into(holder.getCardImage());
 
+
+        if(messages.get(position).getMessage_type().equals("2")){
+            Glide.with(myContext).load(messages.get(position).getPhotoUrl()).into(holder.getMessageFoto());
+            holder.getMessageFoto().setVisibility(View.VISIBLE);
+        }else{
+
+            holder.getSender().setVisibility(View.VISIBLE);
+
+        }
+
         if(!messages.get(position).getSenderUID().equals(currentUserUID)){
+
             holder.itemView.setBackgroundColor(myContext.getResources().getColor(R.color.blue));
+
+
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.itemView.getLayoutParams();
+
+            layoutParams.setMargins(200 , 10 , 0 , 10);
+
+            holder.itemView.setLayoutParams(layoutParams);
+
+        }else{
+
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.itemView.getLayoutParams();
+
+            layoutParams.setMargins(0 , 10 , 200 , 10);
+
+            holder.itemView.setLayoutParams(layoutParams);
+
+
+
         }
 
     }
@@ -82,6 +112,7 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         private TextView sender;
         private  TextView senderTime;
         private TextView messageContent;
+        private ImageView messageFoto;
 
 
         public ChatHolder(@NonNull View itemView) {
@@ -90,6 +121,7 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
             sender =  (TextView) itemView.findViewById(R.id.cardSender);
             senderTime = (TextView) itemView.findViewById(R.id.cardTime);
             messageContent = (TextView) itemView.findViewById(R.id.cardMessage);
+            messageFoto = (ImageView) itemView.findViewById(R.id.messagePhoto);
 
 
 
@@ -129,7 +161,13 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
             this.messageContent = messageContent;
         }
 
+        public ImageView getMessageFoto() {
+            return messageFoto;
+        }
 
+        public void setMessageFoto(ImageView messageFoto) {
+            this.messageFoto = messageFoto;
+        }
     }
 
     public ArrayList<Mensaje> getMessages() {

@@ -33,14 +33,24 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/cardSender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text = "sender"
                     android:layout_weight="1"/>
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/messagePhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_launcher"
+                    />
 
 
             </LinearLayout>
@@ -63,7 +73,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="00:00"/>
+
             </LinearLayout>
+            
+
 
         </LinearLayout>
     </LinearLayout>
