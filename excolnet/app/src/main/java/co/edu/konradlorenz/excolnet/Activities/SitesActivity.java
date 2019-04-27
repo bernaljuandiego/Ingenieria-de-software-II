@@ -20,7 +20,9 @@ public class SitesActivity extends FragmentActivity implements OnMapReadyCallbac
     private DatabaseReference mDatabase;
     private double latitud;
     private double longitud;
-    private String site="";
+    private String titulo="";
+
+
 
 
     @Override
@@ -37,7 +39,7 @@ public class SitesActivity extends FragmentActivity implements OnMapReadyCallbac
         String id=getIntent().getExtras().getString("id");
         Double lat= getIntent().getExtras().getDouble("latitud");
          Double lon = getIntent().getExtras().getDouble("longitud");
-         site =getIntent().getExtras().getString("titulo");
+         titulo =getIntent().getExtras().getString("titulo");
 
          if(lat !=null && lon!=null){
              latitud=lat;
@@ -61,7 +63,10 @@ public class SitesActivity extends FragmentActivity implements OnMapReadyCallbac
         // Add a marker in Sydney and move the camera
         LatLng site = new LatLng(latitud, longitud);
 
-        mMap.addMarker(new MarkerOptions().position(site).title("Marker in "+site));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(site));
+        mMap.addMarker(new MarkerOptions().position(site).title("Marker in "+titulo));
+
+        float zoomLevel = (float)16.0f;
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(site,zoomLevel));
     }
 }
