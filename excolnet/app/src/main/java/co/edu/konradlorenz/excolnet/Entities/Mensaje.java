@@ -4,6 +4,8 @@ public class Mensaje {
 
     private String SenderUID;
 
+    private  String DestinyUUID;
+
     private String senderDisplayName;
 
     private String senderImage;
@@ -19,6 +21,14 @@ public class Mensaje {
 
     public void setSenderUID(String senderUID) {
         SenderUID = senderUID;
+    }
+
+    public String getDestinyUUID() {
+        return DestinyUUID;
+    }
+
+    public void setDestinyUUID(String destinyUUID) {
+        DestinyUUID = destinyUUID;
     }
 
     public String getSenderDisplayName() {

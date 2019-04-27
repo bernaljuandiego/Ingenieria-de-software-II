@@ -27,12 +27,14 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
     private CardView messageCardView;
     private Context myContext;
     private View view;
+    private String currentUserUID;
 
     public static final String MYTAG="ChatAdapter";
 
-    public ChatAdapter(ArrayList<Mensaje> messages, Context myContext) {
-        this.messages = messages;
+    public ChatAdapter( Context myContext , String userUUID) {
+        this.messages = new ArrayList<Mensaje>();
         this.myContext = myContext;
+        this.currentUserUID = userUUID;
     }
 
     @NonNull
@@ -55,15 +57,18 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
     @Override
     public void onBindViewHolder(@NonNull ChatHolder holder, int position) {
 
-
         holder.getSender().setText(messages.get(position).getSenderDisplayName());
-        Log.i(MYTAG , messages.get(position).getSenderDisplayName());
+
         holder.getSenderTime().setText(messages.get(position).getSenderTime());
-        Log.i(MYTAG , messages.get(position).getSenderTime());
+
         holder.getMessageContent().setText(messages.get(position).getMessage());
-        Log.i(MYTAG , messages.get(position).getMessage());
+
         Glide.with(myContext).load(messages.get(position).getSenderImage()).placeholder(R.drawable.ic_profile).error(R.drawable.com_facebook_profile_picture_blank_square).into(holder.getCardImage());
-        Log.i(MYTAG , messages.get(position).getSenderImage().toString());
+
+        if(!messages.get(position).getSenderUID().equals(currentUserUID)){
+            holder.itemView.setBackgroundColor(myContext.getResources().getColor(R.color.blue));
+        }
+
     }
 
     @Override
@@ -125,5 +130,13 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         }
 
 
+    }
+
+    public ArrayList<Mensaje> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<Mensaje> messages) {
+        this.messages = messages;
     }
 }

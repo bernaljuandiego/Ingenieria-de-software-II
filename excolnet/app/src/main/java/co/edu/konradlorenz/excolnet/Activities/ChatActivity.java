@@ -2,9 +2,11 @@ package co.edu.konradlorenz.excolnet.Activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,8 +27,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import co.edu.konradlorenz.excolnet.Adapters.ChatAdapter;
 import co.edu.konradlorenz.excolnet.Entities.Mensaje;
@@ -40,12 +45,13 @@ public class ChatActivity extends AppCompatActivity  {
     private TextView userChatName;
     private RecyclerView messageList;
     private EditText messageInput;
-    private Button sendButton;
+    private ImageButton sendButton;
     //External User
     private Usuario chatUser;
     //Current User
     private FirebaseUser currentUser;
-    private DatabaseReference currentConversation;
+    private DatabaseReference myConversation;
+    private DatabaseReference externalConversation;
     private DatabaseReference chatReference;
     private ArrayList<Mensaje> messages;
     private ValueEventListener valueEventListener;
@@ -63,12 +69,17 @@ public class ChatActivity extends AppCompatActivity  {
         getLayoutComponents();
         getIntentUser();
         getFirebaseComponents();
+        initializeRecycleView();
         addMessageListener();
+
+
+
 
         this.messages = new ArrayList<>();
 
 
     }
+
 
 
     @Override
@@ -83,8 +94,8 @@ public class ChatActivity extends AppCompatActivity  {
         this.userChatName = (TextView) findViewById(R.id.UserChatName);
         this.messageList = (RecyclerView) findViewById(R.id.MessageList);
         this.messageInput = (EditText) findViewById(R.id.message_input);
-        this.sendButton = (Button)  findViewById(R.id.sendMessage_button);
-        this.layoutManager = new LinearLayoutManager(getApplicationContext());
+        this.sendButton = (ImageButton)  findViewById(R.id.sendMessage_button);
+
     }
 
     public void getIntentUser(){
@@ -99,6 +110,8 @@ public class ChatActivity extends AppCompatActivity  {
     }
 
 
+
+
     public void changeChatLayoutValues(){
          if(chatUser != null){
              Glide.with(getApplicationContext()).load(chatUser.getPhotoUrl()).placeholder(R.drawable.ic_profile).error(R.drawable.com_facebook_profile_picture_blank_square).into(userChatImage);
@@ -110,62 +123,85 @@ public class ChatActivity extends AppCompatActivity  {
         FirebaseAuth auth =  FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
         chatReference = FirebaseDatabase.getInstance().getReference("BaseDatos").child("Chat");
-        validatePrivateChatCollection(currentUser.getUid() + "_" + chatUser.getUid());
-
-        if (currentConversation == null ){
-            validatePrivateChatCollection(chatUser.getUid() + "_" + currentUser.getUid() );
-        }
-
-        if (currentConversation == null){
-            currentConversation = chatReference.child(currentUser.getUid() + "_" + chatUser.getUid());
-        }
+        myConversation = chatReference.child(currentUser.getUid());
+        externalConversation = chatReference.child(chatUser.getUid());
 
 
-        Log.i("ChatActivitygetFBcomps " , currentConversation.getKey());
+
     }
 
+    public  void initializeRecycleView(){
+        this.layoutManager = new LinearLayoutManager(getApplicationContext());
+        adapter = new ChatAdapter(getApplicationContext() , currentUser.getUid());
 
-    public void validatePrivateChatCollection(final String pattern){
-        chatReference.orderByKey().equalTo(pattern).addListenerForSingleValueEvent(new ValueEventListener() {
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                currentConversation = chatReference.child(pattern);
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                ScrollBar();
             }
+        });
 
+        messageList.setHasFixedSize(true);
+        messageList.setLayoutManager(layoutManager);
+        messageList.setAdapter(adapter);
+    }
+
+    public void restartAdapter(){
+        ChatAdapter newAdapter = new ChatAdapter(getApplicationContext() , currentUser.getUid());
+        adapter = newAdapter;
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                ScrollBar();
             }
         });
 
     }
 
+    public void ScrollBar(){
+        messageList.scrollToPosition(adapter.getItemCount() -1);
+    }
+
+
+
+
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("ChatActivityONr" , currentConversation.getKey());
         getChatData();
     }
 
 
     public void getChatData(){
+
+
         this.valueEventListener  =  new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                messages.clear();
+                restartAdapter();
 
 
                 for(DataSnapshot dataSnap : dataSnapshot.getChildren()){
                     Mensaje  msg = dataSnap.getValue(Mensaje.class);
-                    messages.add(msg);
+
+                    if(msg.getSenderUID().equals(currentUser.getUid())){
+                        if(msg.getDestinyUUID().equals(chatUser.getUid())){
+                            adapter.addMessage(msg);
+                        }
+                    }else if (msg.getSenderUID().equals(chatUser.getUid())) {
+                        if (msg.getDestinyUUID().equals(currentUser.getUid())) {
+                            adapter.addMessage(msg);
+                        }
+
+                    }
+
 
                 }
-                Log.i("ChatActivity msgs" , messages.toString());
-                Log.i("ChatActivity currConv" , currentConversation.getKey());
-                adapter = new ChatAdapter(messages , getApplicationContext());
-                messageList.setHasFixedSize(true);
-                messageList.setLayoutManager(layoutManager);
                 messageList.setAdapter(adapter);
+
+
 
 
             }
@@ -176,7 +212,7 @@ public class ChatActivity extends AppCompatActivity  {
             }
         };
 
-        currentConversation.addValueEventListener(valueEventListener);
+        myConversation.addValueEventListener(valueEventListener);
 
     }
 
@@ -184,10 +220,13 @@ public class ChatActivity extends AppCompatActivity  {
     @Override
     protected void onPause() {
         super.onPause();
-        currentConversation.removeEventListener(valueEventListener);
+        myConversation.removeEventListener(valueEventListener);
     }
 
     public void addMessageListener(){
+
+
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -195,27 +234,51 @@ public class ChatActivity extends AppCompatActivity  {
 
 
 
-                String message =  messageInput.getText().toString();
 
+                String message =  messageInput.getText().toString();
+                String time = getMessageTime();
 
                 if(message != null && !message.isEmpty()){
                     Mensaje mensaje  =  new Mensaje();
-                    mensaje.setSenderDisplayName(currentUser.getDisplayName());
+                    restartAdapter();    mensaje.setSenderDisplayName(currentUser.getDisplayName());
                     mensaje.setSenderImage(currentUser.getPhotoUrl().toString());
                     mensaje.setSenderUID(currentUser.getUid());
+                    mensaje.setDestinyUUID(chatUser.getUid());
                     mensaje.setMessage(message);
-                    final String currentDate= DateFormat.getDateTimeInstance().format(new Date());
-                    mensaje.setSenderTime(currentDate);
+                    //final String currentDate= DateFormat.getDateTimeInstance().format(new Date());
+                    mensaje.setSenderTime(time);
 
                     //adapter.addMessage(mensaje);
 
 
-                    currentConversation.push().setValue(mensaje);
+                    myConversation.push().setValue(mensaje);
+                    externalConversation.push().setValue(mensaje);
 
                     messageInput.setText("");
+
                 }
             }
         });
 
+    }
+
+
+    public String getMessageTime(){
+        String returnString="";
+        String amPm = "";
+        Calendar time =  new GregorianCalendar();
+        int hour= time.get(Calendar.HOUR);
+        int minute = time.get(Calendar.MINUTE);
+        int amOrPm = time.get(Calendar.AM_PM);
+
+        if(amOrPm == 0){
+            amPm ="a.m.";
+        }else{
+            amPm ="p.m.";
+        }
+
+        returnString = hour + ":" + minute + " " + amPm;
+
+        return returnString;
     }
 }
