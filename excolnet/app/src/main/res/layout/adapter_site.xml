@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/com_facebook_button_background_color_focused"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
 
@@ -53,8 +54,6 @@
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"
                 android:textSize="15dp" />
-
-
 
 
         </RelativeLayout>
