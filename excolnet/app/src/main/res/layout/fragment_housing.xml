@@ -61,7 +61,8 @@
             android:id="@+id/recyclerHousting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttonHousting">
+            android:layout_below="@id/buttonHousting"
+            android:background="@color/divider_grey">
 
         </androidx.recyclerview.widget.RecyclerView>
 
