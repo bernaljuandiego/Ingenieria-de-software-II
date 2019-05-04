@@ -191,7 +191,7 @@ public class ChatActivity extends AppCompatActivity {
         this.valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //restartAdapter();
+                restartAdapter();
 
 
                 for (DataSnapshot dataSnap : dataSnapshot.getChildren()) {
@@ -255,18 +255,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 if (message != null && !message.isEmpty()) {
                     Mensaje mensaje = new Mensaje(currentUser.getUid() , chatUser.getUid() , currentUser.getDisplayName() ,  currentUser.getPhotoUrl().toString() , time , message , message_Type_message);
-                    restartAdapter();
-                    /*
-                    mensaje.setSenderDisplayName(currentUser.getDisplayName());
-                    mensaje.setSenderImage(currentUser.getPhotoUrl().toString());
-                    mensaje.setSenderUID(currentUser.getUid());
-                    mensaje.setDestinyUUID(chatUser.getUid());
-                    mensaje.setMessage(message);
-
-                    //final String currentDate= DateFormat.getDateTimeInstance().format(new Date());
-                    mensaje.setSenderTime(time);
-                            */
-                    //adapter.addMessage(mensaje);
+                    //restartAdapter();
 
 
                     myConversation.push().setValue(mensaje);
@@ -327,7 +316,7 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
-                        restartAdapter();
+                       // restartAdapter();
                         Uri downloadUri = task.getResult();
                         String time = getMessageTime();
                         Mensaje mensaje = new Mensaje(currentUser.getUid() , chatUser.getUid() , currentUser.getDisplayName() ,  currentUser.getPhotoUrl().toString() , time , getSimpleName() + " ha enviado una foto. " ,  downloadUri.toString(), message_Type_image);
