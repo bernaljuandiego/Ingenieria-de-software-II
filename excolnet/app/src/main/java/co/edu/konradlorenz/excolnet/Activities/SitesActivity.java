@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SitesActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -28,6 +29,7 @@ public class SitesActivity extends FragmentActivity implements OnMapReadyCallbac
     private String nameActivityEntrante;
     private double[] latitudes;
     private double[] longitudes;
+    private List<Host> sitios;
 
 
 
@@ -47,6 +49,12 @@ public class SitesActivity extends FragmentActivity implements OnMapReadyCallbac
          Double lon = getIntent().getExtras().getDouble("longitud");
          titulo =getIntent().getExtras().getString("titulo");
         nameActivityEntrante =getIntent().getExtras().getString("nameActivity");
+
+        if(nameActivityEntrante.equals("Housing")){
+
+            sitios = (ArrayList<Host>) getIntent().getSerializableExtra("Hosts");
+        }
+
 
          if(lat !=null && lon!=null){
              latitud=lat;
@@ -70,6 +78,10 @@ public class SitesActivity extends FragmentActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         if(nameActivityEntrante.equals("Housing")){
+            for(Host sitio : sitios){
+                mMap.addMarker(new MarkerOptions().position(new LatLng(sitio.getLatitud() , sitio.getLongitud())).title(sitio.getNombreHost()));
+            }
+            /*
             LatLng site = new LatLng(4.6724736, -74.0477403);
             LatLng site2 = new LatLng(4.66081, -74.0495811);
             LatLng site3 = new LatLng(4.7121263, -74.1267447);
@@ -78,11 +90,11 @@ public class SitesActivity extends FragmentActivity implements OnMapReadyCallbac
             mMap.addMarker(new MarkerOptions().position(site).title("Apartamento en Chico Reservado"));
             mMap.addMarker(new MarkerOptions().position(site2).title("Altos del Nogal Pijao"));
             mMap.addMarker(new MarkerOptions().position(site3).title("Montecarlo 4 Villas"));
-
+            */
 
             float zoomLevel = (float)6.0f;
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(site,zoomLevel));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(sitios.get(0).getLatitud() , sitios.get(0).getLongitud()),zoomLevel));
         }else{
 
 
