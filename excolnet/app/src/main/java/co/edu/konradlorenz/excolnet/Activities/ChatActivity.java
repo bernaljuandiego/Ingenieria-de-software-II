@@ -187,11 +187,11 @@ public class ChatActivity extends AppCompatActivity {
 
     public void getChatData() {
 
-
+        this.adapter.getMessages().clear();
         this.valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                restartAdapter();
+                //restartAdapter();
 
 
                 for (DataSnapshot dataSnap : dataSnapshot.getChildren()) {
