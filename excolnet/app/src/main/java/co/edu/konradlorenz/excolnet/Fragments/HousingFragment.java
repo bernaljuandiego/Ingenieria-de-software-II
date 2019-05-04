@@ -69,6 +69,7 @@ public class HousingFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), SitesActivity.class);
                 intent.putExtra("nameActivity", "Housing");
+                intent.putExtra("Hosts" , hosts);
                 view.getContext().startActivity(intent);
 
 

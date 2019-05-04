@@ -76,22 +76,25 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
         }
 
-        if(!messages.get(position).getSenderUID().equals(currentUserUID)){
+        if(!(messages.get(position).getSenderUID().equals(currentUserUID))){
 
-            holder.itemView.setBackgroundColor(myContext.getResources().getColor(R.color.blue));
-
-
-            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.itemView.getLayoutParams();
-
-            layoutParams.setMargins(200 , 10 , 0 , 10);
-
-            holder.itemView.setLayoutParams(layoutParams);
-
-        }else{
+            holder.itemView.setBackgroundColor(myContext.getResources().getColor(R.color.white));
 
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.itemView.getLayoutParams();
 
             layoutParams.setMargins(0 , 10 , 200 , 10);
+
+            holder.itemView.setLayoutParams(layoutParams);
+
+
+
+        }else{
+
+            holder.itemView.setBackgroundColor(myContext.getResources().getColor(R.color.blue));
+
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.itemView.getLayoutParams();
+
+            layoutParams.setMargins(200 , 10 , 0 , 10);
 
             holder.itemView.setLayoutParams(layoutParams);
 
