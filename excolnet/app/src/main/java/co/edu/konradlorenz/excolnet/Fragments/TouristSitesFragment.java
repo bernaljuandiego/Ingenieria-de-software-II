@@ -1,17 +1,16 @@
 package co.edu.konradlorenz.excolnet.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,8 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import co.edu.konradlorenz.excolnet.Adapters.SiteAdapter;
 import co.edu.konradlorenz.excolnet.Entities.Lugar;
 import co.edu.konradlorenz.excolnet.R;
@@ -33,7 +30,7 @@ import co.edu.konradlorenz.excolnet.R;
 public class TouristSitesFragment extends Fragment {
 
     private RecyclerView itemSites;
-    private  RecyclerView.Adapter mAdapterS;
+    private RecyclerView.Adapter mAdapterS;
     private RecyclerView.LayoutManager mlayoutManagerS;
     private DatabaseReference baseDatos;
     private ArrayList<Lugar> lugares;
@@ -70,11 +67,11 @@ public class TouristSitesFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 lugares.clear();
 
-                for(DataSnapshot asistenteSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot asistenteSnapshot : dataSnapshot.getChildren()) {
                     Lugar lugar = asistenteSnapshot.getValue(Lugar.class);
                     lugares.add(lugar);
                 }
-                itemSites =(RecyclerView) getView().findViewById(R.id.sites);
+                itemSites = (RecyclerView) getView().findViewById(R.id.sites);
                 itemSites.setHasFixedSize(true);
 
                 mlayoutManagerS = new LinearLayoutManager(getContext());
@@ -83,7 +80,6 @@ public class TouristSitesFragment extends Fragment {
                 mAdapterS = new SiteAdapter(getContext(), lugares);
                 itemSites.setAdapter(mAdapterS);
             }
-
 
 
             @Override

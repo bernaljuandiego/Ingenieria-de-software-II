@@ -8,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/linear"
             android:layout_width="match_parent"
@@ -27,6 +28,7 @@
                 android:textSize="30sp"
                 android:typeface="sans" />
         </LinearLayout>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardHoousting"
             android:layout_width="match_parent"

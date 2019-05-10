@@ -31,6 +31,16 @@ public class Publicacion implements Serializable {
         this.usuariosQueGustan = new ArrayList<>();
     }
 
+    public Publicacion(String id, Usuario usuario, String texto, String fechaPublicacion, String imagen) {
+        this.comentarios = new ArrayList<>();
+        this.usuariosQueGustan = new ArrayList<>();
+        this.id = id;
+        this.usuario = usuario;
+        this.texto = texto;
+        this.fechaPublicacion = fechaPublicacion;
+        this.imagen = imagen;
+    }
+
     public String getId() {
         return id;
     }
@@ -84,16 +94,6 @@ public class Publicacion implements Serializable {
     }
 
     public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
-
-    public Publicacion(String id,Usuario usuario, String texto, String fechaPublicacion, String imagen) {
-        this.comentarios = new ArrayList<>();
-        this.usuariosQueGustan = new ArrayList<>();
-        this.id = id;
-        this.usuario = usuario;
-        this.texto = texto;
-        this.fechaPublicacion = fechaPublicacion;
         this.imagen = imagen;
     }
 }

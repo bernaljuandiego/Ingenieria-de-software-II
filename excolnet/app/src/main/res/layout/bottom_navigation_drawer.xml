@@ -41,7 +41,7 @@
             android:layout_marginTop="2dp"
             android:layout_toLeftOf="@+id/close_image_view"
             android:layout_toRightOf="@+id/profile_image_bottom_sheet"
-            android:text="username@excolnet.com"/>
+            android:text="username@excolnet.com" />
 
 
         <ImageView
@@ -51,8 +51,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="16dp"
-            android:visibility="gone"
-            android:src="@drawable/ic_close" />
+            android:src="@drawable/ic_close"
+            android:visibility="gone" />
 
         <View
             android:id="@+id/divider_one"

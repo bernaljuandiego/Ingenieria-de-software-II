@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/chatBackground"
-        tools:context=".Activities.ChatActivity"
-        >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/chatBackground"
+    android:orientation="vertical"
+    tools:context=".Activities.ChatActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/contactChatBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:id="@+id/contactChatBar">
+        android:background="@color/colorPrimary">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,22 +23,19 @@
                 android:id="@+id/circleAvatarImage"
                 android:layout_width="40sp"
                 android:layout_height="45sp"
-                android:src="@mipmap/ic_launcher"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:src="@mipmap/ic_launcher" />
 
 
             <TextView
                 android:id="@+id/UserChatName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Leo"
                 android:layout_gravity="center"
-                android:layout_marginLeft="13dp"/>
+                android:layout_marginLeft="13dp"
+                android:text="Leo" />
 
         </LinearLayout>
-
-
-
 
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -48,38 +43,39 @@
     <include layout="@layout/content_chat"></include>
 
 
+    <LinearLayout
+        android:id="@+id/input_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
 
-
-        <LinearLayout
-            android:id="@+id/input_bar"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/galleryChatImage"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal" >
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:drawable/ic_menu_gallery"
-                android:layout_gravity="center"
-                android:id="@+id/galleryChatImage"/>
+            android:layout_gravity="center"
+            android:background="@android:drawable/ic_menu_gallery" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="35sp"
-            android:orientation="horizontal"
-            android:background="@drawable/drawable_back"
-            android:layout_marginLeft="10dp"
             android:layout_gravity="center"
-            android:layout_weight="1">
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/drawable_back"
+            android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/message_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint=" Escribe un mensaje"
                 android:layout_gravity="center"
                 android:layout_marginRight="5dp"
                 android:background="@android:color/transparent"
+                android:hint=" Escribe un mensaje"
+                android:inputType="text"
                 android:paddingLeft="10sp"
                 android:textCursorDrawable="@color/colorPrimary"
 
@@ -87,17 +83,15 @@
         </LinearLayout>
 
 
-            <ImageButton
-                android:id="@+id/sendMessage_button"
-                android:layout_width="48sp"
-                android:layout_height="48sp"
-                android:src="@drawable/ic_send_black_24dp"
-                android:gravity="center"
-                android:background="@drawable/circularsendmessage"
-                />
+        <ImageButton
+            android:id="@+id/sendMessage_button"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:background="@drawable/circularsendmessage"
+            android:gravity="center"
+            android:src="@drawable/ic_send_black_24dp" />
 
-        </LinearLayout>
-
+    </LinearLayout>
 
 
-    </RelativeLayout>
+</RelativeLayout>

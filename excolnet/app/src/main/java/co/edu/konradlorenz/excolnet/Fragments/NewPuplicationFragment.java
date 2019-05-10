@@ -2,20 +2,6 @@ package co.edu.konradlorenz.excolnet.Fragments;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import co.edu.konradlorenz.excolnet.Entities.Publicacion;
-import co.edu.konradlorenz.excolnet.Entities.Usuario;
-import co.edu.konradlorenz.excolnet.R;
-import co.edu.konradlorenz.excolnet.Utils.FilePaths;
-import co.edu.konradlorenz.excolnet.Utils.FileSearch;
-import co.edu.konradlorenz.excolnet.Utils.GridImageAdapter;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +20,13 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,6 +41,13 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import co.edu.konradlorenz.excolnet.Entities.Publicacion;
+import co.edu.konradlorenz.excolnet.Entities.Usuario;
+import co.edu.konradlorenz.excolnet.R;
+import co.edu.konradlorenz.excolnet.Utils.FilePaths;
+import co.edu.konradlorenz.excolnet.Utils.FileSearch;
+import co.edu.konradlorenz.excolnet.Utils.GridImageAdapter;
 
 
 public class NewPuplicationFragment extends Fragment {
@@ -147,9 +147,9 @@ public class NewPuplicationFragment extends Fragment {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(new Date());
 
-        if(!TextUtils.isEmpty(texto)){
-            Usuario usuario= new Usuario(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getEmail(),mAuth.getCurrentUser().getPhotoUrl().toString(),mAuth.getCurrentUser().getUid());
-            Publicacion nuevaPublicacion = new Publicacion(id,usuario,texto,date,imagen);
+        if (!TextUtils.isEmpty(texto)) {
+            Usuario usuario = new Usuario(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getEmail(), mAuth.getCurrentUser().getPhotoUrl().toString(), mAuth.getCurrentUser().getUid());
+            Publicacion nuevaPublicacion = new Publicacion(id, usuario, texto, date, imagen);
             mDatabase.child("BaseDatos").child("Publicaciones").child(id).setValue(nuevaPublicacion);
             closePasswordRecoveryWindow();
         } else {

@@ -1,17 +1,5 @@
 package co.edu.konradlorenz.excolnet.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import co.edu.konradlorenz.excolnet.Adapters.CommentAdapter;
-import co.edu.konradlorenz.excolnet.Adapters.PublicationAdapter;
-import co.edu.konradlorenz.excolnet.Entities.Comentario;
-import co.edu.konradlorenz.excolnet.Entities.Publicacion;
-import co.edu.konradlorenz.excolnet.Entities.Usuario;
-import co.edu.konradlorenz.excolnet.R;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,14 +7,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,16 +27,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
+import co.edu.konradlorenz.excolnet.Adapters.CommentAdapter;
+import co.edu.konradlorenz.excolnet.Entities.Comentario;
+import co.edu.konradlorenz.excolnet.Entities.Publicacion;
+import co.edu.konradlorenz.excolnet.Entities.Usuario;
+import co.edu.konradlorenz.excolnet.R;
 
 public class DetailPublicationActivity extends AppCompatActivity {
 
-    private RecyclerView items;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     Publicacion publicacion;
     EditText comentario;
     Button botonComentar;
+    private RecyclerView items;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     private TextView userName;
     private TextView publicationDate;
     private TextView publicationDescription;
@@ -71,20 +65,17 @@ public class DetailPublicationActivity extends AppCompatActivity {
         findMaterialElements();
 
 
-
-
-
         setUpLayoutData();
     }
 
-    private void setUpToolbar(){
+    private void setUpToolbar() {
         String[] firebaseName = user.getDisplayName().split(" ");
         String userName = "@";
 
-        for(int i = 0; i < firebaseName.length; i++){
+        for (int i = 0; i < firebaseName.length; i++) {
             if (i == (firebaseName.length - 1)) {
                 userName += firebaseName[i];
-            }else{
+            } else {
                 userName += firebaseName[i] + "_";
             }
         }
@@ -99,9 +90,7 @@ public class DetailPublicationActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference("BaseDatos");
     }
 
-    private void setUpLayoutData(){
-
-
+    private void setUpLayoutData() {
 
 
         String id = getIntent().getExtras().getString("id");
@@ -116,13 +105,14 @@ public class DetailPublicationActivity extends AppCompatActivity {
                 userName.setText(publicacion.getUsuario().getDisplayName());
                 publicationDate.setText(publicacion.getFechaPublicacion());
                 publicationDescription.setText(publicacion.getTexto());
-                try{
-                    cantidadLikes.setText(publicacion.getUsuariosQueGustan().size()+" Likes");
-                    cantidadComentarios.setText(publicacion.getComentarios().size()+" Comments");
-                } catch (NullPointerException e){ }
+                try {
+                    cantidadLikes.setText(publicacion.getUsuariosQueGustan().size() + " Likes");
+                    cantidadComentarios.setText(publicacion.getComentarios().size() + " Comments");
+                } catch (NullPointerException e) {
+                }
 
                 final ArrayList<Comentario> comentarios = publicacion.getComentarios();
-                Log.e("holi",""+comentarios.size());
+                Log.e("holi", "" + comentarios.size());
                 items = (RecyclerView) findViewById(R.id.recicler_comentarios);
                 items.setHasFixedSize(true);
 
@@ -131,18 +121,18 @@ public class DetailPublicationActivity extends AppCompatActivity {
                 items.setLayoutManager(mLayoutManager);
 
                 // specify an adapter (see also next example)
-                mAdapter = new CommentAdapter(comentarios,getApplicationContext());
+                mAdapter = new CommentAdapter(comentarios, getApplicationContext());
                 items.setAdapter(mAdapter);
 
                 botonComentar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(comentario.getText().toString()!= ""){
+                        if (comentario.getText().toString() != "") {
                             String pattern = "yyyy-MM-dd";
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
                             String date = simpleDateFormat.format(new Date());
-                            Usuario newUser = new Usuario(user.getDisplayName(),user.getEmail(),user.getPhotoUrl().toString(),user.getUid());
-                            publicacion.getComentarios().add(new Comentario(newUser,comentario.getText().toString(),date));
+                            Usuario newUser = new Usuario(user.getDisplayName(), user.getEmail(), user.getPhotoUrl().toString(), user.getUid());
+                            publicacion.getComentarios().add(new Comentario(newUser, comentario.getText().toString(), date));
                             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("BaseDatos");
                             mDatabase.child("Publicaciones").child(publicacion.getId()).setValue(publicacion);
                             comentario.setText("");
@@ -150,6 +140,7 @@ public class DetailPublicationActivity extends AppCompatActivity {
                     }
                 });
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -157,7 +148,7 @@ public class DetailPublicationActivity extends AppCompatActivity {
         });
     }
 
-    private void findMaterialElements(){
+    private void findMaterialElements() {
         botonComentar = findViewById(R.id.boton_comentar);
         comentario = findViewById(R.id.comentario);
         actualUserImage = findViewById(R.id.user_imagen);

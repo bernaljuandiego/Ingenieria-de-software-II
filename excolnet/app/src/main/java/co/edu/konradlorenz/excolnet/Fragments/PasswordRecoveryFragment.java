@@ -3,13 +3,6 @@ package co.edu.konradlorenz.excolnet.Fragments;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +12,17 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 import co.edu.konradlorenz.excolnet.R;
@@ -51,14 +52,14 @@ public class PasswordRecoveryFragment extends Fragment {
     private void showProgress(final boolean show) {
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
         form_password.setVisibility(show ? View.GONE : View.VISIBLE);
-        if(show){
+        if (show) {
             back_button.setOnClickListener(null);
         } else {
             crearLiseners();
         }
     }
 
-    private void obtenerElementosLayout(){
+    private void obtenerElementosLayout() {
         email_text = (EditText) getView().findViewById(R.id.email_text);
         back_button = (ConstraintLayout) getView().findViewById(R.id.back_button);
         reset_password_button = (Button) getView().findViewById(R.id.reset_password_button);
@@ -67,14 +68,14 @@ public class PasswordRecoveryFragment extends Fragment {
         email_text.requestFocus();
     }
 
-    private void closePasswordRecoveryWindow(){
+    private void closePasswordRecoveryWindow() {
         FragmentManager manager = ((Fragment) PasswordRecoveryFragment.this).getFragmentManager();
         FragmentTransaction trans = manager.beginTransaction();
         trans.remove((Fragment) PasswordRecoveryFragment.this);
         trans.commit();
     }
 
-    private void crearLiseners(){
+    private void crearLiseners() {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +87,7 @@ public class PasswordRecoveryFragment extends Fragment {
             public void onClick(View v) {
                 FirebaseAuth auth = FirebaseAuth.getInstance();
                 String emailAddress = email_text.getText().toString();
-                if(TextUtils.isEmpty(emailAddress)){
+                if (TextUtils.isEmpty(emailAddress)) {
                     email_text.setError(getString(R.string.error_field_required));
                 } else {
                     if (emailAddress.contains("@")) {
@@ -102,12 +103,12 @@ public class PasswordRecoveryFragment extends Fragment {
                                         }
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    showProgress(false);
-                                    Snackbar.make(back_button, "Email doesn't exists.", Snackbar.LENGTH_SHORT).show();
-                                }
-                            });
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                showProgress(false);
+                                Snackbar.make(back_button, "Email doesn't exists.", Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
                     } else {
                         Snackbar.make(back_button, "Enter a valid email.", Snackbar.LENGTH_SHORT).show();
                     }

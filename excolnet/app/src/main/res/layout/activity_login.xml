@@ -52,7 +52,7 @@
                         android:gravity="bottom"
                         android:text="Exchange"
                         android:textSize="24sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textView2"

@@ -1,22 +1,22 @@
 package co.edu.konradlorenz.excolnet.Adapters;
 
 import android.content.Context;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import co.edu.konradlorenz.excolnet.Entities.Comentario;
-import co.edu.konradlorenz.excolnet.R;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
+
+import co.edu.konradlorenz.excolnet.Entities.Comentario;
+import co.edu.konradlorenz.excolnet.R;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentHolder> {
     private ArrayList<Comentario> items;
@@ -52,6 +52,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentH
         ImageView fotoUsuario;
         TextView nombreUsuario;
         TextView textoComentario;
+
         CommentHolder(View itemView) {
             super(itemView);
             fotoUsuario = itemView.findViewById(R.id.user_image_comment);
