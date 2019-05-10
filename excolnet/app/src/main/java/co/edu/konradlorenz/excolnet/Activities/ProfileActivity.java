@@ -35,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import co.edu.konradlorenz.excolnet.Entities.Usuario;
@@ -62,6 +63,10 @@ public class ProfileActivity extends AppCompatActivity {
     private String user_id;
     private TextView maddUserText;
     private DatabaseReference mFriendDatabase;
+    private ValueEventListener valueEventListener;
+    private ArrayList<Usuario> listaUsuarios;
+    private boolean frien = false;
+    // private TextView numberFriends;
 
 
     @Override
@@ -96,7 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
                 setUpUserData(activityCalled);
                 loadPublications(userPrincipalPublication);
                 break;
-            case "AdapterSearch" :
+            case "AdapterSearch":
                 userPrincipalPublication = (Usuario) getIntent().getSerializableExtra("USER");
                 setUpUserData(activityCalled);
                 loadPublications(userPrincipalPublication);
@@ -104,9 +109,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+
     private void setUpAddUser() {
 
         user_id = getIntent().getStringExtra("USER_ID");
+        isFriend();
         if (user_id == null || user_id.equals(user.getUid())) {
             user_id = user.getUid();
             addUserButton.setEnabled(false);
@@ -114,6 +121,8 @@ public class ProfileActivity extends AppCompatActivity {
             maddUserText.setText("");
         }
 
+
+        System.out.print(frien);
         mUserDatabase = mDatabase.child("Users").child(user_id);
 
 
@@ -153,7 +162,9 @@ public class ProfileActivity extends AppCompatActivity {
                             }
 
                     );
+
                 }
+
 
                 //----------Cancel Request
 
@@ -216,6 +227,37 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    private void isFriend() {
+
+        this.valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                for (DataSnapshot dataSnap : dataSnapshot.getChildren()) {
+                    String friendUserUID = dataSnap.getKey();
+
+                    if (friendUserUID.equals(user_id)) {
+                        frien = true;
+                        addUserButton.setEnabled(false);
+                        addUserButton.setVisibility(View.INVISIBLE);
+                        maddUserText.setText("");
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("FriendsFragment.error: ", databaseError.getMessage() + " details : " + databaseError.getDetails());
+            }
+        };
+
+        mDatabase.child("Friends").child(user.getUid()).addValueEventListener(valueEventListener);
+
+    }
+
 
     private void firebaseLoadData() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -226,35 +268,34 @@ public class ProfileActivity extends AppCompatActivity {
     private void setUpUserData(String activityCalled) {
 
 
+        Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(circleImageView);
+        userName.setText(user.getDisplayName());
 
-                Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(circleImageView);
-                userName.setText(user.getDisplayName());
-                
 
-                Glide.with(getApplicationContext()).load(userPrincipalPublication.getPhotoUrl()).into(circleImageView);
-                userName.setText(userPrincipalPublication.getDisplayName());
+        Glide.with(getApplicationContext()).load(userPrincipalPublication.getPhotoUrl()).into(circleImageView);
+        userName.setText(userPrincipalPublication.getDisplayName());
 
-                mFriendREqDatabase.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChild(user_id)) {
-                            String req_type = dataSnapshot.child(user_id).child("request_type").getValue().toString();
-                            if (req_type.equals("received")) {
-                                mcurrentState = "req_received";
-                                maddUserText.setText("Accept Friend Request");
+        mFriendREqDatabase.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(user_id)) {
+                    String req_type = dataSnapshot.child(user_id).child("request_type").getValue().toString();
+                    if (req_type.equals("received")) {
+                        mcurrentState = "req_received";
+                        maddUserText.setText("Accept Friend Request");
 
-                            } else if (req_type.equals("sent")) {
-                                mcurrentState = "req_sent";
-                                maddUserText.setText("Cancel Friend Request");
-                            }
-                        }
+                    } else if (req_type.equals("sent")) {
+                        mcurrentState = "req_sent";
+                        maddUserText.setText("Cancel Friend Request");
                     }
+                }
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
+            }
+        });
 
     }
 
@@ -313,6 +354,7 @@ public class ProfileActivity extends AppCompatActivity {
         mcurrentState = "not_friends";
         mFriendREqDatabase = FirebaseDatabase.getInstance().getReference().child("BaseDatos").child("FriendReq");
         mFriendDatabase = FirebaseDatabase.getInstance().getReference().child("BaseDatos").child("Friends");
+        //numberFriends =findViewById(R.id.number_friends);
     }
 
     public void setUpAppBarLayout() {
@@ -377,5 +419,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }

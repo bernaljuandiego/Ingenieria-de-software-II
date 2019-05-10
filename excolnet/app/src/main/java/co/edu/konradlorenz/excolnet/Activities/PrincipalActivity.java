@@ -173,7 +173,6 @@ public class PrincipalActivity extends AppCompatActivity {
                 newintent.putExtra("ACTIVITY_CALLED_NAME", ACTIVITY_NAME);
 
 
-
                 newintent.putExtra("USER", obtenerUsuario());
                 startActivity(newintent);
                 break;
@@ -187,8 +186,8 @@ public class PrincipalActivity extends AppCompatActivity {
 
     private Usuario obtenerUsuario() {
         for (Usuario usuario : listaUsuarios) {
-            if(usuario.getDisplayName().equals(user.getDisplayName())){
-                return  usuario;
+            if (usuario.getDisplayName().equals(user.getDisplayName())) {
+                return usuario;
             }
         }
         return null;

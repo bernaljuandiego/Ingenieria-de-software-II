@@ -26,7 +26,7 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.MyViewHold
     private Context context;
     private LinearLayout friendSearched;
     private View view;
-    private  String ACTIVITY_NAME= "AdapterSearch";
+    private String ACTIVITY_NAME = "AdapterSearch";
 
     public AdapterSearch(Context context, ArrayList<Usuario> list) {
         this.context = context;
@@ -36,7 +36,7 @@ public class AdapterSearch extends RecyclerView.Adapter<AdapterSearch.MyViewHold
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_search, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_search, parent, false);
         friendSearched = view.findViewById(R.id.textViewSearchL);
         return new MyViewHolder(view);
     }
