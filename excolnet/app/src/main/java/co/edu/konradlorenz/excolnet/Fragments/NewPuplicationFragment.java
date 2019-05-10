@@ -1,6 +1,7 @@
 package co.edu.konradlorenz.excolnet.Fragments;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,11 +34,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -76,7 +80,7 @@ public class NewPuplicationFragment extends Fragment {
     private String mSelectedImage;
     private FirebaseAuth mAuth;
     private TextView userName;
-
+    private FirebaseStorage storage;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -97,6 +101,8 @@ public class NewPuplicationFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
+        storage = FirebaseStorage.getInstance();
+
         userImage = getView().findViewById(R.id.user_image);
         Glide.with(this).load(user.getPhotoUrl()).into(userImage);
         userName = getView().findViewById(R.id.user_name);
@@ -140,7 +146,8 @@ public class NewPuplicationFragment extends Fragment {
 
     private void crearPublicacion() {
         String texto = textPublication.getText().toString();
-        String imagen = "https://firebasestorage.googleapis.com/v0/b/excolnet.appspot.com/o/23722736_10210496487357606_4915684129591806692_n.jpg?alt=media&token=ca4ebff1-5b8e-44ae-8dc3-95024978ce75";
+        //String imagen = "https://firebasestorage.googleapis.com/v0/b/excolnet.appspot.com/o/23722736_10210496487357606_4915684129591806692_n.jpg?alt=media&token=ca4ebff1-5b8e-44ae-8dc3-95024978ce75";
+
 
         String id = mDatabase.push().getKey();
         String pattern = "yyyy-MM-dd";
@@ -149,6 +156,11 @@ public class NewPuplicationFragment extends Fragment {
 
         if (!TextUtils.isEmpty(texto)) {
             Usuario usuario = new Usuario(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getEmail(), mAuth.getCurrentUser().getPhotoUrl().toString(), mAuth.getCurrentUser().getUid());
+            Uri file = Uri.fromFile(new File(mSelectedImage));
+            StorageReference imagenes = storage.getReference("Publication_reference");
+            final  StorageReference reference =
+
+
             Publicacion nuevaPublicacion = new Publicacion(id, usuario, texto, date, imagen);
             mDatabase.child("BaseDatos").child("Publicaciones").child(id).setValue(nuevaPublicacion);
             closePasswordRecoveryWindow();
