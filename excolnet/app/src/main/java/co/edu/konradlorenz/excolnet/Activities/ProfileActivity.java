@@ -87,14 +87,19 @@ public class ProfileActivity extends AppCompatActivity {
 
         switch (activityCalled) {
             case "PrincipalActivity":
+                userPrincipalPublication = (Usuario) getIntent().getSerializableExtra("USER");
                 setUpUserData(activityCalled);
-                loadPublications();
+                loadPublications(userPrincipalPublication);
                 break;
             case "PublicationsAdapter":
                 userPrincipalPublication = (Usuario) getIntent().getSerializableExtra("USER");
                 setUpUserData(activityCalled);
                 loadPublications(userPrincipalPublication);
                 break;
+            case "AdapterSearch" :
+                userPrincipalPublication = (Usuario) getIntent().getSerializableExtra("USER");
+                setUpUserData(activityCalled);
+                loadPublications(userPrincipalPublication);
         }
 
     }
@@ -220,13 +225,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setUpUserData(String activityCalled) {
 
-        switch (activityCalled) {
-            case "PrincipalActivity":
+
+
                 Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(circleImageView);
                 userName.setText(user.getDisplayName());
-                break;
+                
 
-            case "PublicationsAdapter":
                 Glide.with(getApplicationContext()).load(userPrincipalPublication.getPhotoUrl()).into(circleImageView);
                 userName.setText(userPrincipalPublication.getDisplayName());
 
@@ -252,10 +256,6 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
 
-                break;
-        }
-
-
     }
 
     private void setUpToolbarLayout() {
@@ -272,6 +272,8 @@ public class ProfileActivity extends AppCompatActivity {
     private void loadPublications(Usuario user) {
         Fragment fragment = new PublicationsFragment(user);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+
         ft.replace(R.id.contenido, fragment);
         ft.commit();
     }

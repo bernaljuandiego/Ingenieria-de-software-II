@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/background_dark"
                 android:fontFamily="casual"
-                android:text="Cerca de ti:"
+                android:text="@string/housing"
                 android:textAlignment="textStart"
                 android:textColor="#FCF9F9"
                 android:textSize="24sp"
@@ -57,7 +57,7 @@
             android:layout_below="@id/cardHoousting"
             android:layout_marginTop="5dp"
             android:background="#8BC34A"
-            android:text="Ver en Mapa" />
+            android:text="@string/see_map" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerHousting"

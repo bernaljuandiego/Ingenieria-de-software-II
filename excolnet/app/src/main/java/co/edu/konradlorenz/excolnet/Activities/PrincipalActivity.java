@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +43,7 @@ public class PrincipalActivity extends AppCompatActivity {
     private String ACTIVITY_NAME = "PrincipalActivity";
     private BottomAppBar bottomAppBar;
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
     private DatabaseReference mDatabase;
     private ArrayList<Usuario> listaUsuarios;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -61,6 +63,7 @@ public class PrincipalActivity extends AppCompatActivity {
         fabPublicationsHandler();
 
         mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
 
         if (checkPermissionsArray(Permissions.PERMISSIONS)) {
 
@@ -168,6 +171,10 @@ public class PrincipalActivity extends AppCompatActivity {
             case R.id.app_bar_profile:
                 Intent newintent = new Intent(PrincipalActivity.this, ProfileActivity.class);
                 newintent.putExtra("ACTIVITY_CALLED_NAME", ACTIVITY_NAME);
+
+
+
+                newintent.putExtra("USER", obtenerUsuario());
                 startActivity(newintent);
                 break;
             case android.R.id.home:
@@ -176,6 +183,15 @@ public class PrincipalActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private Usuario obtenerUsuario() {
+        for (Usuario usuario : listaUsuarios) {
+            if(usuario.getDisplayName().equals(user.getDisplayName())){
+                return  usuario;
+            }
+        }
+        return null;
     }
 
     // Ejecuta el efecto del Bottom App Bar
