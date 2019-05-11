@@ -1,10 +1,5 @@
 package co.edu.konradlorenz.excolnet.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -16,6 +11,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,7 +31,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import co.edu.konradlorenz.excolnet.R;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -59,9 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
-    public void addUser(){
-
-
+    public void addUser() {
 
 
         usernameTextInput.setError(null);
@@ -78,13 +76,13 @@ public class RegisterActivity extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        if(TextUtils.isEmpty(usermame)){
+        if (TextUtils.isEmpty(usermame)) {
             usernameTextInput.setError(getString(R.string.error_field_required));
-            focusView =  usernameTextInput;
-            cancel = true ;
+            focusView = usernameTextInput;
+            cancel = true;
         }
 
-        if (TextUtils.isEmpty(lastname)){
+        if (TextUtils.isEmpty(lastname)) {
             lastnameTextInput.setError(getString(R.string.error_field_required));
             focusView = lastnameTextInput;
             cancel = true;
@@ -106,28 +104,21 @@ public class RegisterActivity extends AppCompatActivity {
             passwordTextInput.setError(getString(R.string.error_field_required));
             focusView = passwordTextInput;
             cancel = true;
-        }else if ( !TextUtils.isEmpty(password) && !isPasswordValid(password)){
+        } else if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             passwordTextInput.setError(getString(R.string.error_invalid_password));
             focusView = passwordTextInput;
             cancel = true;
         }
 
-            //Validate if user upload and image
-            boolean notSelected = false;
-            ImageView defaultImage =  new ImageView(this);
-            defaultImage.setImageResource(R.drawable.ic_select_photo);
+        //Validate if user upload and image
+        boolean notSelected = false;
+        ImageView defaultImage = new ImageView(this);
+        defaultImage.setImageResource(R.drawable.ic_select_photo);
 
-        if(  imageRegisterInput.getDrawable().getConstantState() ==  defaultImage.getDrawable().getConstantState()){
+        if (imageRegisterInput.getDrawable().getConstantState() == defaultImage.getDrawable().getConstantState()) {
             cancel = true;
             notSelected = true;
         }
-
-
-
-
-
-
-
 
 
         final String userCompleteName = usernameTextInput.getText().toString().trim() + " " + lastnameTextInput.getText().toString().trim();
@@ -135,19 +126,19 @@ public class RegisterActivity extends AppCompatActivity {
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
-            if(notSelected){
+            if (notSelected) {
                 alertNullImage();
-            }else{
+            } else {
                 focusView.requestFocus();
             }
-        }else {
+        } else {
 
             registration_progressbar.setVisibility(View.VISIBLE);
             firebaseAuth.createUserWithEmailAndPassword(emailAdress, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     registration_progressbar.setVisibility(View.GONE);
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
 
                         FirebaseUser user = firebaseAuth.getCurrentUser();
 
@@ -160,14 +151,14 @@ public class RegisterActivity extends AppCompatActivity {
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
+                                        if (task.isSuccessful()) {
                                             Snackbar.make(register_layout, "User Created", Snackbar.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
 
 
-                    }else{
+                    } else {
                         Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -175,17 +166,16 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
 
-
     }
-    
-    public void buttonsController(){
+
+    public void buttonsController() {
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 imageChooser();
             }
         });
-        
+
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,13 +184,13 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void imageChooser(){
+    public void imageChooser() {
         Intent newIntent = new Intent(Intent.ACTION_GET_CONTENT);
         newIntent.setType("image/*");
         startActivityForResult(newIntent, PICK_IMAGE_REQUEST);
     }
 
-    public void getLayoutComponents(){
+    public void getLayoutComponents() {
         usernameTextInput = findViewById(R.id.username_text_input);
         lastnameTextInput = findViewById(R.id.lastname_text_input);
         emailTextInput = findViewById(R.id.email_text_input);
@@ -214,15 +204,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case PICK_IMAGE_REQUEST:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     selectedImage = data.getData();
 
-                    try{
+                    try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                         imageRegisterInput.setImageBitmap(bitmap);
-                    }catch(IOException e){
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -242,21 +232,21 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     protected boolean isEmailValid(String email) {
-        if (email.contains("@") &&  email.contains(".")){
+        if (email.contains("@") && email.contains(".")) {
             return true;
-        }else {
+        } else {
             return false;
         }
 
     }
 
 
-    private void alertNullImage(){
-        AlertDialog.Builder builder =  new AlertDialog.Builder(this);
+    private void alertNullImage() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.image_required)
                 .setTitle("Error");
 
-        builder.setPositiveButton("Ok" , null);
+        builder.setPositiveButton("Ok", null);
 
         AlertDialog dialog = builder.create();
         dialog.show();

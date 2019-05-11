@@ -1,96 +1,81 @@
 package co.edu.konradlorenz.excolnet.Activities;
 
-import java.util.List;
-
+import android.annotation.TargetApi;
+import android.app.LoaderManager.LoaderCallbacks;
+import android.content.CursorLoader;
+import android.content.Intent;
+import android.content.Loader;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
-import android.os.Bundle;
-import android.view.View;
-
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import android.view.KeyEvent;
-import android.widget.Button;
-import android.content.Loader;
-import android.content.Intent;
-import android.text.TextUtils;
-import android.database.Cursor;
-import android.widget.EditText;
-import android.widget.TextView;
-
 import com.facebook.AccessToken;
-import com.facebook.FacebookSdk;
-
-import android.widget.LinearLayout;
-import android.widget.ArrayAdapter;
-import android.content.CursorLoader;
-import android.annotation.TargetApi;
-
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.tasks.Task;
-
-import android.content.pm.PackageManager;
-import android.view.View.OnClickListener;
-import android.provider.ContactsContract;
-
-import androidx.annotation.NonNull;
-
-import android.widget.AutoCompleteTextView;
-import android.view.inputmethod.EditorInfo;
-
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.UserInfo;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.Twitter;
-import com.twitter.sdk.android.core.Callback;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.facebook.login.widget.LoginButton;
-
-import com.google.android.material.snackbar.Snackbar;
-
-import com.google.firebase.auth.AuthCredential;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.LoaderManager.LoaderCallbacks;
-
-import com.twitter.sdk.android.core.TwitterConfig;
-import com.twitter.sdk.android.core.DefaultLogger;
-import com.twitter.sdk.android.core.TwitterSession;
-import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.auth.TwitterAuthProvider;
-import com.google.firebase.auth.FacebookAuthProvider;
-import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
-
-import static android.Manifest.permission.READ_CONTACTS;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.TwitterAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.DefaultLogger;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterConfig;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import co.edu.konradlorenz.excolnet.Entities.Usuario;
 import co.edu.konradlorenz.excolnet.Fragments.PasswordRecoveryFragment;
 import co.edu.konradlorenz.excolnet.R;
 
+import static android.Manifest.permission.READ_CONTACTS;
+
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+    private static final int RC_SIGN_IN = 101;
+    private static final int REQUEST_READ_CONTACTS = 0;
     // variables de clase ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     private FirebaseAuth mAuth;
     private EditText mPasswordView;
@@ -101,20 +86,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private TextView password_text_link;
     private AutoCompleteTextView mEmailView;
     private CallbackManager mCallbackManager;
-    private static final int RC_SIGN_IN = 101;
     private TwitterLoginButton loginTwitterButton;
     private GoogleSignInClient mGoogleSignInClient;
-    private static final int REQUEST_READ_CONTACTS = 0;
     private TextView sign_up_button;
-
-    //metodos de autocompletado de textedit de correo electronico y pedida de permisos de acceso a contactos--------------------------------------------------------------------------------------------
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-        int ADDRESS = 0;
-    }
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -375,7 +349,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         loginFacebookButton.performClick();
     }
 
-
     protected boolean isEmailValid(String email) {
         if (email.contains("@") && email.contains(".")) {
             return true;
@@ -481,7 +454,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void logInSucceed() {
         FirebaseUser user = mAuth.getCurrentUser();
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        Usuario newUser = new Usuario(user.getDisplayName(), user.getEmail(),user.getPhotoUrl().toString(),user.getUid());
+        Usuario newUser = new Usuario(user.getDisplayName(), user.getEmail(), user.getPhotoUrl().toString(), user.getUid());
         mDatabase.child("BaseDatos").child("Users").child(user.getUid()).setValue(newUser);
         Intent i = new Intent(LoginActivity.this, PrincipalActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -492,6 +465,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void logInConectionFailed() {
         showProgress(false);
         Snackbar.make(findViewById(R.id.main_layout), "Connection Error.", Snackbar.LENGTH_SHORT).show();
+    }
+
+    //metodos de autocompletado de textedit de correo electronico y pedida de permisos de acceso a contactos--------------------------------------------------------------------------------------------
+    private interface ProfileQuery {
+        String[] PROJECTION = {
+                ContactsContract.CommonDataKinds.Email.ADDRESS,
+                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
+        };
+        int ADDRESS = 0;
     }
 }
 

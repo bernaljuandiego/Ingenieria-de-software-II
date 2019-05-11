@@ -17,6 +17,7 @@ public class Interes {
 
     //Short Interest Description
     private String description;
+
     /*
     private String imagenInteres;
 

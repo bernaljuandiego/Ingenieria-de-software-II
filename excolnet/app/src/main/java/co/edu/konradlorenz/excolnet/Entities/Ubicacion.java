@@ -7,7 +7,6 @@ Author: Leonardo Ruiz
 public class Ubicacion {
 
 
-
     //Latitude
     private Long latitud;
 
@@ -25,7 +24,7 @@ public class Ubicacion {
 
     }
 
-    public Ubicacion( Long latitud, Long longitud, Long precision, Long placeId) {
+    public Ubicacion(Long latitud, Long longitud, Long precision, Long placeId) {
         this.latitud = latitud;
         this.longitud = longitud;
         this.precision = precision;

@@ -8,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/linear"
             android:layout_width="match_parent"
@@ -27,6 +28,7 @@
                 android:textSize="30sp"
                 android:typeface="sans" />
         </LinearLayout>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardHoousting"
             android:layout_width="match_parent"
@@ -39,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/background_dark"
                 android:fontFamily="casual"
-                android:text="Cerca de ti:"
+                android:text="@string/housing"
                 android:textAlignment="textStart"
                 android:textColor="#FCF9F9"
                 android:textSize="24sp"
@@ -55,7 +57,7 @@
             android:layout_below="@id/cardHoousting"
             android:layout_marginTop="5dp"
             android:background="#8BC34A"
-            android:text="Ver en Mapa" />
+            android:text="@string/see_map" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerHousting"

@@ -1,21 +1,5 @@
 package co.edu.konradlorenz.excolnet.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import co.edu.konradlorenz.excolnet.Entities.Usuario;
-import co.edu.konradlorenz.excolnet.Fragments.NewPuplicationFragment;
-import co.edu.konradlorenz.excolnet.Fragments.BottomSheetNavigationFragment;
-import co.edu.konradlorenz.excolnet.Fragments.PublicationsFragment;
-import co.edu.konradlorenz.excolnet.R;
-import co.edu.konradlorenz.excolnet.Adapters.AdapterSearch;
-import co.edu.konradlorenz.excolnet.Utils.Permissions;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -23,9 +7,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,12 +29,21 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import co.edu.konradlorenz.excolnet.Adapters.AdapterSearch;
+import co.edu.konradlorenz.excolnet.Entities.Usuario;
+import co.edu.konradlorenz.excolnet.Fragments.BottomSheetNavigationFragment;
+import co.edu.konradlorenz.excolnet.Fragments.NewPuplicationFragment;
+import co.edu.konradlorenz.excolnet.Fragments.PublicationsFragment;
+import co.edu.konradlorenz.excolnet.R;
+import co.edu.konradlorenz.excolnet.Utils.Permissions;
+
 public class PrincipalActivity extends AppCompatActivity {
 
-    private String ACTIVITY_NAME = "PrincipalActivity";
     private static final int VERIFY_PERMISSIONS_REQUEST = 1;
+    private String ACTIVITY_NAME = "PrincipalActivity";
     private BottomAppBar bottomAppBar;
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
     private DatabaseReference mDatabase;
     private ArrayList<Usuario> listaUsuarios;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -59,6 +63,7 @@ public class PrincipalActivity extends AppCompatActivity {
         fabPublicationsHandler();
 
         mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
 
         if (checkPermissionsArray(Permissions.PERMISSIONS)) {
 
@@ -121,7 +126,7 @@ public class PrincipalActivity extends AppCompatActivity {
     private void search(String str) {
         ArrayList<Usuario> myListUsuarios = new ArrayList<>();
         for (Usuario usuarioBuscado : listaUsuarios) {
-            if (usuarioBuscado.getDisplayName().toLowerCase().contains(str.toLowerCase())&&!str.equals("")&&!str.equals(" ")) {
+            if (usuarioBuscado.getDisplayName().toLowerCase().contains(str.toLowerCase()) && !str.equals("") && !str.equals(" ")) {
                 myListUsuarios.add(usuarioBuscado);
             }
         }
@@ -138,7 +143,7 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     //Maneja el botón central flotante de agregar publicaciones.
-    private void fabPublicationsHandler(){
+    private void fabPublicationsHandler() {
         fabPublications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,6 +171,9 @@ public class PrincipalActivity extends AppCompatActivity {
             case R.id.app_bar_profile:
                 Intent newintent = new Intent(PrincipalActivity.this, ProfileActivity.class);
                 newintent.putExtra("ACTIVITY_CALLED_NAME", ACTIVITY_NAME);
+
+
+                newintent.putExtra("USER", obtenerUsuario());
                 startActivity(newintent);
                 break;
             case android.R.id.home:
@@ -174,6 +182,15 @@ public class PrincipalActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private Usuario obtenerUsuario() {
+        for (Usuario usuario : listaUsuarios) {
+            if (usuario.getDisplayName().equals(user.getDisplayName())) {
+                return usuario;
+            }
+        }
+        return null;
     }
 
     // Ejecuta el efecto del Bottom App Bar

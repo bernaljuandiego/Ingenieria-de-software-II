@@ -1,21 +1,8 @@
 package co.edu.konradlorenz.excolnet.Fragments;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import co.edu.konradlorenz.excolnet.Entities.Publicacion;
-import co.edu.konradlorenz.excolnet.Entities.Usuario;
-import co.edu.konradlorenz.excolnet.R;
-import co.edu.konradlorenz.excolnet.Utils.FilePaths;
-import co.edu.konradlorenz.excolnet.Utils.FileSearch;
-import co.edu.konradlorenz.excolnet.Utils.GridImageAdapter;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,20 +21,41 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import co.edu.konradlorenz.excolnet.Entities.Publicacion;
+import co.edu.konradlorenz.excolnet.Entities.Usuario;
+import co.edu.konradlorenz.excolnet.R;
+import co.edu.konradlorenz.excolnet.Utils.FilePaths;
+import co.edu.konradlorenz.excolnet.Utils.FileSearch;
+import co.edu.konradlorenz.excolnet.Utils.GridImageAdapter;
 
 
 public class NewPuplicationFragment extends Fragment {
@@ -69,6 +77,14 @@ public class NewPuplicationFragment extends Fragment {
     private Button sendButton;
     private EditText textPublication;
     private DatabaseReference mDatabase;
+    Publicacion nuevaPublicacion;
+
+    private String texto = "";
+
+    private String id = "";
+    private String pattern = "yyyy-MM-dd";
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    private String date = simpleDateFormat.format(new Date());
 
     //vars
     private ArrayList<String> directories;
@@ -76,7 +92,10 @@ public class NewPuplicationFragment extends Fragment {
     private String mSelectedImage;
     private FirebaseAuth mAuth;
     private TextView userName;
+    private Usuario usuario;
+    private StorageReference publicationReference;
 
+    private FirebaseStorage storage;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -97,6 +116,8 @@ public class NewPuplicationFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
+        storage = FirebaseStorage.getInstance();
+
         userImage = getView().findViewById(R.id.user_image);
         Glide.with(this).load(user.getPhotoUrl()).into(userImage);
         userName = getView().findViewById(R.id.user_name);
@@ -139,19 +160,49 @@ public class NewPuplicationFragment extends Fragment {
     }
 
     private void crearPublicacion() {
-        String texto = textPublication.getText().toString();
-        String imagen = "https://firebasestorage.googleapis.com/v0/b/excolnet.appspot.com/o/23722736_10210496487357606_4915684129591806692_n.jpg?alt=media&token=ca4ebff1-5b8e-44ae-8dc3-95024978ce75";
+        texto = textPublication.getText().toString();
+        //String imagen = "https://firebasestorage.googleapis.com/v0/b/excolnet.appspot.com/o/23722736_10210496487357606_4915684129591806692_n.jpg?alt=media&token=ca4ebff1-5b8e-44ae-8dc3-95024978ce75";
 
-        String id = mDatabase.push().getKey();
-        String pattern = "yyyy-MM-dd";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String date = simpleDateFormat.format(new Date());
 
-        if(!TextUtils.isEmpty(texto)){
-            Usuario usuario= new Usuario(mAuth.getCurrentUser().getDisplayName(),mAuth.getCurrentUser().getEmail(),mAuth.getCurrentUser().getPhotoUrl().toString(),mAuth.getCurrentUser().getUid());
-            Publicacion nuevaPublicacion = new Publicacion(id,usuario,texto,date,imagen);
-            mDatabase.child("BaseDatos").child("Publicaciones").child(id).setValue(nuevaPublicacion);
+        id = mDatabase.push().getKey();
+        pattern = "yyyy-MM-dd";
+        simpleDateFormat = new SimpleDateFormat(pattern);
+        date = simpleDateFormat.format(new Date());
+
+        if (!TextUtils.isEmpty(texto)) {
+            usuario = new Usuario(mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getEmail(), mAuth.getCurrentUser().getPhotoUrl().toString(), mAuth.getCurrentUser().getUid());
+            Uri file = Uri.fromFile(new File(mSelectedImage));
+            publicationReference = storage.getReference("Publication_reference");
+            final StorageReference reference = publicationReference.child(file.getLastPathSegment());
+            UploadTask uploadTask = reference.putFile(file);
+
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return reference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        // restartAdapter();
+                        Uri downloadUri = task.getResult();
+                        nuevaPublicacion = new Publicacion(id, usuario, texto, date, downloadUri.toString());
+                        mDatabase.child("BaseDatos").child("Publicaciones").child(id).setValue(nuevaPublicacion);
+
+                    } else {
+                        // Handle failures
+                        // ...
+                    }
+                }
+            });
             closePasswordRecoveryWindow();
+
         } else {
             Snackbar.make(getView(), "Error.", Snackbar.LENGTH_SHORT).show();
         }
