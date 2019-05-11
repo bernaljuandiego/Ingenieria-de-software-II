@@ -106,6 +106,9 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
             public void onClick(View v) {
                 Intent newIntent = new Intent(view.getContext(), DetailPublicationActivity.class);
                 newIntent.putExtra("id", items.get(position).getId());
+                newIntent.putExtra("ACTIVITY_CALLED_NAME", ACTIVITY_NAME);
+                newIntent.putExtra("USER_ID", items.get(position).getUsuario().getUid());
+                newIntent.putExtra("USER", items.get(position).getUsuario());
                 view.getContext().startActivity(newIntent);
             }
         });
