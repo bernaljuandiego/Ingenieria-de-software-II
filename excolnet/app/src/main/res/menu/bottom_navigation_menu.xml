@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_chat_option"
@@ -11,9 +10,9 @@
             android:icon="@drawable/ic_invitations"
             android:title="Invitations" />
         <item
-        android:id="@+id/nav_tourism_agencies_option"
-        android:icon="@drawable/ic_tourism"
-        android:title="Tourism Agencies" />
+            android:id="@+id/nav_tourism_agencies_option"
+            android:icon="@drawable/ic_tourism"
+            android:title="Tourism Agencies" />
         <item
             android:id="@+id/nav_night_life_option"
             android:icon="@drawable/ic_night_life"

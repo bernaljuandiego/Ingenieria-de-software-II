@@ -12,7 +12,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.twitter.sdk.android.core.models.Card;
 
 import java.util.ArrayList;
 
@@ -25,8 +24,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendHo
 
     private ArrayList<Usuario> friends;
     private CardView friendCardView;
-    private Context  context;
-    private  View view;
+    private Context context;
+    private View view;
 
     public FriendsAdapter(ArrayList<Usuario> friends, Context context) {
         this.friends = friends;
@@ -64,7 +63,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendHo
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_cardview, parent, false);
         this.friendCardView = (CardView) view.findViewById(R.id.FriendCard);
 
-        FriendHolder friendHolder =  new FriendHolder(view);
+        FriendHolder friendHolder = new FriendHolder(view);
 
         return friendHolder;
     }
@@ -76,14 +75,12 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendHo
         friendCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent chatIntent =  new Intent(view.getContext() , ChatActivity.class);
-                chatIntent.putExtra("UserChat" , friends.get(position));
-                 view.getContext().startActivity(chatIntent);
+                Intent chatIntent = new Intent(view.getContext(), ChatActivity.class);
+                chatIntent.putExtra("UserChat", friends.get(position));
+                view.getContext().startActivity(chatIntent);
             }
         });
     }
-
-
 
 
     @Override
@@ -93,8 +90,8 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.FriendHo
 
     public static class FriendHolder extends RecyclerView.ViewHolder {
 
-         private CircleImageView friendImage;
-         private TextView friendName;
+        private CircleImageView friendImage;
+        private TextView friendName;
 
         public FriendHolder(@NonNull View itemView) {
             super(itemView);

@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -20,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,11 +30,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import co.edu.konradlorenz.excolnet.Adapters.ChatAdapter;
@@ -48,6 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
 
+    private static final int OK_PHOTO = 200;
     private CircleImageView userChatImage;
     private TextView userChatName;
     private RecyclerView messageList;
@@ -65,9 +60,6 @@ public class ChatActivity extends AppCompatActivity {
     private ValueEventListener valueEventListener;
     private RecyclerView.LayoutManager layoutManager;
     private ChatAdapter adapter;
-
-    private static final int OK_PHOTO = 200;
-
     //Message_Type identifiers
     private String message_Type_message = "1";
     private String message_Type_image = "2";
@@ -254,7 +246,7 @@ public class ChatActivity extends AppCompatActivity {
                 String time = getMessageTime();
 
                 if (message != null && !message.isEmpty()) {
-                    Mensaje mensaje = new Mensaje(currentUser.getUid() , chatUser.getUid() , currentUser.getDisplayName() ,  currentUser.getPhotoUrl().toString() , time , message , message_Type_message);
+                    Mensaje mensaje = new Mensaje(currentUser.getUid(), chatUser.getUid(), currentUser.getDisplayName(), currentUser.getPhotoUrl().toString(), time, message, message_Type_message);
                     //restartAdapter();
 
 
@@ -316,10 +308,10 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
-                       // restartAdapter();
+                        // restartAdapter();
                         Uri downloadUri = task.getResult();
                         String time = getMessageTime();
-                        Mensaje mensaje = new Mensaje(currentUser.getUid() , chatUser.getUid() , currentUser.getDisplayName() ,  currentUser.getPhotoUrl().toString() , time , getSimpleName() + " ha enviado una foto. " ,  downloadUri.toString(), message_Type_image);
+                        Mensaje mensaje = new Mensaje(currentUser.getUid(), chatUser.getUid(), currentUser.getDisplayName(), currentUser.getPhotoUrl().toString(), time, getSimpleName() + " ha enviado una foto. ", downloadUri.toString(), message_Type_image);
                         myConversation.push().setValue(mensaje);
                         externalConversation.push().setValue(mensaje);
                     } else {
@@ -332,8 +324,8 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    public String getSimpleName(){
-        String [] name ;
+    public String getSimpleName() {
+        String[] name;
         name = currentUser.getDisplayName().split(" ");
         return name[0];
     }

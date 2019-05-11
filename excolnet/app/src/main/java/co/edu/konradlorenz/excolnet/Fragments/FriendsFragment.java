@@ -1,17 +1,16 @@
 package co.edu.konradlorenz.excolnet.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +28,6 @@ import co.edu.konradlorenz.excolnet.Entities.Usuario;
 import co.edu.konradlorenz.excolnet.R;
 
 
-
 public class FriendsFragment extends Fragment {
 
     private RecyclerView friendsList;
@@ -45,20 +43,12 @@ public class FriendsFragment extends Fragment {
     }
 
 
-
-
-
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_friends, container, false);
     }
-
 
 
     @Override
@@ -69,11 +59,10 @@ public class FriendsFragment extends Fragment {
     }
 
 
-
-    public void initializeAtributtes(){
+    public void initializeAtributtes() {
         this.databaseReference = FirebaseDatabase.getInstance().getReference("BaseDatos");
         this.friendsList = (RecyclerView) getView().findViewById(R.id.friends_list);
-        this.friendsArray =  new ArrayList<>();
+        this.friendsArray = new ArrayList<>();
         this.lManager = new LinearLayoutManager(getContext());
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -92,19 +81,19 @@ public class FriendsFragment extends Fragment {
                 friendsArray.clear();
 
 
-                for(DataSnapshot dataSnap : dataSnapshot.getChildren()){
+                for (DataSnapshot dataSnap : dataSnapshot.getChildren()) {
                     String friendUserUID = dataSnap.getKey();
 
                     Usuario friend = getFriend(friendUserUID);
 
-                    if(friend != null &&  !friend.getUid().isEmpty()){
+                    if (friend != null && !friend.getUid().isEmpty()) {
                         friendsArray.add(friend);
-                    }else{
-                        Log.e("FriendsFragment.error: " , "friend Is empty " +  friend);
+                    } else {
+                        Log.e("FriendsFragment.error: ", "friend Is empty " + friend);
                     }
                     friendsList.setHasFixedSize(true);
                     friendsList.setLayoutManager(lManager);
-                    friendsAdapter = new FriendsAdapter(friendsArray ,getContext());
+                    friendsAdapter = new FriendsAdapter(friendsArray, getContext());
                     friendsList.setAdapter(friendsAdapter);
 
                 }
@@ -112,7 +101,7 @@ public class FriendsFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("FriendsFragment.error: "  , databaseError.getMessage() + " details : " + databaseError.getDetails());
+                Log.e("FriendsFragment.error: ", databaseError.getMessage() + " details : " + databaseError.getDetails());
             }
         };
 
@@ -125,17 +114,17 @@ public class FriendsFragment extends Fragment {
         databaseReference.child("Friends").child(this.currentUser.getUid()).removeEventListener(valueEventListener);
     }
 
-    public Usuario getFriend(String UserUUID){
+    public Usuario getFriend(String UserUUID) {
         Usuario returnUser = null;
         PrincipalActivity principalActivity = (PrincipalActivity) getActivity();
         ArrayList<Usuario> allUsers = principalActivity.getListaUsuarios();
 
-        if(allUsers != null &&  allUsers.size() > 0){
-            for (Usuario currentUser : allUsers){
-                if(currentUser.getUid().equals(UserUUID)){
+        if (allUsers != null && allUsers.size() > 0) {
+            for (Usuario currentUser : allUsers) {
+                if (currentUser.getUid().equals(UserUUID)) {
                     returnUser = currentUser;
 
-                    return  returnUser;
+                    return returnUser;
                 }
             }
         }

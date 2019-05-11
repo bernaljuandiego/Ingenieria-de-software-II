@@ -1,4 +1,5 @@
 package co.edu.konradlorenz.excolnet.Entities;
+
 /*
 Entity for manage notifications
 Author: Leonardo Ruiz
@@ -11,12 +12,12 @@ public class Notificacion {
     //Body of the notification
     private String textNotification;
 
-    public Notificacion(){
+    public Notificacion() {
 
     }
 
-    public Notificacion(Object generador , String texto){
-        this.generator =  generador;
+    public Notificacion(Object generador, String texto) {
+        this.generator = generador;
         this.textNotification = texto;
     }
     /*

@@ -15,7 +15,17 @@ public class Lugar implements Serializable {
 
     private String imagen_lugar;
 
-    public Lugar (){
+    public Lugar() {
+    }
+
+    public Lugar(String id, String titulo, String descripcion, String imagen_lugar, double latitud, double longitud) {
+
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.id = id;
+        this.imagen_lugar = imagen_lugar;
+        this.latitud = latitud;
+        this.longitud = longitud;
     }
 
     public String getId() {
@@ -28,6 +38,10 @@ public class Lugar implements Serializable {
 
     public String getTitulo() {
         return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public double getLatitud() {
@@ -46,10 +60,6 @@ public class Lugar implements Serializable {
         this.longitud = longitud;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
@@ -58,22 +68,11 @@ public class Lugar implements Serializable {
         this.descripcion = descripcion;
     }
 
-
     public String getImagen_lugar() {
         return imagen_lugar;
     }
 
     public void setImagen_lugar(String imagen_lugar) {
         this.imagen_lugar = imagen_lugar;
-    }
-
-    public Lugar(String id, String titulo, String descripcion, String imagen_lugar, double latitud, double longitud) {
-
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.id = id;
-        this.imagen_lugar = imagen_lugar;
-        this.latitud=latitud;
-        this.longitud=longitud;
     }
 }

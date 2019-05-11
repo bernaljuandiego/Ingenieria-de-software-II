@@ -4,7 +4,7 @@ public class Mensaje {
 
     private String SenderUID;
 
-    private  String DestinyUUID;
+    private String DestinyUUID;
 
     private String senderDisplayName;
 
@@ -18,7 +18,7 @@ public class Mensaje {
 
     private String message_type;
 
-    public Mensaje(){
+    public Mensaje() {
 
     }
 
@@ -32,6 +32,7 @@ public class Mensaje {
         this.message = message;
         this.message_type = message_type;
     }
+
     //Image message
     public Mensaje(String senderUID, String destinyUUID, String senderDisplayName, String senderImage, String senderTime, String message, String photoUrl, String message_type) {
         SenderUID = senderUID;
