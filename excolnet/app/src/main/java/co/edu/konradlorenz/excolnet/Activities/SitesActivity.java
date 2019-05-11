@@ -251,9 +251,9 @@ public class SitesActivity extends AppCompatActivity implements OnMapReadyCallba
 
             // Add a default marker, because the user hasn't selected a place.
             mMap.addMarker(new MarkerOptions()
-                    .title(getString(R.string.default_info_title))
+                    .title(getString(R.string.app_name))
                     .position(mDefaultLocation)
-                    .snippet(getString(R.string.default_info_snippet)));
+            );
 
             // Prompt the user for permission.
             getLocationPermission();
