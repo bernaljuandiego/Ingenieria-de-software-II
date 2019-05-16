@@ -92,17 +92,7 @@ public class PublicationsFragment extends Fragment {
                 mLayoutManager = new LinearLayoutManager(getContext());
                 items.setLayoutManager(mLayoutManager);
                 Collections.reverse(publicaciones);
-              /*
-                Stack<Publicacion> pub = new Stack<>();
-                for (int i = 0; i < publicaciones.size(); i++) {
-                    pub.add(publicaciones.get(i));
-                }
-                publicaciones.clear();
-                for (int i = 0; i < pub.size(); i++) {
-                    publicaciones.add(pub.pop());
-                }
 
-*/
                 // specify an adapter (see also next example)
                 mAdapter = new PublicationAdapter(getContext(), publicaciones, user);
                 items.setAdapter(mAdapter);
