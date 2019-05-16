@@ -1,7 +1,6 @@
 package co.edu.konradlorenz.excolnet.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,25 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import co.edu.konradlorenz.excolnet.Entities.Mensaje;
 import co.edu.konradlorenz.excolnet.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
+    public static final String MYTAG = "ChatAdapter";
     private ArrayList<Mensaje> messages;
     private CardView messageCardView;
     private Context myContext;
     private View view;
     private String currentUserUID;
 
-    public static final String MYTAG="ChatAdapter";
-
-    public ChatAdapter( Context myContext , String userUUID) {
+    public ChatAdapter(Context myContext, String userUUID) {
         this.messages = new ArrayList<Mensaje>();
         this.myContext = myContext;
         this.currentUserUID = userUUID;
@@ -41,16 +36,16 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
     @NonNull
     @Override
     public ChatHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_cardview , parent , false);
-        messageCardView =  (CardView) view.findViewById(R.id.cardViewMessage);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_cardview, parent, false);
+        messageCardView = (CardView) view.findViewById(R.id.cardViewMessage);
 
-        ChatHolder chatHolder =  new ChatHolder(messageCardView);
+        ChatHolder chatHolder = new ChatHolder(messageCardView);
 
         return chatHolder;
     }
 
 
-    public void addMessage(Mensaje m){
+    public void addMessage(Mensaje m) {
         messages.add(m);
         notifyItemInserted(messages.size());
     }
@@ -67,34 +62,35 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         Glide.with(myContext).load(messages.get(position).getSenderImage()).placeholder(R.drawable.ic_profile).error(R.drawable.com_facebook_profile_picture_blank_square).into(holder.getCardImage());
 
 
-        if(messages.get(position).getMessage_type().equals("2")){
+        if (messages.get(position).getMessage_type().equals("2")) {
             Glide.with(myContext).load(messages.get(position).getPhotoUrl()).into(holder.getMessageFoto());
             holder.getMessageFoto().setVisibility(View.VISIBLE);
-        }else{
+        } else {
 
             holder.getSender().setVisibility(View.VISIBLE);
 
         }
 
-        if(!messages.get(position).getSenderUID().equals(currentUserUID)){
+        if (!(messages.get(position).getSenderUID().equals(currentUserUID))) {
+
+            holder.itemView.setBackgroundColor(myContext.getResources().getColor(R.color.white));
+
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.itemView.getLayoutParams();
+
+            layoutParams.setMargins(0, 10, 200, 10);
+
+            holder.itemView.setLayoutParams(layoutParams);
+
+
+        } else {
 
             holder.itemView.setBackgroundColor(myContext.getResources().getColor(R.color.blue));
 
-
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.itemView.getLayoutParams();
 
-            layoutParams.setMargins(200 , 10 , 0 , 10);
+            layoutParams.setMargins(200, 10, 0, 10);
 
             holder.itemView.setLayoutParams(layoutParams);
-
-        }else{
-
-            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.itemView.getLayoutParams();
-
-            layoutParams.setMargins(0 , 10 , 200 , 10);
-
-            holder.itemView.setLayoutParams(layoutParams);
-
 
 
         }
@@ -106,11 +102,19 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         return messages.size();
     }
 
+    public ArrayList<Mensaje> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<Mensaje> messages) {
+        this.messages = messages;
+    }
+
     public static class ChatHolder extends RecyclerView.ViewHolder {
 
-        private CircleImageView  cardImage;
+        private CircleImageView cardImage;
         private TextView sender;
-        private  TextView senderTime;
+        private TextView senderTime;
         private TextView messageContent;
         private ImageView messageFoto;
 
@@ -118,12 +122,10 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         public ChatHolder(@NonNull View itemView) {
             super(itemView);
             cardImage = (CircleImageView) itemView.findViewById(R.id.cardImage);
-            sender =  (TextView) itemView.findViewById(R.id.cardSender);
+            sender = (TextView) itemView.findViewById(R.id.cardSender);
             senderTime = (TextView) itemView.findViewById(R.id.cardTime);
             messageContent = (TextView) itemView.findViewById(R.id.cardMessage);
             messageFoto = (ImageView) itemView.findViewById(R.id.messagePhoto);
-
-
 
 
         }
@@ -168,13 +170,5 @@ public class ChatAdapter  extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
         public void setMessageFoto(ImageView messageFoto) {
             this.messageFoto = messageFoto;
         }
-    }
-
-    public ArrayList<Mensaje> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(ArrayList<Mensaje> messages) {
-        this.messages = messages;
     }
 }

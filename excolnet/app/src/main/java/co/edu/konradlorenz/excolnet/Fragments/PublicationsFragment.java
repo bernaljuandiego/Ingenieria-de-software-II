@@ -2,21 +2,16 @@ package co.edu.konradlorenz.excolnet.Fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import co.edu.konradlorenz.excolnet.Entities.Publicacion;
-import co.edu.konradlorenz.excolnet.Adapters.PublicationAdapter;
-import co.edu.konradlorenz.excolnet.Entities.Usuario;
-import co.edu.konradlorenz.excolnet.R;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,9 +19,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Stack;
+
+import co.edu.konradlorenz.excolnet.Adapters.PublicationAdapter;
+import co.edu.konradlorenz.excolnet.Entities.Publicacion;
+import co.edu.konradlorenz.excolnet.Entities.Usuario;
+import co.edu.konradlorenz.excolnet.R;
 
 public class PublicationsFragment extends Fragment {
     private RecyclerView items;
@@ -89,6 +91,16 @@ public class PublicationsFragment extends Fragment {
                 mLayoutManager = new LinearLayoutManager(getContext());
                 items.setLayoutManager(mLayoutManager);
 
+                Stack<Publicacion> pub = new Stack<>();
+                for (int i = 0; i < publicaciones.size(); i++) {
+                    pub.add(publicaciones.get(i));
+                }
+                publicaciones.clear();
+                for (int i = 0; i < pub.size(); i++) {
+                    publicaciones.add(pub.pop());
+                }
+
+
                 // specify an adapter (see also next example)
                 mAdapter = new PublicationAdapter(getContext(), publicaciones, user);
                 items.setAdapter(mAdapter);
@@ -99,7 +111,9 @@ public class PublicationsFragment extends Fragment {
                 Log.e("The read failed: ", firebaseError.getMessage());
             }
         };
-        baseDeDatos.child("Publicaciones").addValueEventListener(lisener);
+        Query myLastPost = baseDeDatos.child("Publicaciones").orderByChild("fechaPublicacion");
+        myLastPost.addValueEventListener(lisener);
+
 
     }
 

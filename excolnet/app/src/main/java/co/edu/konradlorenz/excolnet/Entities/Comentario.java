@@ -1,7 +1,5 @@
 package co.edu.konradlorenz.excolnet.Entities;
 
-import java.util.List;
-
 /*
 Entity for manage Comments
 Author: Leonardo Ruiz
@@ -14,8 +12,8 @@ public class Comentario {
 
     //Body of comment
     private String textComment;
-        // Date to post
-        private String fechaComentario;
+    // Date to post
+    private String fechaComentario;
 
     public Comentario() {
 
@@ -46,10 +44,12 @@ public class Comentario {
     public void setTextComment(String textComment) {
         this.textComment = textComment;
     }
-    public void setFechaComentario( String fechaComentario){
-        this.fechaComentario= fechaComentario;
-    }
-    public String getFechaComentario(){
+
+    public String getFechaComentario() {
         return fechaComentario;
+    }
+
+    public void setFechaComentario(String fechaComentario) {
+        this.fechaComentario = fechaComentario;
     }
 }

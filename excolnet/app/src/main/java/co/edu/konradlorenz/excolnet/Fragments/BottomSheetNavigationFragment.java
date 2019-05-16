@@ -10,17 +10,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import co.edu.konradlorenz.excolnet.Activities.LoginActivity;
 import co.edu.konradlorenz.excolnet.R;
@@ -52,39 +53,38 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
         return view;
     }
 
-    private void findMaterialElements(){
+    private void findMaterialElements() {
         navigationView = view.findViewById(R.id.navigation_view);
         userPicture = view.findViewById(R.id.profile_image_bottom_sheet);
         userName = view.findViewById(R.id.user_name_bottom_sheet);
         userEmail = view.findViewById(R.id.user_email_bottom_sheet);
     }
 
-    private void userInfoSetUpLayout(){
+    private void userInfoSetUpLayout() {
         userName.setText(user.getDisplayName());
         userEmail.setText(user.getEmail());
         Glide.with(getApplicationContext()).load(user.getPhotoUrl()).into(userPicture);
     }
 
-    private void firebaseLoadData(){
+    private void firebaseLoadData() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
     }
 
-    private void menuItemsHandler(){
+    private void menuItemsHandler() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-                switch(menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.nav_chat_option:
                         //Toast.makeText(getContext(), "Chat Option Selected", Toast.LENGTH_SHORT).show();
-                        FriendsFragment friendsFragment =  new FriendsFragment();
+                        FriendsFragment friendsFragment = new FriendsFragment();
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.contenido , friendsFragment)
+                                .replace(R.id.contenido, friendsFragment)
                                 .commit();
 
                         BottomSheetNavigationFragment.super.dismiss();
-
 
 
                         return true;
@@ -103,7 +103,7 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                     case R.id.nav_housing_option:
                         Fragment fragmenth = new HousingFragment();
                         FragmentTransaction fth = getActivity().getSupportFragmentManager().beginTransaction();
-                        fth.replace(R.id.contenido,fragmenth);
+                        fth.replace(R.id.contenido, fragmenth);
                         fth.addToBackStack(null);
                         fth.commit();
                         BottomSheetNavigationFragment.super.dismiss();
@@ -112,7 +112,7 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
 
                         Fragment fragment = new TouristSitesFragment();
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.contenido,fragment);
+                        ft.replace(R.id.contenido, fragment);
                         ft.addToBackStack(null);
                         ft.commit();
                         BottomSheetNavigationFragment.super.dismiss();
@@ -125,7 +125,7 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                         mAuth.signOut();
                         LoginManager.getInstance().logOut();
                         Intent newintent = new Intent(getContext(), LoginActivity.class);
-                        newintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        newintent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(newintent);
                         return true;
                 }

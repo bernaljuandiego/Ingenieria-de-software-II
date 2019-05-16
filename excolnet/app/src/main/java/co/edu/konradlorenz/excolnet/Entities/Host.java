@@ -16,10 +16,6 @@ public class Host implements Serializable {
     public Host() {
     }
 
-    public double getLongitud() {
-        return longitud;
-    }
-
     public Host(String id, String nombreHost, String descripcionHost, String precioHost, String imagenHost, double longitud, double latitud) {
         this.id = id;
         this.nombreHost = nombreHost;
@@ -28,6 +24,10 @@ public class Host implements Serializable {
         this.imagenHost = imagenHost;
         this.longitud = longitud;
         this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
     }
 
     public void setLongitud(double longitud) {

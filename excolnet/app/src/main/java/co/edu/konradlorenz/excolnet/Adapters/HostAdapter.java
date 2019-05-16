@@ -25,15 +25,14 @@ public class HostAdapter extends RecyclerView.Adapter<HostAdapter.HostHolder> {
     private ArrayList<Host> hosts;
     private CardView cardViewHosts;
     private Context context;
-    private String ACTIVITY_NAME ="HostAdapter";
+    private String ACTIVITY_NAME = "HostAdapter";
     private View view;
 
 
     public HostAdapter(Context context, ArrayList<Host> hosts) {
-        this.hosts=hosts;
-        this.context=context;
+        this.hosts = hosts;
+        this.context = context;
     }
-
 
 
     @NonNull
@@ -41,10 +40,9 @@ public class HostAdapter extends RecyclerView.Adapter<HostAdapter.HostHolder> {
     public HostAdapter.HostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_housting, parent, false);
         findMaterialElements();
-        HostAdapter.HostHolder hth= new HostAdapter.HostHolder(view);
+        HostAdapter.HostHolder hth = new HostAdapter.HostHolder(view);
         return hth;
     }
-
 
 
     @Override
@@ -58,7 +56,7 @@ public class HostAdapter extends RecyclerView.Adapter<HostAdapter.HostHolder> {
             public void onClick(View v) {
                 Intent intent = new Intent(view.getContext(), SitesActivity.class);
                 intent.putExtra("id", hosts.get(position).getId());
-                intent.putExtra("nameActivity",ACTIVITY_NAME);
+                intent.putExtra("nameActivity", ACTIVITY_NAME);
 
                 intent.putExtra("latitud", hosts.get(position).getLatitud());
                 intent.putExtra("longitud", hosts.get(position).getLongitud());
@@ -69,7 +67,7 @@ public class HostAdapter extends RecyclerView.Adapter<HostAdapter.HostHolder> {
         });
     }
 
-    private void findMaterialElements(){
+    private void findMaterialElements() {
         cardViewHosts = view.findViewById(R.id.host_card);
 
     }
@@ -88,7 +86,7 @@ public class HostAdapter extends RecyclerView.Adapter<HostAdapter.HostHolder> {
     }
 
 
-    public static class HostHolder extends RecyclerView.ViewHolder{
+    public static class HostHolder extends RecyclerView.ViewHolder {
         ImageView imagenHost;
         TextView nombreHost;
         TextView descripcionHost;
@@ -96,10 +94,10 @@ public class HostAdapter extends RecyclerView.Adapter<HostAdapter.HostHolder> {
 
         public HostHolder(@NonNull View itemView) {
             super(itemView);
-            imagenHost =itemView.findViewById(R.id.imagen_host);
-            nombreHost=itemView.findViewById(R.id.titulo_host);
-            descripcionHost=itemView.findViewById(R.id.descripcion_host);
-            precioHost=itemView.findViewById(R.id.precio_host);
+            imagenHost = itemView.findViewById(R.id.imagen_host);
+            nombreHost = itemView.findViewById(R.id.titulo_host);
+            descripcionHost = itemView.findViewById(R.id.descripcion_host);
+            precioHost = itemView.findViewById(R.id.precio_host);
         }
     }
 }
