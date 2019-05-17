@@ -33,4 +33,19 @@
     <string name="cost_living">Cost of living </string>
 
     <string name="api_numbeo">https://www.numbeo.com//api/city_prices?api_key=hfkibcktwtxi4f</string>
+
+    <string-array name="city_list">
+        <item>Bogota</item>
+        <item>Barranquilla</item>
+        <item>Bucaramanga</item>
+        <item>Cartagena</item>
+        <item>Cucuta</item>
+        <item>Cali</item>
+        <item>Medellin</item>
+        <item>Manizales</item>
+        <item>Neiva</item>
+        <item>Pereira</item>
+        <item>Pasto</item>
+        <item>Valledupar</item>
+    </string-array>
 </resources>
