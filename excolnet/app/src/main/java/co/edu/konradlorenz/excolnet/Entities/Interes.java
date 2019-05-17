@@ -1,7 +1,5 @@
 package co.edu.konradlorenz.excolnet.Entities;
 
-import java.util.List;
-
 /*
 Entity for manage Interest`s
 Author: Leonardo Ruiz
@@ -9,75 +7,66 @@ Modificado por Enrique Suarez y Bryan Pinzon: 6/03/2019
  */
 public class Interes {
 
-    //Interest Identifier
-    private Long codigoInteres;
 
-    //Interest name;
-    private String nombreInteres;
+    private String topicName;
 
-    //Short Interest Description
-    private String description;
+    private String Description;
 
-    /*
-    private String imagenInteres;
+    private String PhotoUrl;
 
-    private List<Usuario> listaUsuariosInteresados;
-    */
-    public Interes() {
+    private Double latitude;
 
+    private Double longitude;
+
+
+    public String getTopicName() {
+        return topicName;
     }
 
-    public Interes(Long codInteres, String nombreInteres, String desc, String imagenInteres, List<Usuario> listaUsuariosInteresados) {
-        this.codigoInteres = codInteres;
-        this.nombreInteres = nombreInteres;
-        this.description = desc;
-        /*
-        this.imagenInteres=imagenInteres;
-        this.listaUsuariosInteresados=listaUsuariosInteresados;
-        */
-    }
-
-    /*
-    GETTERS & SETTERS
-     */
-    public Long getCodigoInteres() {
-        return codigoInteres;
-    }
-
-    public void setCodigoInteres(Long codigoInteres) {
-        this.codigoInteres = codigoInteres;
-    }
-
-    public String getNombreInteres() {
-        return nombreInteres;
-    }
-
-    public void setNombreInteres(String nombreInteres) {
-        this.nombreInteres = nombreInteres;
+    public void setTopicName(String topicName) {
+        this.topicName = topicName;
     }
 
     public String getDescription() {
-        return this.description;
+        return Description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
-    }
-    /*
-    public void setImagenInteres( String imagenInteres){
-        this.imagenInteres= imagenInteres;
+        this.Description = description;
     }
 
-    public String getimagenInteres(){
-        return this.imagenInteres;
+    public String getPhotoUrl() {
+        return PhotoUrl;
     }
 
-    public void setlistaUsuariosInteresados(List<Usuario> listaUsuariosInteresados){
-        this.listaUsuariosInteresados=listaUsuariosInteresados;
+    public void setPhotoUrl(String photoUrl) {
+        this.PhotoUrl = photoUrl;
     }
-    public List<Usuario> getListaUsuariosInteresados(){
-        return this.listaUsuariosInteresados;
-    }
-    */
 
-}   
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    @Override
+    public String toString() {
+        return "Interes{" +
+                "topicName='" + topicName + '\'' +
+                ", Description='" + Description + '\'' +
+                ", PhotoUrl='" + PhotoUrl + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                '}';
+    }
+}

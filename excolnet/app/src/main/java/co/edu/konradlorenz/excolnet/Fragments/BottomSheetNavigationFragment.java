@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import co.edu.konradlorenz.excolnet.Activities.LoginActivity;
+import co.edu.konradlorenz.excolnet.Activities.NocturneLifeActivity;
 import co.edu.konradlorenz.excolnet.R;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -95,7 +96,9 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                         Toast.makeText(getContext(), "Tourism agencies Option Selected", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.nav_night_life_option:
-                        Toast.makeText(getContext(), "Night Life Option Selected", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext() , NocturneLifeActivity.class);
+                        startActivity(intent);
+                        BottomSheetNavigationFragment.super.dismiss();
                         return true;
                     case R.id.nav_living_costs_option:
                         Toast.makeText(getContext(), "Living Costs Option Selected", Toast.LENGTH_SHORT).show();
