@@ -20,7 +20,7 @@
         <item
             android:id="@+id/nav_living_costs_option"
             android:icon="@drawable/ic_living_costs"
-            android:title="Living Costs" />
+            android:title="@string/cost_living" />
         <item
             android:id="@+id/nav_housing_option"
             android:icon="@drawable/ic_housing"

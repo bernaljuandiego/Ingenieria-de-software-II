@@ -73,10 +73,6 @@ public class LivingCostActivity extends AppCompatActivity {
                Log.w("LIVING COST", ciudad.getPrices().toString());
                listaDePreciosEntity = ciudad.getPrices();
 
-               for (Precios list: ciudad.getPrices()){
-
-                   listaPrecios.add(list.getItem_name());
-               }
                 recyclerView =(RecyclerView) findViewById(R.id.preciosrecycler);
                 recyclerView.setHasFixedSize(true);
                 mlayoutManagerS = new LinearLayoutManager(context);

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alespero.expandablecardview.ExpandableCardView;
@@ -21,7 +22,7 @@ public class AdapterPrecios extends RecyclerView.Adapter<AdapterPrecios.PriceHol
         private Context mContext;
         List<Precios> precios_items;
         private View view;
-        ExpandableCardView cardView;
+        CardView cardView;
 
     public AdapterPrecios(Context mContext, List<Precios> precios_items) {
         this.mContext = mContext;
@@ -43,8 +44,8 @@ public class AdapterPrecios extends RecyclerView.Adapter<AdapterPrecios.PriceHol
 
     @Override
     public void onBindViewHolder(@NonNull PriceHolder holder, int position) {
-        holder.expandableCardView.setTitle(precios_items.get(position).getItem_name());
-        holder.textView.setText(precios_items.get(position).getAverage_price()+"");
+        holder.textViewnombre.setText(precios_items.get(position).getItem_name());
+        holder.textViewprecio.setText("$"+String.format("%.0f",precios_items.get(position).getAverage_price()));
     }
 
     @Override
@@ -54,13 +55,15 @@ public class AdapterPrecios extends RecyclerView.Adapter<AdapterPrecios.PriceHol
 
 
     public class PriceHolder extends RecyclerView.ViewHolder{
-        ExpandableCardView expandableCardView;
-        TextView textView;
+        CardView cardView;
+        TextView textViewnombre;
+        TextView textViewprecio;
 
         public PriceHolder(@NonNull View itemView) {
             super(itemView);
-            expandableCardView =itemView.findViewById(R.id.expand_card);
-            textView = itemView.findViewById(R.id.precios_text);
+            cardView=itemView.findViewById(R.id.expand_card);
+            textViewnombre = itemView.findViewById(R.id.precios_text_n);
+            textViewprecio = itemView.findViewById(R.id.precios_text);
         }
     }
 }

@@ -99,7 +99,6 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                         Toast.makeText(getContext(), "Night Life Option Selected", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.nav_living_costs_option:
-                        Toast.makeText(getContext(), "Living Costs Option Selected", Toast.LENGTH_SHORT).show();
                         Intent livingIntent = new Intent(getContext(), LivingCostActivity.class);
                         startActivity(livingIntent);
                         return true;
