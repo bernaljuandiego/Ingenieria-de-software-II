@@ -23,6 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import co.edu.konradlorenz.excolnet.Activities.LivingCostActivity;
 import co.edu.konradlorenz.excolnet.Activities.LoginActivity;
 import co.edu.konradlorenz.excolnet.R;
 
@@ -99,6 +100,8 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                         return true;
                     case R.id.nav_living_costs_option:
                         Toast.makeText(getContext(), "Living Costs Option Selected", Toast.LENGTH_SHORT).show();
+                        Intent livingIntent = new Intent(getContext(), LivingCostActivity.class);
+                        startActivity(livingIntent);
                         return true;
                     case R.id.nav_housing_option:
                         Fragment fragmenth = new HousingFragment();

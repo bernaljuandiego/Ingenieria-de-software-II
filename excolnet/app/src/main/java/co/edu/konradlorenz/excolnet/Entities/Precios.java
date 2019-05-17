@@ -3,9 +3,9 @@ package co.edu.konradlorenz.excolnet.Entities;
 public class Precios {
     private int data_points;
     private int item_id;
-    private int lowest_price;
-    private int average_price;
-    private int highest_price;
+    private double lowest_price;
+    private double average_price;
+    private double highest_price;
     private String item_name;
 
     public int getData_points() {
@@ -24,25 +24,17 @@ public class Precios {
         this.item_id = item_id;
     }
 
-    public int getLowest_price() {
-        return lowest_price;
-    }
-
     public void setLowest_price(int lowest_price) {
         this.lowest_price = lowest_price;
     }
 
-    public int getAverage_price() {
-        return average_price;
-    }
+
 
     public void setAverage_price(int average_price) {
         this.average_price = average_price;
     }
 
-    public int getHighest_price() {
-        return highest_price;
-    }
+
 
     public void setHighest_price(int highest_price) {
         this.highest_price = highest_price;
@@ -54,5 +46,29 @@ public class Precios {
 
     public void setItem_name(String item_name) {
         this.item_name = item_name;
+    }
+
+    public double getLowest_price() {
+        return lowest_price;
+    }
+
+    public void setLowest_price(double lowest_price) {
+        this.lowest_price = lowest_price;
+    }
+
+    public double getAverage_price() {
+        return average_price;
+    }
+
+    public void setAverage_price(double average_price) {
+        this.average_price = average_price;
+    }
+
+    public double getHighest_price() {
+        return highest_price;
+    }
+
+    public void setHighest_price(double highest_price) {
+        this.highest_price = highest_price;
     }
 }

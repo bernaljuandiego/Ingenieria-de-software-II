@@ -1,6 +1,7 @@
 package co.edu.konradlorenz.excolnet.Entities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Ciudad {
 
@@ -9,7 +10,7 @@ public class Ciudad {
     private int monthLastUpdate;
     private int contributors;
     private int yearLastUpdate;
-    private Precios prices;
+    private List<Precios> prices;
     private int city_id;
 
     public String getName() {
@@ -62,12 +63,11 @@ public class Ciudad {
         this.city_id = city_id;
     }
 
-    public Precios getPrices() {
+    public List<Precios> getPrices() {
         return prices;
     }
 
-    public void setPrices(Precios prices) {
+    public void setPrices(List<Precios> prices) {
         this.prices = prices;
     }
-
 }
