@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,22 @@ public class NocturneLifeAdapter extends RecyclerView.Adapter<NocturneLifeAdapte
         holder.getTitle().setText(this.currentInterests.get(position).getTopicName());
         holder.getDescTextView().setText(this.currentInterests.get(position).getDescription());
         Glide.with(myContext).load(currentInterests.get(position).getPhotoUrl()).error(R.drawable.com_facebook_profile_picture_blank_square).into(holder.getImageVC());
+
+        if(currentInterests.get(position).getTopicType().equals("Disco")){
+            holder.getDynamicIcon().setCompoundDrawablesWithIntrinsicBounds(R.drawable.disc_icon , 0 , 0, 0);
+            holder.getLocationButton().setBackgroundResource(R.drawable.background_disco_btn);
+            holder.getPrincipalLayout().setBackgroundResource(R.drawable.common_card_disco_bkg);
+        }else if(currentInterests.get(position).getTopicType().equals("Pubs")){
+            holder.getDynamicIcon().setCompoundDrawablesWithIntrinsicBounds(R.drawable.pubs , 0 , 0, 0);
+            holder.getLocationButton().setBackgroundResource(R.drawable.background_pub_btn);
+            holder.getPrincipalLayout().setBackgroundResource(R.drawable.common_card_pub_bkg);
+        }else if(currentInterests.get(position).getTopicType().equals("Restaurant")){
+            holder.getDynamicIcon().setCompoundDrawablesWithIntrinsicBounds(R.drawable.restaurant_icon, 0 , 0, 0);
+            holder.getLocationButton().setBackgroundResource(R.drawable.background_rest_btn);
+            holder.getPrincipalLayout().setBackgroundResource(R.drawable.common_card_rest_bkg);
+        }
+
+
     }
 
     @Override
@@ -66,12 +83,12 @@ public class NocturneLifeAdapter extends RecyclerView.Adapter<NocturneLifeAdapte
     }
 
     public static  class TopicHolder extends  RecyclerView.ViewHolder {
-
         private CircleImageView imageVC;
         private TextView descTextView;
         private Button locationButton;
         private TextView title;
-
+        private TextView dynamicIcon;
+        private LinearLayout principalLayout;
 
         //For get Location
         private Double latitude;
@@ -86,6 +103,8 @@ public class NocturneLifeAdapter extends RecyclerView.Adapter<NocturneLifeAdapte
             this.descTextView = itemView.findViewById(R.id.textDesc);
             this.locationButton = itemView.findViewById(R.id.locationButton);
             this.title = itemView.findViewById(R.id.topicTitle);
+            this.dynamicIcon = itemView.findViewById(R.id.dynamic_icon);
+            this.principalLayout = itemView.findViewById(R.id.principal_commoncard_layout);
 
             initializeLocationListener();
         }
@@ -100,7 +119,8 @@ public class NocturneLifeAdapter extends RecyclerView.Adapter<NocturneLifeAdapte
                     intent.putExtra("latitud" ,  latitude);
                     intent.putExtra("longitud", longitude);
                     intent.putExtra("titulo" , title.getText());
-                    intent.putExtra("nameActivity" , "NocturneLife");
+                    intent.putExtra("nameActivity" , itemView.getContext().getApplicationContext().toString() );
+                    Log.i("testing", "onClick: " + itemView.getContext().getApplicationContext().toString());
                     itemView.getContext().startActivity(intent);
 
                 }
@@ -153,6 +173,22 @@ public class NocturneLifeAdapter extends RecyclerView.Adapter<NocturneLifeAdapte
 
         public void setTitle(TextView title) {
             this.title = title;
+        }
+
+        public TextView getDynamicIcon() {
+            return dynamicIcon;
+        }
+
+        public void setDynamicIcon(TextView dynamicIcon) {
+            this.dynamicIcon = dynamicIcon;
+        }
+
+        public LinearLayout getPrincipalLayout() {
+            return principalLayout;
+        }
+
+        public void setPrincipalLayout(LinearLayout principalLayout) {
+            this.principalLayout = principalLayout;
         }
     }
 }

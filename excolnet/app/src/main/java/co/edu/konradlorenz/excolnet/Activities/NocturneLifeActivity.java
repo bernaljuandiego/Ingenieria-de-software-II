@@ -47,12 +47,15 @@ public class NocturneLifeActivity extends AppCompatActivity {
         intereses = new ArrayList<>();
         getViewElements();
         getFirebaseComponents();
+        initializeRecyclerView();
 
 
+    }
+
+    public void initializeRecyclerView(){
         LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext());
         this.nocturneList.setHasFixedSize(true);
         this.nocturneList.setLayoutManager(manager);
-
     }
     public void getViewElements(){
         this.nocturneList = findViewById(R.id.nocturneList);
@@ -94,13 +97,16 @@ public class NocturneLifeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.i("NocLife", "onDataChange bruh: " +  dataSnapshot.getChildrenCount());
                 for(DataSnapshot data : dataSnapshot.getChildren()){
+                    String tempTopicType = data.getKey();
                     for(DataSnapshot data2 : data.getChildren()){
                         Interes interes = data2.getValue(Interes.class);
                         interes.setTopicName(data2.getKey());
+                        interes.setTopicType(tempTopicType);
                         intereses.add(interes);
 
                     }
                 }
+                Collections.shuffle(intereses);
                 adapt = new NocturneLifeAdapter(intereses , getApplicationContext());
                 nocturneList.setAdapter(adapt);
             }

@@ -14,6 +14,8 @@ public class Interes {
 
     private String PhotoUrl;
 
+    private String topicType;
+
     private Double latitude;
 
     private Double longitude;
@@ -41,6 +43,14 @@ public class Interes {
 
     public void setPhotoUrl(String photoUrl) {
         this.PhotoUrl = photoUrl;
+    }
+
+    public String getTopicType() {
+        return topicType;
+    }
+
+    public void setTopicType(String topicType) {
+        this.topicType = topicType;
     }
 
     public Double getLatitude() {
