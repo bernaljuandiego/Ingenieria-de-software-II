@@ -23,6 +23,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Stack;
 
 import co.edu.konradlorenz.excolnet.Adapters.PublicationAdapter;
@@ -90,16 +91,7 @@ public class PublicationsFragment extends Fragment {
                 // use a linear layout manager
                 mLayoutManager = new LinearLayoutManager(getContext());
                 items.setLayoutManager(mLayoutManager);
-
-                Stack<Publicacion> pub = new Stack<>();
-                for (int i = 0; i < publicaciones.size(); i++) {
-                    pub.add(publicaciones.get(i));
-                }
-                publicaciones.clear();
-                for (int i = 0; i < pub.size(); i++) {
-                    publicaciones.add(pub.pop());
-                }
-
+                Collections.reverse(publicaciones);
 
                 // specify an adapter (see also next example)
                 mAdapter = new PublicationAdapter(getContext(), publicaciones, user);
