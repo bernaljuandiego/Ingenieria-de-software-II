@@ -33,22 +33,7 @@
             android:id="@+id/cardHoousting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/linear">
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/background_dark"
-                android:fontFamily="casual"
-                android:text="@string/housing"
-                android:textAlignment="textStart"
-                android:textColor="#FCF9F9"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-
-        </androidx.cardview.widget.CardView>
+            android:layout_below="@id/linear"/>
 
         <Button
             android:id="@+id/buttonHousting"
