@@ -37,17 +37,14 @@ public class UserLoginTest {
 
             String currActivity = driver.currentActivity();
 
-            /*if (currActivity.contains("LoginActivity")) {
+            if (currActivity.contains("LoginActivity")) {
                 System.out.println("User not Loged yet , executing registry");
+                driverCommons.swipeFromUpToBottom();
                 userLoginPage.clickSignUp();
                 driverCommons.addImplicitlyWait(5);
-                UserRegisterTest test = new UserRegisterTest(this.driver, this.driverCommons);
+                UserRegisterTest test = new UserRegisterTest();
                 test.doRegistry();
-
-            }*/
-
-            assert !currActivity.contains("LoginActivity");
-
+            }
         }
 
     @After
