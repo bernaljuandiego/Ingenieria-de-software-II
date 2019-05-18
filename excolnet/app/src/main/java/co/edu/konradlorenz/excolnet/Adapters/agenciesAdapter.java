@@ -71,7 +71,7 @@ public class agenciesAdapter extends RecyclerView.Adapter<agenciesAdapter.agenci
         private TextView title;
         private TextView phoneNumber;
 
-        private MaterialButton plansButton;
+        private Button plansButton;
 
 
         public agenciesHolder(@NonNull View itemView) {
@@ -122,11 +122,11 @@ public class agenciesAdapter extends RecyclerView.Adapter<agenciesAdapter.agenci
             this.phoneNumber = phoneNumber;
         }
 
-        public MaterialButton getPlansButton() {
+        public Button getPlansButton() {
             return plansButton;
         }
 
-        public void setPlansButton(MaterialButton plansButton) {
+        public void setPlansButton(Button plansButton) {
             this.plansButton = plansButton;
         }
     }
