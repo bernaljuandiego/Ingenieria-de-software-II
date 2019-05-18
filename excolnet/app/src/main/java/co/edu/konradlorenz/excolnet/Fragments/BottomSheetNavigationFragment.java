@@ -1,6 +1,7 @@
 package co.edu.konradlorenz.excolnet.Fragments;
 
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -94,7 +95,12 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                         Toast.makeText(getContext(), "Invitations Option Selected", Toast.LENGTH_SHORT).show();
                         return true;
                     case R.id.nav_tourism_agencies_option:
-                        Toast.makeText(getContext(), "Tourism agencies Option Selected", Toast.LENGTH_SHORT).show();
+                        Fragment frag= new agencieSelectFragment();
+                        FragmentTransaction trans = getActivity().getSupportFragmentManager().beginTransaction();
+                        trans.replace(R.id.contenido, frag);
+                        trans.addToBackStack(null);
+                        trans.commit();
+                        BottomSheetNavigationFragment.super.dismiss();
                         return true;
                     case R.id.nav_night_life_option:
                         Intent intent = new Intent(getContext() , NocturneLifeActivity.class);
