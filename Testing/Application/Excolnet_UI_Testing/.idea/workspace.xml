@@ -2,21 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="76450110-ba52-4587-a748-c091b50d9acc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/Pages/ChatPage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TestCases/ChatTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/Commons/DriverCommons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Commons/DriverCommons.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Drivers/DriverSetUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Drivers/DriverSetUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Pages/SearchPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Pages/SearchPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Pages/PublicationPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Pages/PublicationPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/Pages/UserLoginPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Pages/UserLoginPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Pages/UserRegisterPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Pages/UserRegisterPage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/TestCases/UserLoginTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestCases/UserLoginTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/TestCases/UserPublicationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestCases/UserPublicationTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestCases/UserRegisterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestCases/UserRegisterTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../excolnet/app/src/main/java/co/edu/konradlorenz/excolnet/Activities/DetailPublicationActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../excolnet/app/src/main/java/co/edu/konradlorenz/excolnet/Activities/DetailPublicationActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../excolnet/app/src/main/java/co/edu/konradlorenz/excolnet/Activities/PrincipalActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../excolnet/app/src/main/java/co/edu/konradlorenz/excolnet/Activities/PrincipalActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../excolnet/app/src/main/java/co/edu/konradlorenz/excolnet/Activities/ProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../excolnet/app/src/main/java/co/edu/konradlorenz/excolnet/Activities/ProfileActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../excolnet/app/src/main/java/co/edu/konradlorenz/excolnet/Adapters/PublicationAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../excolnet/app/src/main/java/co/edu/konradlorenz/excolnet/Adapters/PublicationAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../excolnet/app/src/main/java/co/edu/konradlorenz/excolnet/Fragments/PublicationsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../excolnet/app/src/main/java/co/edu/konradlorenz/excolnet/Fragments/PublicationsFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../excolnet/app/src/main/res/layout/publication_comment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../excolnet/app/src/main/res/layout/publication_comment.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -33,103 +26,7 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/Drivers/DriverSetUp.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/Pages/UserRegisterPage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="52" selection-start-line="52" selection-end-line="52" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3356#3357#0" expanded="true" />
-                <element signature="e#3385#3386#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/Pages/SearchPage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="10" column="53" selection-start-line="10" selection-start-column="53" selection-end-line="10" selection-end-column="53" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/Pages/UserLoginPage.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4">
-              <caret line="26" column="5" lean-forward="true" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/TestCases/UserLoginTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="33" column="41" lean-forward="true" selection-start-line="33" selection-start-column="41" selection-end-line="33" selection-end-column="41" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/java/TestCases/UserRegisterTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/TestCases/UserPublicationTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="19" column="35" lean-forward="true" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/Commons/DriverCommons.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="51" column="35" lean-forward="true" selection-start-line="51" selection-start-column="35" selection-end-line="51" selection-end-column="35" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -149,15 +46,17 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/test/TestCases/d.html" />
         <option value="$PROJECT_DIR$/src/test/TestCases/UserLoginTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/Pages/PublicationPage.java" />
         <option value="$PROJECT_DIR$/src/test/java/Pages/SearchPage.java" />
         <option value="$PROJECT_DIR$/src/test/java/Drivers/DriverSetUp.java" />
-        <option value="$PROJECT_DIR$/src/test/java/TestCases/UserPublicationTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/TestCases/UserLoginTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/Commons/DriverCommons.java" />
-        <option value="$PROJECT_DIR$/src/test/java/Pages/UserLoginPage.java" />
         <option value="$PROJECT_DIR$/src/test/java/Pages/UserRegisterPage.java" />
         <option value="$PROJECT_DIR$/src/test/java/TestCases/UserRegisterTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/Pages/UserLoginPage.java" />
+        <option value="$PROJECT_DIR$/src/test/java/Commons/DriverCommons.java" />
+        <option value="$PROJECT_DIR$/src/test/java/TestCases/UserLoginTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/Pages/PublicationPage.java" />
+        <option value="$PROJECT_DIR$/src/test/java/TestCases/UserPublicationTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/TestCases/ChatTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/Pages/ChatPage.java" />
       </list>
     </option>
   </component>
@@ -180,6 +79,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Excolnet_UI_Testing" type="58d84e3e:PackageViewProjectNode" />
+              <item name="Excolnet_UI_Testing" type="616d4139:PackageViewModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -242,17 +152,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Excolnet_UI_Testing" type="58d84e3e:PackageViewProjectNode" />
-              <item name="Excolnet_UI_Testing" type="616d4139:PackageViewModuleNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -288,8 +187,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.UserRegisterTest.doRegistry">
-    <configuration name="UserLoginTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.ChatTest.initLogin">
+    <configuration name="ChatTest.initLogin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Excolnet_UI_Testing" />
       <extension name="coverage">
         <pattern>
@@ -298,8 +197,9 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="TestCases" />
-      <option name="MAIN_CLASS_NAME" value="TestCases.UserLoginTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="TestCases.ChatTest" />
+      <option name="METHOD_NAME" value="initLogin" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -369,11 +269,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ChatTest.initLogin" />
+        <item itemvalue="JUnit.UserPublicationTest.doPublication" />
+        <item itemvalue="JUnit.UserLoginTest.initLogin" />
         <item itemvalue="JUnit.UserRegisterTest.doRegistry" />
         <item itemvalue="JUnit.UserRegisterTest" />
-        <item itemvalue="JUnit.UserLoginTest" />
-        <item itemvalue="JUnit.UserLoginTest.initLogin" />
-        <item itemvalue="JUnit.UserPublicationTest.doPublication" />
       </list>
     </recent_temporary>
   </component>
@@ -391,35 +291,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="UserRegisterTest - 2019.04.24 at 18h 31m 56s.xml">
-      <configuration name="UserRegisterTest" configurationId="JUnit" />
+    <history-entry file="UserPublicationTest_doPublication - 2019.05.18 at 05h 24m 20s.xml">
+      <configuration name="UserPublicationTest.doPublication" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserRegisterTest - 2019.04.24 at 18h 41m 25s.xml">
-      <configuration name="UserRegisterTest" configurationId="JUnit" />
+    <history-entry file="ChatTest_initLogin - 2019.05.18 at 05h 25m 07s.xml">
+      <configuration name="ChatTest.initLogin" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserRegisterTest - 2019.04.24 at 18h 44m 34s.xml">
-      <configuration name="UserRegisterTest" configurationId="JUnit" />
+    <history-entry file="ChatTest_initLogin - 2019.05.18 at 05h 35m 47s.xml">
+      <configuration name="ChatTest.initLogin" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserRegisterTest_doRegistry - 2019.04.24 at 18h 48m 11s.xml">
-      <configuration name="UserRegisterTest.doRegistry" configurationId="JUnit" />
+    <history-entry file="ChatTest_initLogin - 2019.05.18 at 05h 38m 58s.xml">
+      <configuration name="ChatTest.initLogin" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserRegisterTest - 2019.04.24 at 18h 49m 00s.xml">
-      <configuration name="UserRegisterTest" configurationId="JUnit" />
+    <history-entry file="ChatTest_initLogin - 2019.05.18 at 05h 41m 33s.xml">
+      <configuration name="ChatTest.initLogin" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserRegisterTest_doRegistry - 2019.04.24 at 18h 49m 47s.xml">
-      <configuration name="UserRegisterTest.doRegistry" configurationId="JUnit" />
+    <history-entry file="ChatTest_initLogin - 2019.05.18 at 05h 43m 51s.xml">
+      <configuration name="ChatTest.initLogin" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserRegisterTest_doRegistry - 2019.04.24 at 18h 53m 21s.xml">
-      <configuration name="UserRegisterTest.doRegistry" configurationId="JUnit" />
+    <history-entry file="ChatTest_initLogin - 2019.05.18 at 05h 45m 12s.xml">
+      <configuration name="ChatTest.initLogin" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserRegisterTest_doRegistry - 2019.04.24 at 18h 55m 22s.xml">
-      <configuration name="UserRegisterTest.doRegistry" configurationId="JUnit" />
+    <history-entry file="ChatTest_initLogin - 2019.05.18 at 05h 51m 29s.xml">
+      <configuration name="ChatTest.initLogin" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserRegisterTest_doRegistry - 2019.04.24 at 18h 56m 08s.xml">
-      <configuration name="UserRegisterTest.doRegistry" configurationId="JUnit" />
+    <history-entry file="ChatTest_initLogin - 2019.05.18 at 06h 04m 27s.xml">
+      <configuration name="ChatTest.initLogin" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserRegisterTest_doRegistry - 2019.04.24 at 18h 57m 25s.xml">
-      <configuration name="UserRegisterTest.doRegistry" configurationId="JUnit" />
+    <history-entry file="ChatTest_initLogin - 2019.05.18 at 06h 05m 52s.xml">
+      <configuration name="ChatTest.initLogin" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -433,9 +333,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3279483" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.33764136" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -445,7 +344,7 @@
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.39124086" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.39124086" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3620438" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -544,57 +443,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/Pages/PublicationPage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="764">
-          <caret line="62" column="136" selection-start-line="62" selection-start-column="136" selection-end-line="62" selection-end-column="136" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/Drivers/DriverSetUp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/TestCases/UserPublicationTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="19" column="35" lean-forward="true" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/TestCases/UserLoginTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="33" column="41" lean-forward="true" selection-start-line="33" selection-start-column="41" selection-end-line="33" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/Pages/SearchPage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="10" column="53" selection-start-line="10" selection-start-column="53" selection-end-line="10" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/Pages/UserLoginPage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4">
-          <caret line="26" column="5" lean-forward="true" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+        <state relative-caret-position="60">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -603,8 +455,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/Commons/DriverCommons.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="51" column="35" lean-forward="true" selection-start-line="51" selection-start-column="35" selection-end-line="51" selection-end-column="35" />
+        <state relative-caret-position="115">
+          <caret line="103" selection-start-line="103" selection-end-line="103" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3129#3144#0" expanded="true" />
+            <element signature="e#3670#3686#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/TestCases/UserPublicationTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="24" column="42" selection-start-line="24" selection-start-column="42" selection-end-line="24" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/Pages/PublicationPage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-35">
+          <caret line="32" column="8" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/Pages/SearchPage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-123">
+          <caret line="10" column="53" selection-start-line="10" selection-start-column="53" selection-end-line="10" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/Pages/UserLoginPage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="54" column="54" selection-start-line="54" selection-start-column="54" selection-end-line="54" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/TestCases/UserRegisterTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -613,20 +514,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/Pages/UserRegisterPage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="52" selection-start-line="52" selection-end-line="52" />
+        <state relative-caret-position="-185">
+          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="28" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3356#3357#0" expanded="true" />
-            <element signature="e#3385#3386#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/TestCases/UserRegisterTest.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/TestCases/UserLoginTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+        <state relative-caret-position="272">
+          <caret line="52" column="5" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="52" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/Pages/ChatPage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="32" column="8" selection-start-line="32" selection-start-column="8" selection-end-line="32" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#912#913#0" expanded="true" />
+            <element signature="e#945#946#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/TestCases/ChatTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="37" column="38" lean-forward="true" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

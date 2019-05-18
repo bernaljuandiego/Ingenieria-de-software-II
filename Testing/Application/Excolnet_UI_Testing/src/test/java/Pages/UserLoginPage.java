@@ -24,7 +24,6 @@ public class UserLoginPage {
         this.emailField = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/email");
         this.passwordField = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/password");
         this.logInButton = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/email_sign_in_button");
-        this.signUpLabel = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/sign_up_button");
     }
 
 
@@ -53,6 +52,7 @@ public class UserLoginPage {
     }
 
     public void clickSignUp() {
+        this.signUpLabel = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/sign_up_button");
         this.signUpLabel.click();
     }
 

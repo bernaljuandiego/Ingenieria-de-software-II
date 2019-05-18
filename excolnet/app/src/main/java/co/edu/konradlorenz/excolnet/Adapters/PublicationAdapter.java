@@ -2,6 +2,7 @@ package co.edu.konradlorenz.excolnet.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,13 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
         holder.nombreUsuario.setText(items.get(position).getUsuario().getDisplayName());
         holder.fechaPublicacion.setText(items.get(position).getFechaPublicacion());
         holder.descripcionPublicacion.setText(items.get(position).getTexto());
+        for (Usuario usuario: items.get(position).getUsuariosQueGustan()){
+            if(usuario.getUid()==user.getUid()){
+                Log.e("juan", "local "+usuario.getUid()+" bd "+user.getUid());
+                holder.botonLike.setImageResource(R.drawable.ic_like_selected);
+            }
+        }
+
         try {
             holder.cantidadLikes.setText(items.get(position).getUsuariosQueGustan().size() + " Likes");
             holder.cantidadComentarios.setText(items.get(position).getComentarios().size() + " Comments");
@@ -98,6 +106,30 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
                     mDatabase.child("Publicaciones").child(items.get(position).getId()).setValue(items.get(position));
                     holder.comentario.setText("");
                 }
+            }
+        });
+
+        holder.botonLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean likeado = false;
+                Usuario userDislike = null;
+                for (Usuario usuario: items.get(position).getUsuariosQueGustan()){
+                    if(usuario.getUid()==user.getUid()){
+                        likeado = true;
+                        userDislike = usuario;
+                    }
+                }
+                if (likeado){
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("BaseDatos");
+                    items.get(position).getUsuariosQueGustan().remove(userDislike);
+                    mDatabase.child("Publicaciones").child(items.get(position).getId()).setValue(items.get(position));
+
+                } else {
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("BaseDatos");
+                    items.get(position).getUsuariosQueGustan().add(new Usuario(user.getDisplayName(),user.getEmail(),user.getPhotoUrl().toString(),user.getUid()));
+                    mDatabase.child("Publicaciones").child(items.get(position).getId()).setValue(items.get(position));
+            }
             }
         });
 
@@ -144,6 +176,7 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
         TextView cantidadLikes;
         EditText comentario;
         Button botonComentar;
+        ImageView botonLike;
 
         PublicationHolder(View itemView) {
             super(itemView);
@@ -157,6 +190,8 @@ public class PublicationAdapter extends RecyclerView.Adapter<PublicationAdapter.
             descripcionPublicacion = itemView.findViewById(R.id.descripcion_publicacion);
             imagenPublicacion = itemView.findViewById(R.id.imagen_publicacion);
             comentario = itemView.findViewById(R.id.comentario);
+            botonLike = itemView.findViewById(R.id.like_button);
+
         }
     }
 

@@ -60,7 +60,7 @@ public class PublicationPage {
     }
 
     public void clickCreatePublicationButton() {
-               this.createPublicationButton = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/send_button");
+        this.createPublicationButton = (MobileElement) pageDriver.findElementById("co.edu.konradlorenz.excolnet:id/send_button");
         this.createPublicationButton.click();
     }
 
