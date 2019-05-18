@@ -20,16 +20,9 @@ public class UserPublicationTest {
         this.driverCommons = new DriverCommons(this.driver);
     }
 
-    public UserPublicationTest(AndroidDriver driver, DriverCommons driverCommons) {
-        this.driver = driver;
-        this.driverCommons = driverCommons;
-   }
-
-
-
     @Test
     public void doPublication(){
-        driverCommons.addImplicitlyWait(5);
+        driverCommons.addImplicitlyWait(10);
         this.publicationPage = new PublicationPage(driver);
 
 

@@ -5,10 +5,12 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class DriverCommons {
@@ -82,5 +84,38 @@ public class DriverCommons {
 
     public void resetApp(){
        this.driver.resetApp();
+    }
+
+    public boolean swipeFromBottomToUp()
+    {
+        try  {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            HashMap<String, String> scrollObject = new HashMap<String,String>();
+            scrollObject.put("direction", "down");
+            js.executeScript("mobile: scroll", scrollObject);
+            System.out.println("Swipe down was Successfully done");
+        }
+        catch (Exception e)
+        {
+            System.out.println("swipe down was not successfull");
+        }
+        return false;
+    }
+
+    public boolean swipeFromUpToBottom()
+    {
+
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            HashMap<String, String> scrollObject = new HashMap<String, String>();
+            scrollObject.put("direction", "up");
+            js.executeScript("mobile: scroll", scrollObject);
+            System.out.println("Swipe up was Successfully done.");
+        }
+        catch (Exception e)
+        {
+            System.out.println("swipe up was not successfull");
+        }
+        return false;
     }
 }
