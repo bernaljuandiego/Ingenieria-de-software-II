@@ -61,8 +61,8 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private ChatAdapter adapter;
     //Message_Type identifiers
-    private String message_Type_message = "1";
-    private String message_Type_image = "2";
+    private final String message_Type_message = "1";
+    private final String message_Type_image = "2";
 
     //Storage references
 

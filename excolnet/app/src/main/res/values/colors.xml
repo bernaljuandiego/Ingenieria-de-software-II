@@ -20,5 +20,5 @@
     <color name="divider_greys">#E7E6E6</color>
     <color name="chatBackground">#E4F3D3</color>
     <color name="blue">#E0F5FF</color>
-
+    <color name="permantlyBlack">#1D1F1F</color>
 </resources>
