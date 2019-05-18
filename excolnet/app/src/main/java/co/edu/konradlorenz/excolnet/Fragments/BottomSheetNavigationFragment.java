@@ -104,6 +104,8 @@ public class BottomSheetNavigationFragment extends BottomSheetDialogFragment {
                     case R.id.nav_living_costs_option:
                         Intent livingIntent = new Intent(getContext(), LivingCostActivity.class);
                         startActivity(livingIntent);
+                        BottomSheetNavigationFragment.super.dismiss();
+
                         return true;
                     case R.id.nav_housing_option:
                         Fragment fragmenth = new HousingFragment();
